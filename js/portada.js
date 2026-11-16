@@ -266,6 +266,7 @@ const card = document.getElementById('card');
 const cardBody = document.getElementById('cardBody');
 
 function explode(){
+  introTl?.kill(); introTl = null;
   resetDetached();
   mode='explore';
   gsap.killTweensOf(hero);   // por si la animación de entrada aún no ha terminado
@@ -275,7 +276,7 @@ function explode(){
   gsap.to(rot,{ x:0.08, y:-0.25, duration:D(1.4), ease:'power3.inOut' });
   gsap.to(exploreUi,{ autoAlpha:1, duration:D(.5), delay:D(1.1), onStart:()=>exploreUi.style.pointerEvents='auto' });
   labelBox.style.visibility='';
-  Object.values(labels).forEach((l,i)=>{ gsap.to(l,{ opacity:1, duration:D(.4), delay:D(1.2+i*.08) }); l.style.pointerEvents='auto'; });
+  Object.values(labels).forEach((l,i)=>{ gsap.to(l,{ autoAlpha:1, duration:D(.4), delay:D(1.2+i*.08) }); l.style.pointerEvents='auto'; });
 }
 // Cancela las animaciones de la vista desmontada que aún no han empezado (carteles, piezas, botones)
 function cancelarPendientes(){
@@ -287,7 +288,7 @@ function assemble(){
   cancelarPendientes();
   resetDetached();
   deselect(); mode='hero'; autoRotate=!reduceMotion;
-  Object.values(labels).forEach(l=>{ gsap.to(l,{opacity:0,duration:D(.25)}); l.style.pointerEvents='none'; });
+  Object.values(labels).forEach(l=>{ gsap.to(l,{autoAlpha:0,duration:D(.25)}); l.style.pointerEvents='none'; });
   gsap.to(exploreUi,{ autoAlpha:0, duration:D(.3) }); exploreUi.style.pointerEvents='none';
   Object.keys(parts).forEach(k=> gsap.to(parts[k].position,{ x:0,y:0,z:0, duration:D(1.1), ease:'power3.inOut' }));
   gsap.to(rot,{ x:0.12, y:-0.5, duration:D(1.2), ease:'power3.inOut' });
@@ -436,7 +437,7 @@ lienzo.addEventListener('pointermove', e=>{
 function endDrag(){
   spin=null;
   if(!drag){ downAt=null; return; }
-  const k=drag.k; glow(k,0);
+  const k=drag.k; glow(k,0); hovered=null;
   if(!drag.moved) select(k);                                              // fue un toque: abrir ficha
   else if(!detached[k]) settle(k, anchorOf(k).clone(), 'elastic.out(1,.45)', .7);   // vuelve como una goma
   else {
@@ -474,9 +475,11 @@ Object.entries(START).forEach(([k,[x,y,z]])=>{ parts[k].position.set(x,y,z); par
 gsap.set(hero,{ autoAlpha:0, y:24 });
 gsap.set(exploreUi,{ autoAlpha:0 });
 
+let introTl = null;
 export function intro(){
   document.getElementById('loader').classList.add('done');
   const tl = gsap.timeline({ defaults:{ ease:'expo.out' } });
+  introTl = tl;
   ['stem','cup','liner','head'].forEach((k,i)=>{
     tl.to(parts[k].position,{ x:0,y:0,z:0, duration:D(2.2) }, D(i*0.22));
     tl.to(parts[k].rotation,{ x:0,y:0,z:0, duration:D(2.2) }, D(i*0.22));
@@ -510,16 +513,27 @@ export function actualizarPortada(t){
 /* ---- Para el viaje al pasillo (main.js) ---- */
 // Prepara la portada para el viaje: monta la prótesis, para el balanceo y oculta los textos
 export function prepararViaje(){
-  if(mode==='explore') assemble();   // assemble ya cancela lo pendiente sin frenar el montaje
+  introTl?.kill(); introTl = null;
+  const estabaExplorando = mode==='explore';
+  if(estabaExplorando) assemble();   // assemble ya cancela lo pendiente sin frenar el montaje
   autoRotate=false;
   labelBox.style.visibility='hidden';   // ningún cartel puede verse en el pasillo
   gsap.killTweensOf(hero);
   gsap.to(hero,{autoAlpha:0,duration:D(.4)}); gsap.to(exploreUi,{autoAlpha:0,duration:D(.3)});
-  Object.values(labels).forEach(l=>{l.style.opacity=0;l.style.pointerEvents='none'});
+  Object.values(labels).forEach(l=>{ gsap.set(l,{autoAlpha:0}); l.style.pointerEvents='none'; });
+  if(estabaExplorando){
+    const t = layout();
+    return prosthesis.position.clone()
+      .applyEuler(new THREE.Euler(0.12, -0.5, 0.08))
+      .multiplyScalar(t.s)
+      .add(new THREE.Vector3(t.x, t.y, 0));
+  }
   const cabeza=new THREE.Vector3(); parts.head.getWorldPosition(cabeza); return cabeza;
 }
 // Vuelve a dejar la portada como al principio
 export function volverAPortada(){
+  gsap.killTweensOf([hero, exploreUi, camera.position, look]);
+  userX=0; userY=0; hovered=null; spin=null; drag=null;
   look.set(0,0,0); camera.position.set(0,0.6,17);
   mode='hero'; autoRotate=!reduceMotion; moveStage(true);
   labelBox.style.visibility='';

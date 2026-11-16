@@ -100,7 +100,7 @@ export function crearPasillo(vitrinas, salas){
   const dotsBox = document.getElementById('dots'), caption = document.getElementById('caption');
   vitrinas.forEach((v,i)=>{ const b=document.createElement('button'); b.setAttribute('aria-label',v.titulo); b.addEventListener('click',()=>goTo(i)); dotsBox.appendChild(b); });
   const state = { angle:0 };
-  let current=-1, activeSeg=0, wasDrag=false;
+  let current=-1, activeSeg=0, wasDrag=false, targetAngle=0;
   const norm = a => ((a%360)+540)%360-180;
   const segIdx = () => ((Math.round(state.angle/STEP)%HN)+HN)%HN;
   const snapAngle = a => Math.round(a/STEP)*STEP;
@@ -116,8 +116,12 @@ export function crearPasillo(vitrinas, salas){
       dotsBox.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-current',j===room));
     }
   }
-  function rotateTo(a, dur=.9){ gsap.killTweensOf(state); gsap.to(state,{ angle:a, duration:D(dur), ease:'power3.out', onUpdate:renderRing }); }
-  function step(dd){ rotateTo(snapAngle(state.angle)+dd*STEP); }
+  function rotateTo(a, dur=.9){
+    targetAngle = a;
+    gsap.killTweensOf(state);
+    gsap.to(state,{ angle:a, duration:D(dur), ease:'power3.out', onUpdate:renderRing, onComplete:renderRing });
+  }
+  function step(dd){ const base = gsap.isTweening(state) ? targetAngle : state.angle; rotateTo(snapAngle(base)+dd*STEP); }
   function goTo(room){   // por el camino más corto
     const idx=Math.round(state.angle/STEP); let best=null;
     for(let k=idx-HN;k<=idx+HN;k++) if(((k%NR)+NR)%NR===room && (best===null||Math.abs(k-idx)<Math.abs(best-idx))) best=k;
@@ -156,7 +160,10 @@ export function crearPasillo(vitrinas, salas){
     const rel = norm(hit.object.userData.seg*STEP - state.angle);
     if(Math.abs(rel) < STEP/2) hooks.entrar(hit.object.userData.seg%NR); else rotateTo(state.angle+rel);
   });
-  ringWrap.addEventListener('pointercancel',()=>{ dragRing=null; ringWrap.classList.remove('grabbing'); });
+  ringWrap.addEventListener('pointercancel',()=>{
+    if(hooks.mesa && hooks.mesa.agarrando()) hooks.mesa.pointerCancel?.();
+    dragRing=null; ringWrap.classList.remove('grabbing');
+  });
   let wheelT=null;
   ringWrap.addEventListener('wheel',e=>{
     if(estado.enSala) return; e.preventDefault(); gsap.killTweensOf(state);

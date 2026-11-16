@@ -76,6 +76,7 @@ function mostrarPasillo(){
   document.getElementById('prevDoor').focus({preventScroll:true});
 }
 function empezarRecorrido(){
+  if(viaje) return;
   const cabeza = portada.prepararViaje();
   // La cámara vuela hacia la cabeza femoral, todo se funde en blanco y aparecen las frases
   viaje=gsap.timeline();
@@ -92,7 +93,11 @@ function empezarRecorrido(){
   viaje.add(mostrarPasillo, D(1.9+datos.frasesIntro.length*2.3));
 }
 function volverAPortada(){
+  if(viaje){ viaje.kill(); viaje=null; }
   estado.enPasillo=false;
+  gsap.killTweensOf([hub,'.top',flash,intro,skipBtn]);
+  gsap.set([intro,skipBtn],{autoAlpha:0}); skipBtn.style.pointerEvents='none';
+  gsap.set(flash,{opacity:0});
   gsap.to(hub,{autoAlpha:0,duration:D(.5)}); gsap.to('.top',{autoAlpha:1,duration:D(.5)});
   portada.volverAPortada();
 }
@@ -111,7 +116,7 @@ addEventListener('keydown',e=>{
 function alRedimensionar(){
   const w=innerWidth, h=innerHeight;
   redimensionar(w,h);
-  hubCam.aspect=w/h; if(!estado.enSala) hubCam.fov=HUB_FOV(); hubCam.updateProjectionMatrix();
+  hubCam.aspect=w/h; hubCam.fov = HUB_FOV() + (estado.enSala ? 6 : 0); hubCam.updateProjectionMatrix();
   if(mesa) mesa.redimensionar(w,h);
 }
 addEventListener('resize', alRedimensionar);

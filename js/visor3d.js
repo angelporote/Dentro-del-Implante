@@ -5,6 +5,7 @@
    ========================================================= */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { gamaBaja, reduceMotion } from './util.js';
 
 export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, camPos=[0, 1.1, 4.2], autoGiro=true }={}){
@@ -18,7 +19,34 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
   renderer.toneMappingExposure = 1.1;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(fondo);
+
+  // Fondo de estudio con viñeteado radial sutil para dar profundidad a vidrios, metales y polímeros
+  const bgCanvas = document.createElement('canvas');
+  bgCanvas.width = 512; bgCanvas.height = 512;
+  {
+    const g = bgCanvas.getContext('2d');
+    const cBase = new THREE.Color(fondo);
+    const cCentro = fondo === 0x0E0C2A ? new THREE.Color(0x1E1848) : cBase.clone().lerp(new THREE.Color(0xFFFFFF), 0.08);
+    const cBorde = fondo === 0x0E0C2A ? new THREE.Color(0x09081C) : cBase.clone().multiplyScalar(0.6);
+    const gr = g.createRadialGradient(256, 224, 24, 256, 256, 360);
+    gr.addColorStop(0, '#' + cCentro.getHexString());
+    gr.addColorStop(0.52, '#' + cBase.getHexString());
+    gr.addColorStop(1, '#' + cBorde.getHexString());
+    g.fillStyle = gr;
+    g.fillRect(0, 0, 512, 512);
+  }
+  const bgTex = new THREE.CanvasTexture(bgCanvas);
+  bgTex.colorSpace = THREE.SRGBColorSpace;
+  scene.background = bgTex;
+
+  // Iluminación PBR real de estudio (RoomEnvironment + PMREMGenerator, calculada una vez por visor)
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const roomEnv = new RoomEnvironment();
+  const envTex = pmrem.fromScene(roomEnv, 0.04).texture;
+  roomEnv.dispose?.();
+  pmrem.dispose();
+  scene.environment = envTex;
+  scene.environmentIntensity = 0.85;
 
   const w = Math.max(260, wrap.clientWidth || 340);
   const h = Math.max(220, wrap.clientHeight || 260);
@@ -35,11 +63,12 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
   controls.autoRotate = autoGiro && !reduceMotion;
   controls.autoRotateSpeed = 1.4;
 
-  // Iluminación de estudio limpia (sin coste de PMREM)
-  scene.add(new THREE.HemisphereLight(0xFFFFFF, 0x26204A, 1.15));
-  const key = new THREE.DirectionalLight(0xFFFFFF, 1.45); key.position.set(3, 5, 4); scene.add(key);
-  const rim = new THREE.DirectionalLight(0x5FF2D2, 0.8); rim.position.set(-4, 2, -3); scene.add(rim);
-  const warm = new THREE.DirectionalLight(0xFFD58A, 0.45); warm.position.set(2, -3, -2); scene.add(warm);
+  // Esquema de estudio de 4 puntos + luz hemisférica complementando el entorno PBR
+  scene.add(new THREE.HemisphereLight(0xF4F6FF, 0x1A1538, 0.75));
+  const key = new THREE.DirectionalLight(0xFFFBF2, 1.55); key.position.set(3.5, 5.5, 4.5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x5FF2D2, 1.0); rim.position.set(-4.5, 2.2, -3.5); scene.add(rim);
+  const fill = new THREE.DirectionalLight(0x9C83FF, 0.55); fill.position.set(-3.2, -2.5, 2.8); scene.add(fill);
+  const warm = new THREE.DirectionalLight(0xFFD58A, 0.5); warm.position.set(2.5, -3.2, -2.2); scene.add(warm);
 
   const grupo = new THREE.Group();
   scene.add(grupo);
@@ -54,14 +83,33 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
   });
   ro.observe(wrap);
 
-  let raf = 0;
+  let raf = 0, destruido = false;
   const reloj = new THREE.Clock();
+  function limpiarGrupo(){
+    while(grupo.children.length){
+      const ch = grupo.children[0];
+      ch.traverse?.(o=>{
+        o.geometry?.dispose?.();
+        const mats = Array.isArray(o.material) ? o.material : [o.material];
+        mats.forEach(m=>m?.dispose?.());
+      });
+      grupo.remove(ch);
+    }
+  }
+  function destruir(){
+    if(destruido) return;
+    destruido = true;
+    cancelAnimationFrame(raf);
+    ro.disconnect();
+    controls.dispose();
+    limpiarGrupo();
+    envTex.dispose();
+    bgTex.dispose();
+    renderer.dispose();
+  }
   function bucle(){
-    if(!document.body.contains(canvas)){
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-      controls.dispose();
-      renderer.dispose();
+    if(destruido || !document.body.contains(canvas)){
+      destruir();
       return;
     }
     const t = reloj.getElapsedTime();
@@ -74,13 +122,15 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
 
   return {
     reemplazar(nuevaEscena){
-      while(grupo.children.length){
-        const ch = grupo.children[0];
-        ch.traverse?.(o=>{ o.geometry?.dispose?.(); });
-        grupo.remove(ch);
-      }
+      if(destruido) return;
+      limpiarGrupo();
+      grupo.position.set(0,0,0);
       grupo.rotation.set(0,0,0);
       animRef.fn = nuevaEscena(grupo, scene, camera) || (()=>{});
-    }
+    },
+    destruir,
+    renderer,
+    scene,
+    camera
   };
 }

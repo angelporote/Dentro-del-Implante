@@ -95,8 +95,11 @@ export function pintarTest(contenedor, { datos }){
   // Teclado: solo mientras el foco está dentro del test
   r.addEventListener('keydown', e=>{
     if(!ronda || !r.querySelector('.test-op')) return;
-    const k = '1234'.indexOf(e.key)>=0 ? +e.key-1 : 'abcd'.indexOf(e.key.toLowerCase());
-    if(k>=0 && k<ronda[i].opciones.length && !respondida && !e.ctrlKey && !e.metaKey){ e.preventDefault(); responder(k); }
+    if(respondida && e.key==='Enter' && !e.target.closest('button')){
+      e.preventDefault(); r.querySelector('#testSigue')?.click(); return;
+    }
+    const k = '123456'.indexOf(e.key)>=0 ? +e.key-1 : 'abcdef'.indexOf(e.key.toLowerCase());
+    if(k>=0 && k<ronda[i].opciones.length && !respondida && !e.ctrlKey && !e.metaKey && !e.altKey){ e.preventDefault(); responder(k); }
   });
 
   empezar(banco);

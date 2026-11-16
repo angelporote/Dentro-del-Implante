@@ -7,6 +7,7 @@
    ========================================================= */
 import * as THREE from 'three';
 import { gsap, D, estado } from './util.js';
+import { esc } from './ui.js';
 import { hubCam, HR, HUB_FOV } from './pasillo.js';
 import { pintarTest } from './test.js';
 
@@ -30,12 +31,16 @@ export function avisar(t){ toast.textContent=t; gsap.killTweensOf(toast); gsap.f
 export function crearActividades({ vitrinas, salas, pasillo, mesa }){
   const { state, snapAngle, rotateTo } = pasillo;
   const ocultables = ['.hub-head','.caption','.hub-nav','#home','.arrow.side'];
-  let salaActual=null;
+  const immContent = document.getElementById('immContent'), immToggle = document.getElementById('immToggle');
+  let salaActual=null, transicion=null, saliendo=false;
 
   function entrar(i){
-    if(estado.enSala) return; estado.enSala=true;
+    if(estado.enSala) return; estado.enSala=true; saliendo=false;
+    transicion?.kill();
     rotateTo(snapAngle(state.angle), .4);
     const v=vitrinas[i]; salaActual=v;
+    immContent?.classList.remove('collapsed');
+    if(immToggle) immToggle.textContent='Ocultar panel';
     document.getElementById('immPlate').textContent=`Vitrina ${String(i+1).padStart(2,'0')}`;
     document.getElementById('immTitle').textContent=v.titulo;
     document.getElementById('immText').textContent=v.texto;
@@ -44,12 +49,12 @@ export function crearActividades({ vitrinas, salas, pasillo, mesa }){
       if(v.pdf){ pdfBtn.href = v.pdf; pdfBtn.hidden = false; }
       else { pdfBtn.hidden = true; pdfBtn.removeAttribute('href'); }
     }
-    acts.innerHTML = v.actividades.map((a,k)=>`<button class="act" data-k="${k}"><span class="ico">${ICONOS[a.tipo]||ICONOS.teoria}</span><span><b>${a.titulo}</b><span>${a.texto}</span>${disponible(v,a)?'':'<em>Próximamente</em>'}</span></button>`).join('');
+    acts.innerHTML = v.actividades.map((a,k)=>`<button class="act" data-k="${k}"><span class="ico">${ICONOS[a.tipo]||ICONOS.teoria}</span><span><b>${esc(a.titulo)}</b><span>${esc(a.texto)}</span>${disponible(v,a)?'':'<em>Próximamente</em>'}</span></button>`).join('');
     acts.querySelectorAll('.act').forEach(b=>b.addEventListener('click',()=>abrir(v, v.actividades[+b.dataset.k])));
     // La cámara cruza el cristal (justo al otro lado se ve la sala entera) y aparece el panel
     const yaw = -THREE.MathUtils.degToRad(snapAngle(state.angle)), dist = HR+0.25;
     gsap.set(immerseEl,{visibility:'visible'}); gsap.set('.imm-content > *, .imm-shade, #immBack',{opacity:0});
-    gsap.timeline()
+    transicion = gsap.timeline()
       .to(ocultables,{autoAlpha:0,duration:D(.35)},0)
       .to(hubCam.position,{ x:-Math.sin(yaw)*dist, z:-Math.cos(yaw)*dist, y:-0.05, duration:D(1.7), ease:'power2.inOut' },0.1)
       .to(mesa.contador.position,{ y:-1.2, duration:D(1), ease:'power2.in' },0.1)
@@ -59,9 +64,11 @@ export function crearActividades({ vitrinas, salas, pasillo, mesa }){
       .add(()=>document.getElementById('immBack').focus({preventScroll:true}));
   }
   function salir(){
-    if(!estado.enSala) return;
+    if(!estado.enSala || saliendo) return;
+    saliendo=true;
+    transicion?.kill();
     cerrarVisor();
-    gsap.timeline({ onComplete:()=>{ gsap.set(immerseEl,{visibility:'hidden'}); estado.enSala=false; } })
+    transicion = gsap.timeline({ onComplete:()=>{ gsap.set(immerseEl,{visibility:'hidden'}); estado.enSala=false; saliendo=false; } })
       .to('.imm-content > *, .imm-shade, #immBack',{opacity:0,duration:D(.35)},0)
       .to(hubCam.position,{ x:0, y:0.3, z:0, duration:D(1.4), ease:'power2.inOut' },0.15)
       .to(mesa.contador.position,{ y:0, duration:D(1), ease:'power2.out' },0.6)
@@ -100,11 +107,11 @@ export function crearActividades({ vitrinas, salas, pasillo, mesa }){
     visorCuerpo.innerHTML=''; visorCuerpo.scrollTop=0;
     f(visorCuerpo, { datos:datosSala, vitrina:v, avisar });
   }
-  function cerrarVisor(){ if(visor.style.visibility==='visible'){ estado.visorAbierto=false; apertura++; document.body.classList.remove('visor-on'); gsap.killTweensOf(visor); gsap.to(visor,{opacity:0,duration:D(.25),onComplete:()=>gsap.set(visor,{visibility:'hidden'})}); } }
+  function cerrarVisor(){ if(visor.style.visibility==='visible'){ estado.visorAbierto=false; apertura++; document.body.classList.remove('visor-on'); gsap.killTweensOf(visor); gsap.to(visor,{opacity:0,duration:D(.25),onComplete:()=>{ gsap.set(visor,{visibility:'hidden'}); visorCuerpo.innerHTML=''; }}); } }
   document.getElementById('visorCerrar').addEventListener('click',cerrarVisor);
   document.getElementById('immBack').addEventListener('click',salir);
-  document.getElementById('immToggle').addEventListener('click',()=>{ const c=document.getElementById('immContent'); c.classList.toggle('collapsed'); document.getElementById('immToggle').textContent = c.classList.contains('collapsed') ? 'Ver actividades' : 'Ocultar panel'; });
-  addEventListener('keydown',e=>{ if(estado.enSala && e.key==='Escape') (visor.style.visibility==='visible'?cerrarVisor():salir()); });
+  immToggle?.addEventListener('click',()=>{ immContent.classList.toggle('collapsed'); immToggle.textContent = immContent.classList.contains('collapsed') ? 'Ver actividades' : 'Ocultar panel'; });
+  addEventListener('keydown',e=>{ if(estado.enSala && e.key==='Escape') (estado.visorAbierto?cerrarVisor():salir()); });
 
   return { entrar, salir };
 }

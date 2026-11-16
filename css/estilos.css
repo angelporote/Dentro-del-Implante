@@ -49,14 +49,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* Controles del modo exploración */
 .explore-ui span{pointer-events:none;user-select:none}
-.explore-ui{position:fixed;left:clamp(1.2rem,4vw,3rem);bottom:clamp(1.5rem,6vh,3rem);z-index:4;display:flex;gap:.8rem;align-items:center;opacity:0;pointer-events:none}
+.explore-ui{position:fixed;left:clamp(1.2rem,4vw,3rem);right:clamp(1.2rem,4vw,3rem);bottom:clamp(1.5rem,6vh,3rem);z-index:4;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;opacity:0;visibility:hidden;pointer-events:none}
 .ghost{border:1px solid var(--edge);background:rgba(18,14,48,.84);border-radius:99px;padding:.7rem 1.2rem;font-size:.92rem}
 .ghost:hover{border-color:rgba(255,255,255,.35)}
 .explore-ui span{color:var(--dim);font-size:.9rem}
 
 /* Etiquetas que siguen a cada pieza 3D */
 .label{position:fixed;left:0;top:0;z-index:3;display:flex;align-items:center;gap:.6rem;border:0;background:none;padding:0;
-       opacity:0;pointer-events:none;transform:translate(-9px,-50%);white-space:nowrap}
+       opacity:0;visibility:hidden;pointer-events:none;transform:translate(-9px,-50%);white-space:nowrap}
 .label .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--c);display:grid;place-items:center;flex:none}
 .label .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--c)}
 .label .txt{background:rgba(18,14,48,.84);border:1px solid var(--edge);border-radius:10px;padding:.45rem .75rem;text-align:left}
@@ -69,8 +69,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Ficha de información de cada pieza */
 .card{position:fixed;top:50%;right:clamp(1rem,3vw,2.5rem);width:min(400px,92vw);transform:translate(30px,-50%);z-index:6;
       background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--edge);border-radius:20px;
-      padding:1.6rem;opacity:0;pointer-events:none;max-height:86vh;overflow:auto}
-.card.open{opacity:1;pointer-events:auto;transform:translate(0,-50%);transition:opacity .35s, transform .35s}
+      padding:1.6rem;opacity:0;visibility:hidden;pointer-events:none;max-height:86vh;overflow:auto;transition:opacity .35s, transform .35s, visibility 0s linear .35s}
+.card.open{opacity:1;visibility:visible;pointer-events:auto;transform:translate(0,-50%);transition:opacity .35s, transform .35s}
 .card .fam{display:inline-block;font-size:.78rem;font-weight:600;color:var(--night);background:var(--c);border-radius:99px;padding:.2rem .65rem;margin-bottom:.9rem}
 .card h2{margin:0 0 .3rem;font-size:1.6rem;letter-spacing:-.02em}
 .card .mat{color:var(--c);font-size:.95rem;margin-bottom:1.1rem;line-height:1.45}
@@ -97,7 +97,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   .label.left{flex-direction:row;transform:translate(-9px,-50%)}
   .label.m-left{flex-direction:row-reverse;transform:translate(calc(-100% + 9px),-50%)}
 }
-@media (prefers-reduced-motion:reduce){ .cta,.card.open{transition:none} }
+@media (prefers-reduced-motion:reduce){ .cta,.card,.card.open{transition:none} }
 
 /* =========================================================
    TRANSICIÓN, PASILLO CONTINUO E INMERSIÓN EN LAS SALAS
@@ -107,9 +107,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .cta.alt:hover{border-color:rgba(255,255,255,.4);box-shadow:none}
 
 .flash{position:fixed;inset:0;z-index:20;background:#F4F1FF;opacity:0;pointer-events:none}
-.intro{position:fixed;inset:0;z-index:21;display:grid;place-items:center;text-align:center;padding:2rem;pointer-events:none;opacity:0}
+.intro{position:fixed;inset:0;z-index:21;display:grid;place-items:center;text-align:center;padding:2rem;pointer-events:none;opacity:0;visibility:hidden}
 .intro p{margin:0;font-size:clamp(1.6rem,3.6vw,2.8rem);font-weight:600;letter-spacing:-.03em;color:var(--night);max-width:22ch;line-height:1.15}
-.skip{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:22;border:0;background:none;color:#5B5390;font-size:.9rem;text-decoration:underline;text-underline-offset:4px;opacity:0;pointer-events:none}
+.skip{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:22;border:0;background:none;color:#5B5390;font-size:.9rem;text-decoration:underline;text-underline-offset:4px;opacity:0;visibility:hidden;pointer-events:none}
 
 /* --- Pasillo: una pared curva continua (un cilindro visto desde dentro) --- */
 .hub{position:fixed;inset:0;z-index:15;overflow:hidden;opacity:0;visibility:hidden;background:transparent}
@@ -137,7 +137,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .immerse .imm-back,.immerse .imm-content{pointer-events:auto}
 .imm-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,7,28,.92) 0%,rgba(9,7,28,.7) 42%,rgba(9,7,28,.15) 75%),linear-gradient(0deg,rgba(9,7,28,.6),transparent 40%)}
 .imm-back{position:absolute;top:1.3rem;left:clamp(1.2rem,4vw,3rem);z-index:2}
-.imm-content{position:absolute;left:clamp(1.2rem,6vw,5.5rem);top:50%;transform:translateY(-50%);width:min(620px,88vw);z-index:2}
+.imm-content{position:absolute;left:clamp(1.2rem,6vw,5.5rem);top:50%;transform:translateY(-50%);width:min(620px,88vw);max-height:calc(100vh - 8rem);overflow-y:auto;z-index:2}
 .imm-content small{display:block;color:var(--bio);font-size:.9rem;margin-bottom:.8rem}
 .imm-content h2{margin:0 0 .6rem;font-size:clamp(2rem,4.6vw,3.6rem);line-height:1.02;letter-spacing:-.04em}
 .imm-content > p{color:#D3CEF0;line-height:1.6;margin:0 0 1.8rem;max-width:48ch}
@@ -171,6 +171,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .imm-pdf{font-size:.82rem;padding:.45rem .9rem;text-decoration:none;border-color:rgba(95,242,210,.45);color:var(--bio)}
 .imm-pdf:hover{background:rgba(95,242,210,.12)}
 .imm-hint{color:var(--bio)!important;font-size:.9rem;margin:1rem 0 0!important}
+.imm-hint:empty{display:none}
 .imm-content.collapsed > :not(.imm-bar):not(h2):not(.imm-hint){display:none}
 .imm-content.collapsed{top:auto;bottom:1.5rem;transform:none}
 .imm-content.collapsed h2{font-size:clamp(1.6rem,3vw,2.2rem)}

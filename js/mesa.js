@@ -259,6 +259,7 @@ function resetBody(b){
   const p = b.paddle!==undefined ? restSpot(b) : new THREE.Vector3(b.homeX*deskK, TOP+0.06, b.homeZ);
   b.body.position.set(p.x,p.y,p.z); b.body.quaternion.set(b.restQ.x,b.restQ.y,b.restQ.z,b.restQ.w);
   b.body.velocity.setZero(); b.body.angularVelocity.setZero(); b.body.wakeUp();
+  b.obj.position.copy(b.body.position); b.obj.quaternion.copy(b.body.quaternion);
 }
 // Los cables solo se reconstruyen si alguna pala se ha movido (rehacer un tubo cada fotograma es costoso)
 const ultimaPala = paddles.map(()=>new THREE.Vector3(1e9,0,0));
@@ -322,7 +323,7 @@ function actualizar(t){
   }
   if(cambia) renderDeskLayer();
 }
-function redimensionar(w,h){ deskRenderer.setSize(w,h,false); layoutDesk(); forzarDibujo=true; }
+function redimensionar(w,h){ deskRenderer.setSize(w,h,false); layoutDesk(); updateCables(true); forzarDibujo=true; }
 layoutDesk(); updateCables(true);
 // ---- Coger, arrastrar y lanzar (con un "muelle" que une el ratón y el objeto) ----
 let deskGrab=null;
@@ -345,23 +346,26 @@ function deskPointerDown(e){
   return true;
 }
 function deskPointerMove(e){
-  const g=deskGrab; if(Math.hypot(e.clientX-g.start.x,e.clientY-g.start.y)>5) g.moved=true;
+  const g=deskGrab; if(!g) return;
+  if(Math.hypot(e.clientX-g.start.x,e.clientY-g.start.y)>5) g.moved=true;
   deskSetRay(e);
   const o=counter.worldToLocal(deskRay.ray.origin.clone()), dir=counter.worldToLocal(deskRay.ray.origin.clone().add(deskRay.ray.direction)).sub(o).normalize();
+  if(Math.abs(dir.z)<1e-4) return;
   // el ratón se proyecta sobre el plano vertical del objeto (su profundidad no cambia)
   const k=(g.zLock-o.z)/dir.z; const target=o.clone().addScaledVector(dir,k);
   target.z=g.zLock; target.y=THREE.MathUtils.clamp(target.y,TOP+0.02,0.25);
   const hw=halfWidthAt(-2.6)-0.05; target.x=THREE.MathUtils.clamp(target.x,-hw,hw);
   g.target.copy(target);
 }
-function deskPointerUp(){
-  const g=deskGrab, b=g.b; world.removeConstraint(g.c); document.getElementById('ringWrap').classList.remove('grabbing'); deskGrab=null;
-  if(!g.moved){ if(b.tap) b.tap(); avisar(b.name+': '+b.info); }
+function deskPointerUp(cancelar=false){
+  const g=deskGrab; if(!g) return;
+  const b=g.b; world.removeConstraint(g.c); document.getElementById('ringWrap').classList.remove('grabbing'); deskGrab=null;
+  if(!cancelar && !g.moved){ if(b.tap) b.tap(); avisar(b.name+': '+b.info); }
 }
 
 
 listo = true;
 return { contador:counter, actualizar, redimensionar, dibujar:()=>{ forzarDibujo=true; },
          bajarResolucion:(pr)=>{ deskRenderer.setPixelRatio(pr); deskRenderer.setSize(innerWidth,innerHeight,false); forzarDibujo=true; },
-         pointerDown:deskPointerDown, pointerMove:deskPointerMove, pointerUp:deskPointerUp, agarrando:()=>!!deskGrab };
+         pointerDown:deskPointerDown, pointerMove:deskPointerMove, pointerUp:deskPointerUp, pointerCancel:()=>deskPointerUp(true), agarrando:()=>!!deskGrab };
 }
