@@ -145,7 +145,11 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
   function limpiarGrupo(){
     while(grupo.children.length){
       const ch = grupo.children[0];
-      ch.traverse?.(o=>{ o.geometry?.dispose?.(); });
+      ch.traverse?.(o=>{
+        o.geometry?.dispose?.();
+        // materiales y sus texturas también ocupan memoria de la GPU
+        [].concat(o.material||[]).forEach(m=>{ Object.values(m).forEach(v=>v?.isTexture && v.dispose()); m.dispose?.(); });
+      });
       grupo.remove(ch);
     }
   }
@@ -159,6 +163,9 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
     envTex.dispose();
     bgTex.dispose();
     renderer.dispose();
+    // dispose() no libera el contexto WebGL: sin esto se acumulan y el navegador (máx. ~16)
+    // acaba cerrando el más antiguo, que es el del pasillo, y la escena principal se queda en negro
+    renderer.forceContextLoss();
   }
   function bucle(){
     if(destruido || !document.body.contains(canvas)){
