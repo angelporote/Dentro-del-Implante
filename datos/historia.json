@@ -5,11 +5,286 @@
     "Las 3 generaciones: bioinertes → bioactivos y reabsorbibles (Bioglass 45S5 de Hench, osteointegración de Brånemark) → regenerativos e inteligentes",
     "Definiciones de consenso: Chester 1986 y Chengdu 2018 (biomaterial, implante, prótesis, dispositivo médico)"
   ],
-  "conceptos": [],
-  "datos": [],
-  "hitos": [],
-  "normas": [],
-  "preguntas": [],
-  "fuentes": [],
-  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+  "conceptos": [
+    {
+      "titulo": "Biomaterial (definición de consenso)",
+      "definicion": "Material diseñado para adoptar una forma capaz de dirigir, mediante interacciones con sistemas vivos, el curso de cualquier procedimiento terapéutico o diagnóstico (Chengdu 2018; en Chester 1986, Williams lo definió como material no viable usado en un dispositivo médico destinado a interactuar con sistemas biológicos).",
+      "detalle": "Aunque el prefijo «bio-» sugiere vida u origen biológico, la mayoría de los biomateriales son sintéticos y no contienen organismos vivos.",
+      "ejemplo": "Titanio comercialmente puro en un implante dental, PMMA en una lente intraocular o PLA en una sutura absorbible."
+    },
+    {
+      "titulo": "Dispositivo médico / Producto sanitario",
+      "definicion": "Todo instrumento, aparato, implemento, máquina, artilugio, implante, reactivo in vitro o artículo relacionado destinado al diagnóstico, prevención, seguimiento, tratamiento o alivio de enfermedades o lesiones en el ser humano, cuya acción principal no sea farmacológica, inmunológica ni metabólica.",
+      "detalle": "En la traducción española del Reglamento europeo MDR (UE) 2017/745 se denomina «producto sanitario» para evitar confusiones con «dispositivo médico».",
+      "ejemplo": "Un stent coronario, un marcapasos, un bisturí quirúrgico o un software de diagnóstico."
+    },
+    {
+      "titulo": "Implante",
+      "definicion": "Dispositivo médico fabricado a partir de uno o más biomateriales que se coloca intencionadamente, total o parcialmente, dentro del cuerpo humano (Chengdu 2018).",
+      "detalle": "Exige colocación intencionada en el interior del cuerpo, pero NO exige reemplazar una parte anatómica.",
+      "ejemplo": "Un tornillo de fijación ósea, una placa de osteosíntesis o incluso una barra de piercing cumplen el criterio de estar dentro del cuerpo sin sustituir un órgano."
+    },
+    {
+      "titulo": "Prótesis",
+      "definicion": "Dispositivo que reemplaza o aumenta una parte del cuerpo.",
+      "detalle": "Exige sustituir o aumentar una estructura corporal, pero NO exige estar colocada dentro del cuerpo.",
+      "ejemplo": "Una dentadura removible es prótesis (pero no implante); una prótesis total de cadera es a la vez implante y prótesis."
+    },
+    {
+      "titulo": "Las tres generaciones de biomateriales",
+      "definicion": "Evolución filosófica del diseño de biomateriales: 1ª generación (bioinertes, décadas 1960–1970: no dañar, mínima respuesta tisular), 2ª generación (bioactivos y biodegradables, 1970–2000: inducir unión o reabsorción controlada) y 3ª generación (regenerativos e inteligentes, siglo XXI: estimular respuestas celulares y remodelado funcional del tejido).",
+      "detalle": "Según el esquema de Wagner/Ratner (2020), las generaciones conviven: muchos implantes actuales siguen usando materiales de 1ª generación combinados con recubrimientos o modificaciones superficiales de 2ª y 3ª generación.",
+      "ejemplo": "Vástago de Ti-6Al-4V (1ª gen.) recubierto de hidroxiapatita (2ª gen.) o andamios porosos biofuncionalizados con péptidos RGD (3ª gen.)."
+    },
+    {
+      "titulo": "Bioactividad (Hench original vs. actual)",
+      "definicion": "En la definición original de Larry Hench, un material bioactivo provoca una respuesta biológica específica en la interfaz que da lugar a la formación de un enlace químico directo con el tejido. En la definición actual, basta con que provoque o module una actividad biológica específica (sin exigir necesariamente un enlace físico).",
+      "detalle": "En vidrios bioactivos como el 45S5, el enlace con el hueso se produce gracias a la formación superficial de una capa de hidroxiapatita carbonatada (HCA).",
+      "ejemplo": "Vidrio bioactivo 45S5 (PerioGlas, NovaBone) o recubrimientos liberadores de fármacos en stents farmacoactivos."
+    },
+    {
+      "titulo": "Biodegradación",
+      "definicion": "Descomposición de un material producida dentro de un sistema biológico (Declaración de Chengdu 2019).",
+      "detalle": "Busca que el implante cumpla su función durante el tiempo mínimo necesario para la curación y luego se reabsorba en productos solubles no tóxicos (por ejemplo mediante hidrólisis en PLA/PGA), evitando una segunda cirugía de retirada.",
+      "ejemplo": "Suturas absorbibles de PLA/PGA o láminas craneales biodegradables de PLA para reconstrucción pediátrica."
+    }
+  ],
+  "datos": [
+    {
+      "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
+      "dispositivo": "Prótesis total de cadera",
+      "en_el_cuerpo": true,
+      "reemplaza_aumenta": true,
+      "clasificacion": "Implante y prótesis",
+      "explicacion": "Se implanta dentro del cuerpo y sustituye la articulación femoral-acetabular."
+    },
+    {
+      "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
+      "dispositivo": "Dentadura removible",
+      "en_el_cuerpo": false,
+      "reemplaza_aumenta": true,
+      "clasificacion": "Prótesis (no implante)",
+      "explicacion": "Reemplaza piezas dentales ausentes, pero no se coloca quirúrgicamente dentro del tejido."
+    },
+    {
+      "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
+      "dispositivo": "Tornillo de osteosíntesis",
+      "en_el_cuerpo": true,
+      "reemplaza_aumenta": false,
+      "clasificacion": "Implante (no prótesis)",
+      "explicacion": "Se coloca dentro del hueso para fijar fragmentos, pero no reemplaza ninguna parte anatómica."
+    },
+    {
+      "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
+      "dispositivo": "Barra de piercing",
+      "en_el_cuerpo": true,
+      "reemplaza_aumenta": false,
+      "clasificacion": "Implante (no prótesis)",
+      "explicacion": "Atraviesa intencionadamente el tejido, aunque no tiene finalidad médica terapéutica ni reemplaza anatomía."
+    },
+    {
+      "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
+      "dispositivo": "Bisturí quirúrgico",
+      "en_el_cuerpo": false,
+      "reemplaza_aumenta": false,
+      "clasificacion": "Dispositivo médico (instrumental)",
+      "explicacion": "Se usa en procedimientos quirúrgicos, pero no permanece implantado ni reemplaza tejidos."
+    },
+    {
+      "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
+      "dispositivo": "Lente intraocular (IOL) pseudofáquica",
+      "en_el_cuerpo": true,
+      "reemplaza_aumenta": true,
+      "clasificacion": "Implante y prótesis",
+      "explicacion": "Se aloja dentro del ojo y sustituye al cristalino natural opacificado por cataratas."
+    }
+  ],
+  "hitos": [
+    {
+      "fecha": "Prehistoria y Antigüedad (~7000 a. C. – 600 d. C.)",
+      "titulo": "Primeras suturas e implantes dentales empíricos",
+      "protagonista": "Civilizaciones neolítica, egipcia, romana y maya",
+      "material": "Lino, catgut, alambre de oro/plata, hierro forjado y nácar de concha marina",
+      "descripcion": "Se cerraban heridas con lino, tendones o mandíbulas de hormigas; los mayas (~600 d. C.) tallaron dientes en concha de nácar que mostraron integración ósea (la conversión superficial del CaCO₃ en hidroxiapatita pudo favorecerlo). Todo era empírico, sin esterilización ni conocimiento biológico.",
+      "generacion": "Prehistoria / Empirismo"
+    },
+    {
+      "fecha": "1829 – 1937",
+      "titulo": "Primeros ensayos de reactividad tisular en metales",
+      "protagonista": "H. S. Levert (1829), A. Zierold (1924), Venable y Stuck (1937)",
+      "material": "Oro, platino, acero inoxidable 18-8 con Mo y Vitallium (Co–Cr–Mo)",
+      "descripcion": "Levert evaluó hilos metálicos en perros (el platino mostró gran tolerancia). Zierold comprobó que el hierro corroía el hueso circundante mientras las aleaciones Co–Cr–Mo (Stellite / Vitallium) resistían la corrosión y las cargas mecánicas.",
+      "generacion": "Pre-moderna"
+    },
+    {
+      "fecha": "1943 – 1960",
+      "titulo": "El riñón artificial y el acceso vascular crónico",
+      "protagonista": "Willem J. Kolff, Belding Scribner y Wayne Quinton",
+      "material": "Celofán (tripas de celulosa), Teflon, Dacron y silicona",
+      "descripcion": "En 1943, en la Holanda ocupada, Kolff construyó el primer dializador de tambor con 40 metros de celofán. En 1960, el shunt arteriovenoso de Scribner y Quinton (tubos de Teflon, manguito de Dacron y silicona) permitió la hemodiálisis crónica.",
+      "generacion": "Era del cirujano-héroe"
+    },
+    {
+      "fecha": "1949",
+      "titulo": "Primera lente intraocular de PMMA",
+      "protagonista": "Sir Harold Ridley",
+      "material": "Polimetilmetacrilato (PMMA, Perspex)",
+      "descripcion": "Al observar que fragmentos de las cabinas de PMMA de cazas Spitfire incrustados en ojos de pilotos de la II Guerra Mundial permanecían sin inflamación crónica, Ridley fabricó e implantó la primera lente intraocular tras cirugía de cataratas.",
+      "generacion": "Era del cirujano-héroe / 1ª gen."
+    },
+    {
+      "fecha": "1947 – 1952",
+      "titulo": "Primeros injertos vasculares sintéticos",
+      "protagonista": "Arthur Voorhees",
+      "material": "Seda, tela de paracaídas Vinyon-N y posteriormente Dacron (PET) / ePTFE",
+      "descripcion": "Tras observar en autopsias que el tejido recubría suturas de seda dentro de vasos sanguíneos, Voorhees cosió tubos porosos con tela de paracaídas en la máquina de coser de su esposa y logró reemplazar arterias en humanos.",
+      "generacion": "Era del cirujano-héroe"
+    },
+    {
+      "fecha": "1952 – 1960",
+      "titulo": "Primeras válvulas cardíacas mecánicas y marcapasos implantables",
+      "protagonista": "Charles Hufnagel (1952), Albert Starr y Lowell Edwards (1960), Wilson Greatbatch y W. M. Chardack (1959)",
+      "material": "PMMA, bola de silicona, jaula de acero inoxidable, encapsulado epoxi",
+      "descripcion": "Hufnagel implantó una válvula de bola en jaula antes de la máquina corazón-pulmón; Starr y Edwards lograron supervivencias prolongadas. En 1959, Greatbatch y Chardack crearon el primer marcapasos totalmente implantable con transistores de bajo consumo.",
+      "generacion": "Era del cirujano-héroe"
+    },
+    {
+      "fecha": "1958 – 1961",
+      "titulo": "Artroplastia total de cadera de baja fricción",
+      "protagonista": "Sir John Charnley y Dennis Smith",
+      "material": "Vástago metálico + cotilo de UHMWPE + cemento óseo de PMMA",
+      "descripcion": "Tras fracasar con el PTFE por desgaste masivo, Charnley adoptó el polietileno de ultra alto peso molecular (UHMWPE) y el cemento acrílico dental PMMA (introducido por Dennis Smith), estableciendo el diseño moderno de prótesis de cadera.",
+      "generacion": "1ª generación (bioinertes)"
+    },
+    {
+      "fecha": "1952 – 1976",
+      "titulo": "Descubrimiento de la osteointegración del titanio",
+      "protagonista": "Per-Ingvar Brånemark",
+      "material": "Titanio comercialmente puro",
+      "descripcion": "Al intentar retirar cámaras ópticas roscadas de titanio implantadas en hueso de conejo, Brånemark comprobó que el hueso se había unido íntimamente al metal. En los años 60 introdujo el término y en 1976 definió la osteointegración como el contacto directo hueso-implante sin tejido fibroso intermedio.",
+      "generacion": "Transición 1ª → 2ª gen."
+    },
+    {
+      "fecha": "1960 – 1969",
+      "titulo": "Hidrogeles blandos, carbono pirolítico y el primer vidrio bioactivo (45S5)",
+      "protagonista": "Otto Wichterle (1960), Jack Bokros / Vincent Gott (1967), Larry L. Hench (1969)",
+      "material": "PHEMA, carbono pirolítico y Bioglass 45S5",
+      "descripcion": "Wichterle convirtió el PHEMA en hidrogeles elásticos para lentes blandas. Bokros y Gott descubrieron por accidente la baja trombogenicidad del carbono pirolítico. En 1969, Larry Hench diseñó el Bioglass 45S5, el primer material sintético capaz de unirse químicamente al hueso sin cápsula fibrosa.",
+      "generacion": "2ª generación (bioactivos)"
+    },
+    {
+      "fecha": "1966 – 1993",
+      "titulo": "Polímeros biodegradables e ingeniería de tejidos",
+      "protagonista": "R. K. Kulkarni (1966), E. Schmitt y J. Frazza (1971), Robert Langer y Joseph Vacanti (1993)",
+      "material": "Ácido poliláctico (PLA), ácido poliglicólico (PGA) y copolímeros PLGA",
+      "descripcion": "De las primeras suturas sintéticas absorbibles y fijaciones reabsorbibles se dio el salto en los años 90 a los soportes porosos (scaffolds) combinados con células y señales bioquímicas para regenerar tejido funcional.",
+      "generacion": "2ª → 3ª generación (regenerativos)"
+    },
+    {
+      "fecha": "1986 y 2018",
+      "titulo": "Conferencias de consenso de Chester y Chengdu",
+      "protagonista": "Prof. David Williams, ESB (Chester 1986) e IUSBSE (Chengdu 2018)",
+      "material": "Marco conceptual internacional de la ciencia de biomateriales",
+      "descripcion": "Establecieron las definiciones oficiales de biomaterial, biocompatibilidad, implante y biodegradación para unificar el lenguaje de ingenieros, biólogos y médicos en los siglos XX y XXI.",
+      "generacion": "3ª generación / Actualidad"
+    }
+  ],
+  "normas": [
+    {
+      "codigo": "Conferencia de Consenso de Chester (1986)",
+      "titulo": "Definiciones en biomateriales (ESB)",
+      "alcance": "Auspiciada por la Sociedad Europea de Biomateriales y organizada por David Williams; fijó las definiciones clásicas de biomaterial y biocompatibilidad.",
+      "clave": "Biocompatibilidad deja de ser una lista de «no tóxicos» y pasa a depender de la función y del sitio de aplicación."
+    },
+    {
+      "codigo": "Conferencia de Consenso de Chengdu (2018)",
+      "titulo": "Definiciones de biomateriales para el siglo XXI (IUSBSE)",
+      "alcance": "Actualización internacional para incluir medicina regenerativa, ingeniería tisular, nanomateriales e implantes bioactivos/biodegradables.",
+      "clave": "Define implante, biomaterial contemporáneo y biodegradación."
+    }
+  ],
+  "preguntas": [
+    {
+      "pregunta": "¿Por qué una barra de piercing o un tornillo de fijación ósea se consideran implantes según la definición de consenso, pero no prótesis?",
+      "opciones": [
+        "Porque se colocan intencionadamente dentro del cuerpo, pero no reemplazan ni aumentan ninguna parte anatómica",
+        "Porque están fabricados exclusivamente con materiales bioactivos de segunda generación",
+        "Porque solo las prótesis requieren marcado CE europeo",
+        "Porque las prótesis siempre están hechas de polímeros y los implantes de metales"
+      ],
+      "correcta": 0,
+      "explicacion": "Un implante exige colocación intencionada dentro del cuerpo (total o parcial), mientras que una prótesis exige reemplazar o aumentar una parte del cuerpo (puede ser removible y no ser implante)."
+    },
+    {
+      "pregunta": "¿Qué hecho histórico inspiró a Sir Harold Ridley a inventar la primera lente intraocular de PMMA en 1949?",
+      "opciones": [
+        "La observación de fragmentos de cabinas de aviones Spitfire tolerados en los ojos de pilotos sin inflamación crónica",
+        "El recubrimiento con hidroxiapatita de lentes de vidrio empleadas en microscopía",
+        "El uso de celofán en los primeros dializadores renales de Willem Kolff",
+        "El descubrimiento accidental de la osteointegración en hueso de conejo"
+      ],
+      "correcta": 0,
+      "explicacion": "Ridley comprobó que los restos de Perspex (PMMA) de las cúpulas de aviones de combate cicatrizaban sin rechazo ocular, demostrando en humanos el concepto moderno de tolerancia biocompatible."
+    },
+    {
+      "pregunta": "¿Qué aportó principalmente el Bioglass 45S5 desarrollado por Larry Hench en 1969?",
+      "opciones": [
+        "Fue el primer material sintético capaz de formar una unión química directa con el hueso mediante una capa de hidroxiapatita carbonatada (HCA), sin cápsula fibrosa",
+        "Fue el primer polímero elástico usado en prótesis de mama",
+        "Fue la primera aleación metálica con memoria de forma para stents coronarios",
+        "Sustituyó al PTFE en las prótesis de cadera de John Charnley"
+      ],
+      "correcta": 0,
+      "explicacion": "Hench inauguró la 2ª generación (materiales bioactivos): al contactar con fluidos fisiológicos, el 45S5 desarrolla en superficie una capa de HCA que enlaza directamente con el tejido óseo."
+    },
+    {
+      "pregunta": "¿Cuál de las siguientes afirmaciones sobre la palabra «biomaterial» es correcta?",
+      "opciones": [
+        "La gran mayoría de los biomateriales son sintéticos y no contienen organismos vivos",
+        "Todo biomaterial debe ser de origen natural o biológico",
+        "Un biomaterial siempre debe fabricarse mediante procesos ecológicos",
+        "El término se limita únicamente a materiales biodegradables de tercera generación"
+      ],
+      "correcta": 0,
+      "explicacion": "Aunque el prefijo «bio-» puede sugerir vida o ecología, la mayoría de los biomateriales clínicos son metales, cerámicas o polímeros sintéticos sin células vivas."
+    },
+    {
+      "pregunta": "¿Quién introdujo la artroplastia total de cadera de baja fricción combinando UHMWPE y cemento óseo de PMMA?",
+      "opciones": [
+        "Sir John Charnley (con la colaboración de Dennis Smith para el cemento de PMMA)",
+        "Per-Ingvar Brånemark",
+        "Arthur Voorhees",
+        "Charles Hufnagel"
+      ],
+      "correcta": 0,
+      "explicacion": "Charnley sustituyó en 1961 el cotilo de PTFE (que fallaba por desgaste) por UHMWPE y adoptó el cemento acrílico PMMA de uso dental gracias a Dennis Smith."
+    },
+    {
+      "pregunta": "¿Cuál es la diferencia entre la definición original de material bioactivo de Hench y la definición actual?",
+      "opciones": [
+        "La actual solo exige provocar o modular una actividad biológica específica; ya no exige formar un enlace físico directo con el tejido",
+        "La original se aplicaba solo a polímeros y la actual solo a metales",
+        "La actual exige que el material sea completamente bioinerte",
+        "No hay diferencia; ambas definiciones exigen la formación de una capa de HCA"
+      ],
+      "correcta": 0,
+      "explicacion": "Hoy se consideran bioactivos también los recubrimientos liberadores de fármacos (como en stents farmacoactivos) o superficies funcionalizadas que modulan la respuesta celular sin soldarse al hueso."
+    },
+    {
+      "pregunta": "¿Qué evento impulsó el paso de materiales «prestados» de la industria a biomateriales diseñados específicamente a partir de los años 60?",
+      "opciones": [
+        "La insuficiencia de plásticos y metales comerciales frente a trombosis, desgaste o lixiviación de aditivos, dando paso a siliconas médicas, poliuretanos segmentados, PyC, hidrogeles y vidrios bioactivos",
+        "La prohibición total de usar metales en ortopedia tras 1960",
+        "La aparición del Reglamento europeo MDR 2017/745 en 1965",
+        "El abandono definitivo de los materiales bioinertes en la clínica"
+      ],
+      "correcta": 0,
+      "explicacion": "En la era del cirujano-héroe se adaptaban materiales industriales (Dacron, Teflon, PMMA). Desde los 60 se optimizaron materiales para el entorno biológico, aunque muchos bioinertes siguen vigentes."
+    }
+  ],
+  "fuentes": [
+    "Wagner, W. R., Sakiyama-Elbert, S. E., Zhang, G., & Yaszemski, M. J. (Eds.). (2020). Biomaterials Science: An Introduction to Materials in Medicine (4th ed.). Academic Press / Elsevier. Caps. 1.1.1 y 1.1.2.",
+    "Apuntes de clase UVigo (Curso 2026-2027). Biocompatibilidad y comportamiento mecánico de materiales en implantología — Tema 1: Fundamentos de implantología.",
+    "Guía docente oficial de Biomateriales (3º Grado en Ingeniería Biomédica, UVigo) — Tema 1."
+  ]
 }

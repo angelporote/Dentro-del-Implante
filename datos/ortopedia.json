@@ -6,11 +6,170 @@
     "Osteosíntesis: estabilidad, micromovimiento y dinamización; metálica frente a biodegradable (PLA/PGA)",
     "Cajas intersomáticas (Ti poroso frente a PEEK) e implantes dentales (Ti frente a ZrO₂)"
   ],
-  "conceptos": [],
-  "datos": [],
-  "hitos": [],
-  "normas": [],
-  "preguntas": [],
-  "fuentes": [],
-  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+  "conceptos": [
+    {
+      "titulo": "Prótesis de cadera: modalidades y fijación al hueso",
+      "definicion": "Sustituye la articulación entre cabeza femoral y acetábulo en fracturas, artrosis u osteosarcoma. Existen prótesis totales (4 elementos: vástago, cabeza femoral, inserto y cotilo), parciales (sin cotilo), de revisión (modulares y más largas) y de resuperficialización (capuchón metálico para pacientes jóvenes).",
+      "detalle": "Fijación cementada (PMMA): sujeción inmediata independiente de la calidad ósea (ideal en osteoporosis severa o recambios), aunque el cemento puede degenerar con los años. Fijación no cementada: recubrimientos porosos y/o bioactivos (HA) para osteointegración en pacientes con buena calidad ósea.",
+      "ejemplo": "Vástago en acero inoxidable o Ti-6Al-4V; par articular Metal–Polietileno, Cerámica–Cerámica, Cerámica–Polietileno o Metal–Policarbonato uretano."
+    },
+    {
+      "titulo": "Prótesis de rodilla y asignación exacta de materiales",
+      "definicion": "Reemplaza las superficies articulares de fémur, tibia y opcionalmente rótula (total, unicompartimental o de revisión con vástagos largos).",
+      "detalle": "Asignación clínica estándar: bandeja tibial de Ti-6Al-4V; componente femoral de Co-Cr (mayor dureza y resistencia al desgaste); inserto articular y botón rotuliano de UHMWPE; cemento de PMMA; recubrimiento bioactivo de hidroxiapatita (HA) y recubrimientos antifricción multicapa (CrN–CrC–ZrN, TiNbN o ZrO₂ sobre Zr).",
+      "ejemplo": "Una prótesis unicompartimental sustituye solo la mitad afectada de la articulación."
+    },
+    {
+      "titulo": "Cascada de osteólisis inducida por desgaste de UHMWPE",
+      "definicion": "Principal causa de aflojamiento aséptico a largo plazo en prótesis articulares.",
+      "detalle": "Secuencia en 4 pasos: 1) Desgaste del UHMWPE por fricción con liberación de partículas. 2) Activación inflamatoria de macrófagos y células gigantes. 3) Estimulación de osteoclastos que reabsorben hueso periprotésico (osteólisis). 4) Pérdida de soporte óseo y aflojamiento. La clave no es la química del polímero sino la tasa de liberación y el tamaño/forma de las partículas.",
+      "ejemplo": "Equilibrio crítico entre propiedades mecánicas y resistencia al desgaste."
+    },
+    {
+      "titulo": "Osteosíntesis: estrategia biomecánica en 3 fases",
+      "definicion": "Dispositivos temporales de estabilización de fracturas (pines/clavos/tornillos, placas y clavos intramedulares encerrojados).",
+      "detalle": "La rigidez debe adaptarse a la consolidación: 1ª fase inicial → estabilidad absoluta (evitar movimiento); 2ª fase de fibrocartílago → carga axial suave y micromovimiento cíclico; 3ª fase de callo óseo y remodelación → carga progresiva (dinamización). Pueden ser metálicos (316L, Co-Cr, Ti-6Al-4V) o biodegradables (PLA, PGA, composites PLA+HA).",
+      "ejemplo": "Los implantes biodegradables transfieren carga gradualmente y evitan una segunda cirugía, pero se restringen a baja solicitación mecánica."
+    },
+    {
+      "titulo": "Cajas intersomáticas para fusión vertebral: Titanio vs. PEEK",
+      "definicion": "Implantes huecos colocados entre dos vértebras para restaurar altura discal (liberando raíces nerviosas), aportar injerto óseo y lograr artrodesis (fusión rígida).",
+      "detalle": "Cajas metálicas (Ti poroso): superficie muy rugosa con mejor estabilización primaria e integración, pero más rígidas que el hueso (riesgo de hundimiento/fractura en osteoporosis) y producen artefactos en RMN. Cajas de PEEK: módulo elástico similar al hueso y radiotransparentes (con marcadores metálicos para RX), pero menor rugosidad e integración ósea más lenta.",
+      "ejemplo": "Cajas cervicales (pequeñas), lumbares posteriores/transforaminales (rectas o tipo banana, cuidando raíces nerviosas) y lumbares anteriores (mayores y más estables)."
+    },
+    {
+      "titulo": "Implantes dentales: estructura y materiales",
+      "definicion": "Raíz artificial roscada que se osteointegra en el hueso maxilar o mandibular para soportar un pilar y una corona protésica.",
+      "detalle": "Se distinguen el implante dental (anclaje intraóseo) y la prótesis dental (corona/puente que sustituye la pieza). Deben lograr osteointegración en hueso y sellado gingival frente a bacterias.",
+      "ejemplo": "Metálicos de titanio comercialmente puro (Ticp) y Ti-6Al-4V; cerámicos de óxido de circonio (circonia, ZrO₂) por su color blanco estético y excelente biocompatibilidad."
+    }
+  ],
+  "datos": [
+    {
+      "dispositivo": "Cadera — Par Metal–Polietileno",
+      "ventajas": "Mayor experiencia clínica y fiabilidad",
+      "inconvenientes": "Mayor desgaste de PE → partículas osteolíticas; el PE grueso obliga a cabezas pequeñas (mayor riesgo de luxación)."
+    },
+    {
+      "dispositivo": "Cadera — Par Cerámica–Cerámica",
+      "ventajas": "Dureza + hidrofilia → desgaste casi nulo; permite cabezas femorales de mayor diámetro",
+      "inconvenientes": "Mayor coste y riesgo de fractura por fragilidad (alternativa: metal recubierto de cerámica)."
+    },
+    {
+      "dispositivo": "Cadera — Par Cerámica–Polietileno",
+      "ventajas": "Compromiso equilibrado: menos desgaste que M–PE y menor riesgo de fractura que C–C",
+      "inconvenientes": "Solución intermedia en coste, desgaste y tenacidad."
+    },
+    {
+      "dispositivo": "Cadera — Par Metal–Policarbonato uretano (PCU)",
+      "ventajas": "Permite cabezas de gran diámetro y elasticidad muy parecida al cartílago natural",
+      "inconvenientes": "Menor historial clínico a largo plazo."
+    },
+    {
+      "dispositivo": "Rodilla — Asignación por pieza",
+      "ventajas": "Bandeja tibial (Ti-6Al-4V), cóndilos femorales (Co-Cr), inserto y rótula (UHMWPE), cemento (PMMA), recubrimiento (HA)",
+      "inconvenientes": "Riesgo de osteólisis si aumenta el desgaste del UHMWPE."
+    },
+    {
+      "dispositivo": "Columna — Titanio poroso vs. PEEK",
+      "ventajas": "Ti poroso: mejor estabilización primaria e integración. PEEK: módulo similar al hueso, transparente en RX/RMN",
+      "inconvenientes": "Ti: mayor rigidez (riesgo en osteoporosis) y distorsión en RMN. PEEK: integración ósea más difícil."
+    }
+  ],
+  "hitos": [
+    {
+      "fecha": "1958 – 1961",
+      "titulo": "Consolidación de la prótesis total de cadera",
+      "protagonista": "John Charnley y Dennis Smith",
+      "material": "Acero / Ti + UHMWPE + PMMA",
+      "descripcion": "Sistematización del par metal–polietileno y fijación cementada con PMMA."
+    },
+    {
+      "fecha": "1968 – 1972",
+      "titulo": "Primeras prótesis totales modernas de rodilla",
+      "protagonista": "Frank Gunston y John Insall",
+      "material": "Co-Cr + UHMWPE",
+      "descripcion": "Adaptación de la tecnología de artroplastia de baja fricción a la biomecánica compleja de la rodilla."
+    }
+  ],
+  "normas": [
+    {
+      "codigo": "ISO 7206",
+      "titulo": "Ensayos de fatiga y durabilidad en prótesis parciales y totales de cadera",
+      "alcance": "Evalúa la resistencia a fatiga de vástagos femorales y cuellos bajo millones de ciclos de carga fisiológica.",
+      "clave": "Complementa los requisitos mecánicos del Reglamento MDR."
+    }
+  ],
+  "preguntas": [
+    {
+      "pregunta": "¿En qué tipo de paciente está indicada preferentemente una prótesis de cadera con fijación cementada (PMMA) frente a una no cementada?",
+      "opciones": [
+        "En pacientes con osteoporosis severa, fracturas o recambios protésicos que requieren sujeción inmediata sin depender de la calidad ósea",
+        "Exclusivamente en pacientes jóvenes deportistas con excelente densidad ósea",
+        "Solo en implantes dentales estéticos de circona",
+        "Cuando se quiere que la prótesis se reabsorba por hidrólisis en 6 meses"
+      ],
+      "correcta": 0,
+      "explicacion": "El cemento de PMMA rellena el canal y fragua rápido permitiendo movilización inmediata aunque el hueso sea osteoporótico; la fijación no cementada depende de la capacidad osteointegradora del hueso del paciente."
+    },
+    {
+      "pregunta": "En la cascada de osteólisis periprotésica por desgaste de UHMWPE, ¿qué factores determinan la intensidad de la respuesta inflamatoria y el aflojamiento?",
+      "opciones": [
+        "La tasa de liberación de residuos de desgaste y la forma y dimensiones de las partículas",
+        "Exclusivamente la fórmula química del polietileno puro sin importar cuántas partículas se liberen",
+        "La conductividad eléctrica del inserto polimérico",
+        "La presencia de vitamina E antioxidante en el polímero"
+      ],
+      "correcta": 0,
+      "explicacion": "Como destacan los apuntes, la química específica del polímero no es el factor determinante del proceso inflamatorio: mandan la tasa de desgaste y el tamaño/morfología de las partículas que fagocitan los macrófagos."
+    },
+    {
+      "pregunta": "En una prótesis total de rodilla estándar, ¿qué material corresponde a la parte tibial, la parte femoral y el inserto articular, respectivamente?",
+      "opciones": [
+        "Ti-6Al-4V (tibial), Co-Cr (femoral) y UHMWPE (inserto)",
+        "PMMA (tibial), alúmina (femoral) y PEEK (inserto)",
+        "Co-Cr (tibial), Ti-6Al-4V (femoral) y PLA (inserto)",
+        "Zirconia (tibial), acero 316L (femoral) y silicona (inserto)"
+      ],
+      "correcta": 0,
+      "explicacion": "La bandeja tibial es de Ti-6Al-4V, los cóndilos femorales de Co-Cr (más duro frente al desgaste) y el inserto articular de UHMWPE."
+    },
+    {
+      "pregunta": "¿Qué ventaja aporta una caja intersomática vertebral de PEEK frente a una de aleación de titanio?",
+      "opciones": [
+        "Módulo de elasticidad similar al del hueso y transparencia en radiografía/RMN (con marcadores metálicos)",
+        "Superficie mucho más rugosa y mejor estabilización primaria inmediata",
+        "Mayor dureza superficial para penetrar vértebras osteoporóticas",
+        "Capacidad de desaparecer completamente por corrosión en 12 semanas"
+      ],
+      "correcta": 0,
+      "explicacion": "El PEEK (~3,2–4 GPa) evita el exceso de rigidez del titanio y no distorsiona la imagen de resonancia magnética, aunque su superficie menos rugosa dificulta la integración ósea primaria."
+    },
+    {
+      "pregunta": "¿En qué consiste la «dinamización» de una fractura durante la osteosíntesis?",
+      "opciones": [
+        "En aplicar carga progresiva al foco en la fase de osificación y remodelación del callo óseo, tras una fase inicial de estabilidad absoluta",
+        "En sustituir un clavo intramedular metálico por un stent de Nitinol",
+        "En impedir cualquier carga sobre el hueso durante toda la vida del paciente",
+        "En inyectar cemento de PMMA en el cartílago articular"
+      ],
+      "correcta": 0,
+      "explicacion": "La estrategia biomecánica evoluciona desde estabilidad absoluta (fase inicial) → micromovimiento cíclico suave (fibrocartílago) → carga progresiva o dinamización (callo óseo y remodelación)."
+    },
+    {
+      "pregunta": "¿Cuál es la principal desventaja del par articular Metal–Polietileno frente a Cerámica–Cerámica en prótesis de cadera?",
+      "opciones": [
+        "Mayor desgaste con partículas osteolíticas y necesidad de inserto grueso que obliga a cabezas femorales más pequeñas (mayor riesgo de luxación)",
+        "Fragilidad extrema con rotura frágil de la cabeza metálica ante pequeños defectos",
+        "Imposibilidad de utilizar cemento óseo PMMA en el vástago",
+        "Calcificación inmediata de la cápsula articular"
+      ],
+      "correcta": 0,
+      "explicacion": "El par Cerámica–Cerámica ofrece desgaste casi nulo y permite cabezas más grandes (más estables frente a luxación), aunque a mayor coste y con riesgo de fractura frágil."
+    }
+  ],
+  "fuentes": [
+    "Apuntes de clase UVigo (Curso 2026-2027). Biocompatibilidad y comportamiento mecánico de materiales en implantología — Tema 2.1.4 y 2.1.5.",
+    "Wagner, W. R., et al. (Eds.). (2020). Biomaterials Science (4th ed.). Elsevier. Chapters 2.5.4 (Orthopedic) y 2.5.5 (Dental)."
+  ]
 }

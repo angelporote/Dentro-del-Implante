@@ -7,11 +7,318 @@
     "Comportamiento mecánico: elasticidad y anisotropía del hueso frente al metal, apantallamiento de tensiones, viscoelasticidad, fractura y fatiga",
     "Corrosión, tribología y degradación"
   ],
-  "conceptos": [],
-  "datos": [],
-  "hitos": [],
-  "normas": [],
-  "preguntas": [],
-  "fuentes": [],
-  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+  "conceptos": [
+    {
+      "titulo": "Metales biomédicos y pasivación",
+      "definicion": "Materiales cristalinos con enlace metálico que aportan alta resistencia estática, tenacidad y resistencia a fatiga para soportar cargas fisiológicas.",
+      "detalle": "Su durabilidad química en el medio corporal (rico en Cl⁻ y proteínas) depende de una fina capa superficial de óxido pasivo (Cr₂O₃ en 316L y Co-Cr; TiO₂ en titanio). Si esta película se rompe por micromovimiento o desgaste, aparecen corrosión por picadura, grieta o fretting.",
+      "ejemplo": "Ti-6Al-4V en vástagos femorales, acero 316L en placas temporales, Co-Cr-Mo en cóndilos de rodilla, Nitinol en stents autoexpandibles y aleaciones de Mg en fijación reabsorbible."
+    },
+    {
+      "titulo": "Nitinol (aleación con memoria de forma y superelasticidad)",
+      "definicion": "Aleación casi equiatómica de níquel y titanio (Ni-Ti) capaz de experimentar una transformación martensítica reversible inducida por temperatura o tensión mecánica.",
+      "detalle": "Presenta dos módulos aparentes según su fase (martensita ~28–41 GPa; austenita ~75–83 GPa) y recupera deformaciones muy superiores a las de metales convencionales, ideal para introducirse plegado por un catéter y expandirse al alcanzar 37 °C.",
+      "ejemplo": "Stents autoexpandibles periféricos, arcos de ortodoncia y grapas quirúrgicas."
+    },
+    {
+      "titulo": "Biocerámicas: inertes, bioactivas y reabsorbibles",
+      "definicion": "Sólidos inorgánicos con enlaces iónicos/covalentes muy fuertes: presentan dureza extrema, excelente resistencia al desgaste y a compresión, pero baja tenacidad a fractura (fragilidad).",
+      "detalle": "Se dividen en bioinertes (Al₂O₃, ZrO₂ y carbono pirolítico, usadas en pares de fricción y válvulas), bioactivas/reactivas en superficie (hidroxiapatita sintética y Bioglass 45S5, que enlazan con el hueso) y reabsorbibles/cementos (fosfatos tricálcicos y cementos de fosfato cálcico que son sustituidos por hueso nuevo).",
+      "ejemplo": "Cabezas femorales de alúmina o alúmina-circona, implantes dentales de ZrO₂ y recubrimientos de HA."
+    },
+    {
+      "titulo": "Polímeros médicos: no degradables y biodegradables",
+      "definicion": "Macromoléculas orgánicas de cadena larga cuyas propiedades mecánicas y térmicas dependen de su peso molecular, cristalinidad, temperatura de transición vítrea (Tg) y grado de reticulación.",
+      "detalle": "Los bioestables (UHMWPE, PMMA, PEEK, silicona/PDMS, ePTFE, PET/Dacron, poliuretanos) permanecen a largo plazo como cojinetes, cementos, cajas vertebrales o injertos. Los biodegradables (PLA, PGA, PLGA) se escinden principalmente por hidrólisis en ácido láctico/glicólico solubles y se eliminan tras cumplir su función.",
+      "ejemplo": "UHMWPE altamente reticulado con vitamina E en insertos de cadera/rodilla; PEEK en cajas cervicales; PLA/PGA en suturas y placas pediátricas."
+    },
+    {
+      "titulo": "Compuestos (composites) biomédicos",
+      "definicion": "Combinación de dos o más materiales (matriz + fase de refuerzo) para lograr propiedades mecánicas y biológicas que ninguno alcanza por separado.",
+      "detalle": "Permiten ajustar el módulo de elasticidad para acercarlo al hueso o combinar biodegradabilidad con bioactividad ósea (osteoconducción).",
+      "ejemplo": "Composites PLA + hidroxiapatita (HA) en osteosíntesis biodegradable, o PEEK reforzado con fibra de carbono (CFR-PEEK) en columna y trauma."
+    },
+    {
+      "titulo": "Apantallamiento de tensiones (Stress Shielding)",
+      "definicion": "Fenómeno mecánico por el que un implante mucho más rígido que el hueso circundante (E_implante >> E_hueso) absorbe la mayor parte de la carga y descarga al hueso vecino.",
+      "detalle": "Según la ley de Wolff, el hueso responde a la falta de estímulo mecánico reabsorbiéndose (disminución de densidad ósea), lo que puede provocar aflojamiento o fractura periprotésica. Un vástago de Ti-6Al-4V (110 GPa) tiene la mitad de rigidez que Co-Cr (210–230 GPa), pero sigue siendo ~6 veces más rígido que el hueso cortical.",
+      "ejemplo": "Las cajas intersomáticas de PEEK (3,2–4,0 GPa) reducen el apantallamiento frente a las de aleación de titanio, aunque presentan menor estabilización primaria por superficie menos rugosa."
+    },
+    {
+      "titulo": "Anisotropía del hueso y viscoelasticidad",
+      "definicion": "A diferencia de la mayoría de metales y cerámicas (isótropos), el hueso es anisótropo (sus propiedades dependen de la dirección de la carga respecto a las osteonas) y los tejidos blandos, ligamentos y polímeros exhiben viscoelasticidad (respuesta dependiente del tiempo y velocidad de carga).",
+      "detalle": "La viscoelasticidad conlleva fenómenos de fluencia (creep bajo carga constante), relajación de tensiones e histéresis en carga cíclica.",
+      "ejemplo": "El hueso cortical resiste más a compresión longitudinal que transversal; el UHMWPE y las siliconas muestran comportamiento viscoelástico."
+    },
+    {
+      "titulo": "Fatiga, fractura, corrosión y tribología",
+      "definicion": "Modos de fallo a largo plazo bajo solicitaciones cíclicas y ambiente fisiológico: la fatiga produce iniciación y propagación de grietas por debajo de la resistencia estática; la tribología estudia fricción, lubricación y desgaste.",
+      "detalle": "Una prótesis de cadera soporta del orden de 1 millón de ciclos/año y una válvula cardíaca late ~40 millones de veces/año. El diseño debe evitar geometrías concentradoras de tensiones y controlar la tasa y tamaño de las partículas de desgaste.",
+      "ejemplo": "Las partículas de desgaste de UHMWPE desencadenan osteólisis mediada por macrófagos; los pares metal-metal generan liberación de iones y riesgo de metalosis."
+    }
+  ],
+  "datos": [
+    {
+      "familia": "Tejido biológico (referencia)",
+      "nombre": "Hueso cortical humano",
+      "densidad_g_cm3": "1,8 – 2,1",
+      "modulo_E_GPa": "10 – 25",
+      "resistencia_MPa": "100 – 150 (tracción)",
+      "usos": ["Referencia estructural del esqueleto"],
+      "ventajas": ["Anisótropo y vivo", "Capacidad de remodelado según carga (ley de Wolff)"],
+      "limitaciones": ["Sus propiedades varían con edad, dirección y porosidad"]
+    },
+    {
+      "familia": "Metal",
+      "nombre": "Acero inoxidable 316L",
+      "densidad_g_cm3": "~8,0",
+      "modulo_E_GPa": "190 – 200",
+      "resistencia_MPa": "530 – 1160",
+      "usos": ["Placas y tornillos temporales de osteosíntesis", "Vástagos cementados", "Stents convencionales"],
+      "ventajas": ["Bajo coste", "Alta resistencia y buena conformabilidad"],
+      "limitaciones": ["Riesgo de corrosión por picadura/grieta a muy largo plazo", "Muy rígido frente al hueso", "Liberación de Ni"]
+    },
+    {
+      "familia": "Metal",
+      "nombre": "Aleación Cobalto–Cromo–Molibdeno (Co-Cr-Mo)",
+      "densidad_g_cm3": "8,3 – 9,2",
+      "modulo_E_GPa": "210 – 230",
+      "resistencia_MPa": "600 – 1200+",
+      "usos": ["Cóndilos femorales de prótesis de rodilla", "Cabezas femorales metálicas", "Anillos de válvulas y stents"],
+      "ventajas": ["Dureza y resistencia al desgaste muy altas", "Excelente resistencia a fatiga y corrosión"],
+      "limitaciones": ["Módulo muy elevado (mayor apantallamiento de tensiones)", "Alta densidad"]
+    },
+    {
+      "familia": "Metal",
+      "nombre": "Aleación de Titanio (Ti-6Al-4V)",
+      "densidad_g_cm3": "4,4 – 4,5",
+      "modulo_E_GPa": "110 – 114",
+      "resistencia_MPa": "900 – 1000",
+      "usos": ["Vástagos de cadera", "Bandeja tibial de rodilla", "Implantes dentales", "Cajas vertebrales porosas"],
+      "ventajas": ["Alta resistencia específica (baja densidad)", "Capa pasiva de TiO₂ excelente para osteointegración", "Módulo menor que acero y Co-Cr"],
+      "limitaciones": ["Menor resistencia al desgaste por fricción que Co-Cr (evitar uso como superficie articular sin recubrir)"]
+    },
+    {
+      "familia": "Metal",
+      "nombre": "Nitinol (Ni-Ti)",
+      "densidad_g_cm3": "6,45 – 6,5",
+      "modulo_E_GPa": "28–41 (martensita) / 75–83 (austenita)",
+      "resistencia_MPa": "895 – 1900",
+      "usos": ["Stents autoexpandibles", "Guías endovasculares", "Grapas y alambres ortodóncicos"],
+      "ventajas": ["Superelasticidad y memoria de forma a 37 °C", "Módulo cercano al hueso en fase martensítica"],
+      "limitaciones": ["Contenido en níquel (exige pasivación superficial cuidadosa)", "Mayor complejidad de procesado"]
+    },
+    {
+      "familia": "Metal",
+      "nombre": "Aleaciones de Magnesio (p. ej. WE43)",
+      "densidad_g_cm3": "1,74 – 1,85",
+      "modulo_E_GPa": "41 – 45",
+      "resistencia_MPa": "150 – 300",
+      "usos": ["Tornillos y pines biodegradables", "Stents bioabsorbibles de nueva generación"],
+      "ventajas": ["Densidad y módulo muy próximos al hueso cortical", "Biodegradable sin segunda cirugía"],
+      "limitaciones": ["Control difícil de la velocidad de corrosión (liberación de hidrógeno si degrada rápido)"]
+    },
+    {
+      "familia": "Cerámica",
+      "nombre": "Alúmina (Al₂O₃)",
+      "densidad_g_cm3": "3,9 – 3,98",
+      "modulo_E_GPa": "380 – 400",
+      "resistencia_MPa": "270 – 400 (flexión)",
+      "usos": ["Cabezas femorales e insertos cerámica–cerámica", "Componentes dentales"],
+      "ventajas": ["Dureza e hidrofilia extremas", "Desgaste casi nulo y bioinerte"],
+      "limitaciones": ["Fragilidad (baja tenacidad a fractura)", "Alto coste"]
+    },
+    {
+      "familia": "Cerámica",
+      "nombre": "Circona (ZrO₂ / Y-PSZ)",
+      "densidad_g_cm3": "6,0 – 6,08",
+      "modulo_E_GPa": "200 – 210",
+      "resistencia_MPa": "900 – 2000 (flexión)",
+      "usos": ["Implantes dentales estéticos", "Cabezas femorales y composites alúmina–circona"],
+      "ventajas": ["Color blanco estético", "Mayor tenacidad y resistencia a flexión que la alúmina pura"],
+      "limitaciones": ["Sensible a envejecimiento hidrotermal en ciertas fases si no se estabiliza bien"]
+    },
+    {
+      "familia": "Cerámica / Bioactivo",
+      "nombre": "Hidroxiapatita (HA) y Bioglass 45S5",
+      "densidad_g_cm3": "3,16 (HA) / 2,7–2,8 (45S5)",
+      "modulo_E_GPa": "70–120 (HA densa) / 30–35 (45S5)",
+      "resistencia_MPa": "30 – 60 (tracción HA)",
+      "usos": ["Recubrimientos bioactivos en vástagos y cotilos", "Rellenos de defectos óseos", "Scaffolds"],
+      "ventajas": ["Bioactividad y osteoconducción: enlace directo con el hueso vía capa de HCA"],
+      "limitaciones": ["Baja resistencia mecánica a tracción/impacto: no soporta carga estructural por sí sola"]
+    },
+    {
+      "familia": "Carbono",
+      "nombre": "Carbono pirolítico (PyC)",
+      "densidad_g_cm3": "1,45 – 2,1",
+      "modulo_E_GPa": "17 – 31",
+      "resistencia_MPa": "350 – 700",
+      "usos": ["Valvas y anillos de válvulas cardíacas mecánicas"],
+      "ventajas": ["Excepcional resistencia al desgaste y fatiga", "Excelente hemocompatibilidad respecto a otros materiales sintéticos"],
+      "limitaciones": ["Frágil frente a impactos locales", "Requiere anticoagulación de por vida en válvulas mecánicas"]
+    },
+    {
+      "familia": "Polímero",
+      "nombre": "UHMWPE (Polietileno de ultra alto peso molecular)",
+      "densidad_g_cm3": "0,93 – 0,94",
+      "modulo_E_GPa": "0,5 – 1,0",
+      "resistencia_MPa": "35 – 63 (elongación > 300 %)",
+      "usos": ["Inserto acetabular de cadera", "Inserto tibial y rotuliano de rodilla"],
+      "ventajas": ["Muy baja fricción y absorción de impactos", "Alta tenacidad (mejora con reticulación y vitamina E)"],
+      "limitaciones": ["El desgaste libera partículas micrométricas que inducen osteólisis periprotésica"]
+    },
+    {
+      "familia": "Polímero",
+      "nombre": "PMMA (Polimetilmetacrilato)",
+      "densidad_g_cm3": "1,15 – 1,19",
+      "modulo_E_GPa": "2,0 – 3,5",
+      "resistencia_MPa": "30 – 60",
+      "usos": ["Cemento óseo para fijación protésica", "Lentes intraoculares rígidas", "Vertebroplastia"],
+      "ventajas": ["Fijación mecánica inmediata al fraguar", "Excelente transparencia óptica"],
+      "limitaciones": ["Reacción exotérmica al polimerizar in situ", "Puede degradarse/agrietarse con los años"]
+    },
+    {
+      "familia": "Polímero",
+      "nombre": "PEEK (Polieteretercetona)",
+      "densidad_g_cm3": "1,30 – 1,32",
+      "modulo_E_GPa": "3,2 – 4,0",
+      "resistencia_MPa": "90 – 100",
+      "usos": ["Cajas intersomáticas vertebrales", "Placas de trauma", "Implantes craneofaciales"],
+      "ventajas": ["Módulo próximo al hueso", "Radiotransparente en RX y sin artefactos en RMN"],
+      "limitaciones": ["Superficie poco osteointegrable sin recubrimiento o texturizado"]
+    },
+    {
+      "familia": "Polímero",
+      "nombre": "ePTFE (Teflon expandido) y PET (Dacron)",
+      "densidad_g_cm3": "2,15–2,25 (PTFE)",
+      "modulo_E_GPa": "0,5 – 1,0 (PTFE)",
+      "resistencia_MPa": "15 – 40",
+      "usos": ["Injertos vasculares de diámetro > 5 mm", "Anillos de sutura en válvulas", "Mallas quirúrgicas"],
+      "ventajas": ["Alta bioestabilidad y porosidad controlable (woven o knitted)"],
+      "limitaciones": ["Se trombosan en vasos de pequeño calibre (< 5 mm)"]
+    },
+    {
+      "familia": "Polímero",
+      "nombre": "Silicona (PDMS)",
+      "densidad_g_cm3": "0,97 – 1,03",
+      "modulo_E_GPa": "0,0005 – 0,003 (elastómero)",
+      "resistencia_MPa": "1,1 – 9",
+      "usos": ["Cubierta y gel de implantes mamarios", "Lentes intraoculares plegables", "Aislante de cables de marcapasos", "Catéteres"],
+      "ventajas": ["Gran flexibilidad, hidrofobicidad y estabilidad química"],
+      "limitaciones": ["Baja resistencia al desgarro y riesgo histórico de gel bleed sin capa barrera"]
+    },
+    {
+      "familia": "Polímero biodegradable",
+      "nombre": "PLA y PGA (Ácido poliláctico y poliglicólico)",
+      "densidad_g_cm3": "1,21–1,25 (PLA) / 1,50–1,70 (PGA)",
+      "modulo_E_GPa": "2,7–3,8 (PLA) / 6,0–7,0 (PGA)",
+      "resistencia_MPa": "40–70 (PLA) / 60–100 (PGA)",
+      "usos": ["Suturas absorbibles", "Placas y tornillos biodegradables", "Stents reabsorbibles", "Scaffolds"],
+      "ventajas": ["Degradación por hidrólisis evitando reoperación de retirada", "Transfieren carga gradualmente al hueso en curación"],
+      "limitaciones": ["Menor capacidad portante que los metales: limitados a zonas de baja solicitación mecánica"]
+    }
+  ],
+  "hitos": [
+    {
+      "fecha": "Tema 3–6 (Biomateriales 3º)",
+      "titulo": "Selección multiclase en un solo dispositivo",
+      "protagonista": "Diseño integrado de implantes",
+      "material": "Metal + Cerámica + Polímero + Recubrimiento bioactivo",
+      "descripcion": "Un implante moderno raramente usa un único material: la prótesis de cadera combina vástago de Ti-6Al-4V, recubrimiento de HA, cabeza de alúmina/circona e inserto de UHMWPE."
+    }
+  ],
+  "normas": [
+    {
+      "codigo": "Ensayo de tracción y fatiga",
+      "titulo": "Caracterización mecánica de probetas e implantes",
+      "alcance": "Permite obtener el módulo de Young (pendiente elástica E), límite elástico, resistencia última y vida a fatiga (curvas S–N).",
+      "clave": "El dimensionado debe contemplar solicitaciones dinámicas (≈10⁶ ciclos/año en cadera) y evitar concentradores de tensiones."
+    }
+  ],
+  "preguntas": [
+    {
+      "pregunta": "¿Por qué en una prótesis total de rodilla la parte femoral suele fabricarse en Co-Cr mientras que la bandeja tibial se fabrica en Ti-6Al-4V?",
+      "opciones": [
+        "Porque el Co-Cr es más duro y resistente al desgaste articular contra el inserto de UHMWPE, mientras que el Ti-6Al-4V tiene menor módulo elástico y mejor integración ósea en la tibia",
+        "Porque el titanio no resiste cargas de compresión",
+        "Porque el Co-Cr es biodegradable y se reabsorbe tras consolidar el fémur",
+        "Porque la parte femoral requiere ser radiotransparente en radiografías"
+      ],
+      "correcta": 0,
+      "explicacion": "La parte femoral articula directamente con el inserto de UHMWPE y exige máxima dureza superficial (Co-Cr); la bandeja tibial apoya en hueso y aprovecha el menor módulo y la capa de TiO₂ del Ti-6Al-4V."
+    },
+    {
+      "pregunta": "¿Cuál es la principal causa del «apantallamiento de tensiones» (stress shielding) en implantes ortopédicos?",
+      "opciones": [
+        "Una diferencia elevada de módulo elástico entre un implante muy rígido y el hueso cortical, que priva al hueso de carga mecánica y provoca su reabsorción",
+        "La reacción exotérmica del cemento óseo PMMA al fraguar",
+        "La toxicidad química intrínseca del óxido de titanio",
+        "La rotura frágil de una cabeza femoral cerámica"
+      ],
+      "correcta": 0,
+      "explicacion": "El Ti-6Al-4V (~110 GPa) y el Co-Cr (~220 GPa) son mucho más rígidos que el hueso cortical (~10–25 GPa); el implante soporta la carga y el hueso circundante pierde densidad."
+    },
+    {
+      "pregunta": "¿Qué ventaja aporta añadir vitamina E y reticular por radiación el polietileno UHMWPE de un inserto articular?",
+      "opciones": [
+        "La reticulación reduce la generación de partículas de desgaste y la vitamina E protege al polímero frente a la oxidación",
+        "Convierte al UHMWPE en un polímero biodegradable por hidrólisis",
+        "Aumenta su módulo elástico hasta igualar al de la alúmina",
+        "Permite que el inserto conduzca impulsos eléctricos en marcapasos"
+      ],
+      "correcta": 0,
+      "explicacion": "Reducir la tasa de desgaste del UHMWPE es crítico para evitar la osteólisis inducida por partículas; el entrecruzamiento mejora el desgaste y los antioxidantes (vitamina E) frenan la degradación oxidativa."
+    },
+    {
+      "pregunta": "¿Por qué no se utiliza una cerámica como la hidroxiapatita o el Bioglass 45S5 para fabricar el cuerpo entero de un vástago femoral sometido a flexión y torsión?",
+      "opciones": [
+        "Por su baja tenacidad a fractura y fragilidad frente a esfuerzos de tracción y flexión, aunque sea excelente como recubrimiento bioactivo",
+        "Porque la hidroxiapatita induce calcificación en el hueso cortical",
+        "Porque es un polímero con módulo elástico demasiado bajo",
+        "Porque impide el crecimiento óseo sobre la superficie del vástago"
+      ],
+      "correcta": 0,
+      "explicacion": "Las biocerámicas bioactivas tienen excelente unión química al hueso pero son frágiles a tracción; por eso se combinan como recubrimiento sobre un núcleo metálico tenaz de Ti-6Al-4V."
+    },
+    {
+      "pregunta": "¿Por qué los polímeros biodegradables como PLA y PGA se degradan en el organismo y qué ventaja clínica ofrecen en osteosíntesis?",
+      "opciones": [
+        "Se degradan principalmente por hidrólisis en monómeros/oligómeros solubles, transfiriendo carga gradualmente al hueso y evitando una segunda cirugía de extracción",
+        "Se disuelven por corrosión galvánica al contacto con el acero inoxidable",
+        "Soportan más carga estática que el Co-Cr en fracturas de fémur adulto",
+        "Forman una cápsula fibrosa gruesa que sustituye al hueso"
+      ],
+      "correcta": 0,
+      "explicacion": "Los poliésteres PLA/PGA sufren hidrólisis hacia ácidos solubles biocompatibles. Su limitación es la menor resistencia mecánica, por lo que se restringen a zonas de baja solicitación o cirugía pediátrica."
+    },
+    {
+      "pregunta": "¿Qué propiedad hace al Nitinol (Ni-Ti) especialmente útil para stents autoexpandibles que se introducen comprimidos por catéter?",
+      "opciones": [
+        "Su superelasticidad y memoria de forma por transformación martensítica reversible cerca de la temperatura corporal",
+        "Su transparencia óptica superior a la del PMMA",
+        "Su capacidad de degradarse en 6 meses por hidrólisis enzimática",
+        "Su módulo elástico superior al de la alúmina (400 GPa)"
+      ],
+      "correcta": 0,
+      "explicacion": "El Nitinol admite grandes deformaciones recuperables al plegarse dentro del catéter y recupera su diámetro nominal al liberarse en la arteria a 37 °C."
+    },
+    {
+      "pregunta": "¿Qué característica diferencia el comportamiento mecánico del hueso cortical frente al de un vástago de aleación de titanio?",
+      "opciones": [
+        "El hueso es anisótropo (propiedades dependientes de la dirección) y mucho menos rígido (~10–25 GPa frente a ~110 GPa del Ti-6Al-4V)",
+        "El hueso es perfectamente isótropo y más rígido que el titanio",
+        "El titanio es viscoelástico a temperatura ambiente mientras el hueso es puramente elástico lineal",
+        "Ambos tienen exactamente la misma densidad (~4,4 g/cm³)"
+      ],
+      "correcta": 0,
+      "explicacion": "La microestructura osteónica hace al hueso anisótropo y más flexible; igualar mejor su rigidez y controlar las tensiones de contacto es uno de los grandes retos de la implantología."
+    }
+  ],
+  "fuentes": [
+    "Guía docente oficial de Biomateriales (3º Grado en Ingeniería Biomédica, UVigo) — Temas 2, 3, 4, 5 y 6.",
+    "Guía docente oficial de Biocompatibilidad y comportamiento mecánico de materiales en implantología (4º, UVigo) — Temas 3 y 4.",
+    "Wagner, W. R., et al. (Eds.). (2020). Biomaterials Science (4th ed.). Elsevier. Section 1.2 (Properties) y Section 1.3 (Classes of Materials).",
+    "Temenoff, J. S., & Mikos, A. G. (2022). Biomaterials: The Intersection of Biology and Materials Science (2nd ed.). Pearson."
+  ]
 }

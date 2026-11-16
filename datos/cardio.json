@@ -6,11 +6,183 @@
     "Marcapasos: carcasa de Ti, cables Pt/Co-Cr, aislante PU/silicona",
     "Injertos vasculares (< 5 mm frente a > 5 mm), lentes intraoculares (PMMA, PHEMA, silicona) e implantes mamarios (5 generaciones, contractura capsular)"
   ],
-  "conceptos": [],
-  "datos": [],
-  "hitos": [],
-  "normas": [],
-  "preguntas": [],
-  "fuentes": [],
-  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+  "conceptos": [
+    {
+      "titulo": "Stents coronarios (angioplastia y 3 categorías)",
+      "definicion": "Malla cilíndrica expandida mediante balón (o autoexpandible) para mantener abierta una arteria coronaria obstruida por arteriosclerosis y evitar su reoclusión elástica tras la angioplastia.",
+      "detalle": "1) Convencionales (metal desnudo: acero 316L, Nitinol, Co-Cr): económicos e inertes, pero presentan riesgo de reestenosis por irritación mecánica. 2) Farmacoactivos: recubiertos con polímeros que liberan fármacos antiproliferativos reduciendo la reestenosis. 3) Biodegradables (p. ej. PLA o aleaciones de Mg): se reabsorben tras restaurar la pared arterial.",
+      "ejemplo": "Los stents de metal desnudo demostraron que elegir aleaciones muy resistentes a la corrosión no basta si el estímulo mecánico induce proliferación celular (reestenosis)."
+    },
+    {
+      "titulo": "Válvulas cardíacas artificiales: mecánicas vs. biológicas",
+      "definicion": "Sustituyen válvulas cardíacas incompetentes (principalmente mitral y aórtica en el ventrículo izquierdo, sometido a mayor presión; ~40 millones de ciclos/año).",
+      "detalle": "Válvulas mecánicas (monodisco o bivalva): marco de Ti o Co-Cr, anillo de sutura en ePTFE o PET (Dacron) y valvas recubiertas de carbono pirolítico; durabilidad superior a la esperanza de vida del paciente, pero alto riesgo trombogénico → anticoagulación de por vida. Válvulas biológicas (xenoinjertos porcinos o pericardio bovino): tratadas con glutaraldehído para formar enlaces cruzados estables no inmunogénicos; no requieren anticoagulantes de por vida, pero su durabilidad es limitada (12–15 años).",
+      "ejemplo": "Válvula St. Jude bivalva de carbono pirolítico vs. bioprótesis porcina Hancock."
+    },
+    {
+      "titulo": "Marcapasos cardíacos",
+      "definicion": "Dispositivos electrónicos implantables que corrigen bradicardias enviando impulsos eléctricos al miocardio solo cuando es necesario.",
+      "detalle": "Constan de 3 bloques: 1) Generador de impulsos y batería en carcasa de titanio sellada herméticamente (resistencia a la corrosión). 2) Cables conductores de aleaciones del grupo del platino o Co-Cr aislados con poliuretano o silicona (superando problemas históricos de agrietamiento del PU y oxidación por iones metálicos). 3) Electrodos de Pt o Co-Cr: deben entregar el pulso sin provocar fibrosis excesiva, pues la cápsula fibrosa elevaría el umbral de estimulación a niveles inaceptables.",
+      "ejemplo": "Uso de biomateriales inertes en electrodos e investigación actual de recubrimientos bioactivos."
+    },
+    {
+      "titulo": "Injertos vasculares según el diámetro del vaso",
+      "definicion": "Conductos para sustituir vasos sanguíneos dañados; la elección entre injerto biológico y polímero sintético depende críticamente del calibre.",
+      "detalle": "Calibre pequeño (< 5 mm, como coronarias): se emplean injertos biológicos (autoinjertos venosos o de origen animal/humano), ya que los sintéticos se ocluyen rápidamente por trombosis. Calibre mayor (> 5 mm): se usan polímeros sintéticos como ePTFE (Teflon/Gore-Tex), PET (Dacron/Terylen en tejido woven más estable o knitted más poroso/distensible) y poliuretanos (buena compliancia, aunque sensibles a biodegradación en 1ª generación).",
+      "ejemplo": "Bypass aorto-ilíaco en Dacron/ePTFE (> 5 mm) frente a vena safena autóloga en bypass coronario (< 5 mm)."
+    },
+    {
+      "titulo": "Lentes intraoculares (IOL) y queratoprótesis",
+      "definicion": "Dispositivos ópticos implantados principalmente tras cirugía de cataratas para restaurar la transparencia y refracción ocular.",
+      "detalle": "Toda IOL consta de porción óptica (PMMA, PHEMA o silicona, con aditivos antioxidantes y filtro UV) y anclajes/hápticos (metales, vidrio bioactivo o polipropileno). Pueden ser pseudofáquicas (sustituyen totalmente al cristalino) o fáquicas (cámara anterior o posterior, sin extraer el cristalino). Las queratoprótesis sustituyen córneas severamente dañadas.",
+      "ejemplo": "Lentes plegables de PHEMA o silicona que se introducen por microincisión."
+    },
+    {
+      "titulo": "Implantes mamarios y contractura capsular",
+      "definicion": "Prótesis de tejidos blandos formadas por una cubierta elastomérica de silicona rellena de gel de silicona, gel cohesivo (gummy bear) o suero salino.",
+      "detalle": "Han evolucionado en 5 generaciones desde los años 60 (cubierta gruesa → cubierta fina con alto gel bleed → capa barrera → texturización superficial → gel cohesivo estable en forma circular o anatómica en lágrima). Los llamados «implantes de poliuretano» siguen siendo de silicona por dentro, pero llevan espuma de poliuretano en el exterior. La contractura capsular se asocia a irritación mecánica y micromovimiento en la interfaz, no a toxicidad química de la silicona.",
+      "ejemplo": "Una cápsula fina es fisiológica; cuando se engrosa, contrae o calcifica provoca deformidad y dolor."
+    }
+  ],
+  "datos": [
+    {
+      "implante": "Válvula cardíaca mecánica",
+      "materiales": "Marco de Ti o Co-Cr; valvas de sustrato metálico recubierto de carbono pirolítico; anillo de sutura en ePTFE o PET (Dacron)",
+      "trombogenicidad": "Alta → medicación anticoagulante de por vida",
+      "durabilidad": "Muy alta (> esperanza de vida del paciente)"
+    },
+    {
+      "implante": "Válvula cardíaca biológica",
+      "materiales": "Tejido porcino o pericardio bovino tratado con glutaraldehído sobre soporte plástico/metálico con tejido de sutura",
+      "trombogenicidad": "Baja → no requiere anticoagulación crónica",
+      "durabilidad": "Limitada (12–15 años; riesgo de calcificación/deterioro)"
+    },
+    {
+      "implante": "Injerto vascular > 5 mm",
+      "materiales": "ePTFE (Gore-Tex), PET (Dacron woven o knitted), Poliuretano (PU)",
+      "trombogenicidad": "Aceptable con alto flujo",
+      "durabilidad": "Décadas (alta bioestabilidad en ePTFE y PET)"
+    },
+    {
+      "implante": "Injerto vascular < 5 mm",
+      "materiales": "Injertos biológicos (autoinjerto o de origen animal/humano)",
+      "trombogenicidad": "Los sintéticos de pequeño calibre se ocluyen por trombosis",
+      "durabilidad": "Dependiente del lecho receptor"
+    },
+    {
+      "implante": "Lente intraocular (IOL)",
+      "materiales": "Óptica: PMMA, PHEMA o silicona (+ filtro UV/antioxidantes). Hápticos: polipropileno, metales o vidrio bioactivo",
+      "trombogenicidad": "No aplica (medio ocular)",
+      "durabilidad": "Permanente (riesgo de opacificación capsular posterior)"
+    },
+    {
+      "implante": "Implante de mama (5ª gen.)",
+      "materiales": "Cubierta elastomérica de silicona + capa barrera (lisa, texturizada o con espuma de PU) + gel cohesivo de silicona o suero salino",
+      "trombogenicidad": "No aplica (tejido blando)",
+      "durabilidad": "Larga; seguimiento frente a rotura y contractura capsular"
+    }
+  ],
+  "hitos": [
+    {
+      "fecha": "1952 – 1969",
+      "titulo": "Evolución de las válvulas cardíacas",
+      "protagonista": "Hufnagel (1952), Starr–Edwards (1960), Warren Hancock (1969)",
+      "material": "Bola en jaula → carbono pirolítico y xenoinjertos fijados con glutaraldehído",
+      "descripcion": "El tratamiento con glutaraldehído en 1969 estabilizó el colágeno de válvulas porcinas reduciendo su inmunogenicidad."
+    },
+    {
+      "fecha": "1963 – 2000+",
+      "titulo": "Cinco generaciones de implantes mamarios",
+      "protagonista": "Cronin y Gerow (1963) hasta geles cohesivos actuales",
+      "material": "Elastómero y gel de silicona (PDMS)",
+      "descripcion": "Reducción progresiva de gel bleed, roturas y contractura capsular mediante capa barrera, texturizado superficial y gel cohesivo."
+    },
+    {
+      "fecha": "1978 – 1986",
+      "titulo": "Invención del stent coronario",
+      "protagonista": "Julio Palmaz (tras angioplastia de Andreas Grüntzig)",
+      "material": "Malla metálica expandible por balón",
+      "descripcion": "Resolvió el retroceso elástico de un tercio de las arterias dilatadas con balón tras la angioplastia coronaria."
+    }
+  ],
+  "normas": [
+    {
+      "codigo": "Requisitos funcionales cardiovasculares y oftálmicos",
+      "titulo": "Hemocompatibilidad y durabilidad cíclica extrema",
+      "alcance": "Las válvulas cardíacas soportan ~40 millones de aperturas al año; los electrodos de marcapasos deben evitar encapsulación fibrosa aislante.",
+      "clave": "En stents y válvulas el fallo suele venir de la trombogenicidad o de la respuesta proliferativa mecánica (reestenosis)."
+    }
+  ],
+  "preguntas": [
+    {
+      "pregunta": "¿Por qué no se utilizan injertos vasculares sintéticos de Dacron (PET) o ePTFE para sustituir arterias coronarias de diámetro menor a 5 mm?",
+      "opciones": [
+        "Porque los injertos sintéticos de pequeño calibre se ocluyen por trombosis",
+        "Porque el ePTFE se disuelve por hidrólisis en menos de 24 horas",
+        "Porque los injertos biológicos son más rígidos que el acero inoxidable",
+        "Porque el PET no puede esterilizarse"
+      ],
+      "correcta": 0,
+      "explicacion": "En vasos < 5 mm el flujo más lento y la ausencia de endotelio funcional en materiales sintéticos provocan trombosis e inmediata oclusión, por lo que se recurre a injertos biológicos."
+    },
+    {
+      "pregunta": "¿Qué consecuencia clínica grave provoca una fibrosis excesiva alrededor del electrodo de un marcapasos?",
+      "opciones": [
+        "Aumenta el umbral eléctrico necesario para estimular el miocardio hasta niveles clínicamente inaceptables",
+        "Aumenta la conductividad del electrodo mejorando la batería",
+        "Convierte el marcapasos en un stent farmacoactivo",
+        "Provoca la calcificación de la carcasa externa de titanio"
+      ],
+      "correcta": 0,
+      "explicacion": "La cápsula fibrosa actúa como barrera aislante entre el electrodo (Pt o Co-Cr) y el músculo cardíaco, elevando la energía necesaria para despolarizar el corazón."
+    },
+    {
+      "pregunta": "¿Qué afirmación describe correctamente la diferencia entre válvulas cardíacas mecánicas y biológicas?",
+      "opciones": [
+        "Las mecánicas (carbono pirolítico) duran más pero exigen anticoagulación de por vida; las biológicas (tratadas con glutaraldehído) no exigen anticoagulación crónica pero duran unos 12–15 años",
+        "Las biológicas duran más que la esperanza de vida del paciente y exigen anticoagulantes de por vida",
+        "Las mecánicas están hechas de pericardio de vaca tratado con PMMA",
+        "Ninguna de las dos requiere anillo de sutura textil"
+      ],
+      "correcta": 0,
+      "explicacion": "Es el dilema clínico clásico: altísima durabilidad vs. riesgo tromboembólico (mecánicas) frente a excelente hemocompatibilidad sin anticoagulación crónica vs. deterioro estructural a 12–15 años (biológicas)."
+    },
+    {
+      "pregunta": "¿Cuál es la trampa conceptual sobre los llamados «implantes de mama de poliuretano»?",
+      "opciones": [
+        "No están rellenos de poliuretano: son implantes de gel de silicona cuya cubierta de silicona lleva externamente una capa de espuma de poliuretano",
+        "Están rellenos de espuma líquida de poliuretano y carecen de cubierta",
+        "Son implantes de suero salino con carcasa metálica de titanio",
+        "Están diseñados para degradarse completamente en 2 años"
+      ],
+      "correcta": 0,
+      "explicacion": "El núcleo y la cubierta principal siguen siendo de silicona; únicamente la capa externa texturizada es de espuma de poliuretano."
+    },
+    {
+      "pregunta": "¿Por qué surgieron los stents farmacoactivos frente a los stents convencionales de metal desnudo?",
+      "opciones": [
+        "Para liberar lentamente fármacos antiproliferativos que reducen la reestenosis arterial provocada por la irritación mecánica del stent",
+        "Para aumentar la corrosión del acero inoxidable dentro de la arteria",
+        "Para sustituir la angioplastia con balón por cirugía a corazón abierto",
+        "Para calcificar intencionadamente la placa de ateroma"
+      ],
+      "correcta": 0,
+      "explicacion": "Incluso aleaciones muy resistentes a la corrosión inducían proliferación de músculo liso vascular (reestenosis) por daño mecánico; el recubrimiento farmacológico frena esa hiperplasia."
+    },
+    {
+      "pregunta": "¿Qué diferencia a una lente intraocular (IOL) pseudofáquica de una lente fáquica?",
+      "opciones": [
+        "La pseudofáquica sustituye totalmente al cristalino (cataratas), mientras la fáquica se implanta sin extraerlo (en cámara anterior o posterior)",
+        "La fáquica está hecha de titanio opaco y la pseudofáquica de hidroxiapatita",
+        "La pseudofáquica se coloca fuera del ojo sobre la córnea como lentilla diaria",
+        "No existe diferencia; ambos términos designan una queratoprótesis"
+      ],
+      "correcta": 0,
+      "explicacion": "En cirugía de cataratas se retira el cristalino opaco y se coloca una IOL pseudofáquica; las fáquicas corrigen defectos refractivos conservando el cristalino natural."
+    }
+  ],
+  "fuentes": [
+    "Apuntes de clase UVigo (Curso 2026-2027). Biocompatibilidad y comportamiento mecánico de materiales en implantología — Temas 2.1.1, 2.1.2 y 2.1.3.",
+    "Wagner, W. R., et al. (Eds.). (2020). Biomaterials Science (4th ed.). Elsevier. Chapters 1.1.2, 2.5.2, 2.5.3 y 2.5.6."
+  ]
 }

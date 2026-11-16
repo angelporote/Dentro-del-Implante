@@ -6,11 +6,187 @@
     "Cuerpo frente a superficie: topografía (Ra, Rz), grupos funcionales, energía superficial, mojabilidad (Young, Wenzel, Cassie), potencial zeta y doble capa",
     "Etapas celulares: hidratación → proteínas → integrinas/RGD → diferenciación; osteoinducción, osteoconducción y osteointegración"
   ],
-  "conceptos": [],
-  "datos": [],
-  "hitos": [],
-  "normas": [],
-  "preguntas": [],
-  "fuentes": [],
-  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+  "conceptos": [
+    {
+      "titulo": "Biocompatibilidad (idea clave del tema)",
+      "definicion": "Capacidad de un material para ejercer su función con una respuesta apropiada del anfitrión en una situación específica.",
+      "detalle": "No es una propiedad intrínseca del material, sino una característica del conjunto material–sistema biológico. Un mismo material puede ser biocompatible en una aplicación y fracasar en otra (y el tiempo de contacto también importa: minutos en nanopartículas de contraste vs. décadas en una prótesis).",
+      "ejemplo": "El titanio c.p. es biocompatible como implante dental, pero inapropiado en una cadera metal-metal (metalosis); la hidroxiapatita es biocompatible en cadera pero calcificaría una válvula cardíaca."
+    },
+    {
+      "titulo": "Reacción a cuerpo extraño y cápsula fibrosa",
+      "definicion": "Respuesta inflamatoria aguda y crónica frente a un implante sólido: monocitos y macrófagos pueden fusionarse en células gigantes de cuerpo extraño, mientras fibroblastos y miofibroblastos depositan una densa capa avascular de colágeno alrededor del dispositivo.",
+      "detalle": "En rigor, ningún implante es absolutamente inerte para el cuerpo humano; incluso en los bien tolerados aparece una fina cápsula fisiológica que aísla el implante, salvo cuando se logra unión directa osteointegrada o bioactiva.",
+      "ejemplo": "Una cápsula fina en un implante mamario es fisiológica; si se engrosa, contrae o calcifica por micromovimiento, origina contractura capsular patológica."
+    },
+    {
+      "titulo": "Hemocompatibilidad, trombogenicidad e inmunogenicidad",
+      "definicion": "La hemocompatibilidad describe la compatibilidad con la sangre circulante; la trombogenicidad es un aspecto concreto de ella (tendencia a formar trombos), no un sinónimo. La inmunogenicidad es la capacidad de generar respuesta inmune.",
+      "detalle": "La inmunogenicidad no es negativa en sí misma: en una vacuna es el objetivo deseado, mientras que en un implante resulta indeseable.",
+      "ejemplo": "Las válvulas mecánicas presentan riesgo trombogénico y requieren anticoagulación; las biológicas fijadas con glutaraldehído minimizan la inmunogenicidad."
+    },
+    {
+      "titulo": "Cuerpo vs. Superficie: por qué mandan los últimos ~1 nm",
+      "definicion": "El cuerpo del implante determina la compatibilidad mecánica (densidad, resistencia específica, módulo elástico, vida a fatiga) y restringe la química disponible; la superficie controla la interacción directa con el tejido.",
+      "detalle": "Frente a ~10²³ átomos/cm³ en el volumen interior, solo ~10¹⁵ átomos/cm² están en la superficie. En ~1 nm superficial cae la densidad atómica, aumentan la movilidad y la energía libre por enlaces colgantes (dangling bonds) y fuerzas desequilibradas, haciendo la superficie mucho más reactiva.",
+      "ejemplo": "La corrosión, liberación de iones y restos de desgaste dependen conjuntamente de cuerpo y superficie."
+    },
+    {
+      "titulo": "Topografía superficial y escalas en osteointegración",
+      "definicion": "Hay que distinguir entre defectos de forma (macroscópicos), ondulación y rugosidad (picos y valles micro/nanométricos), separados matemáticamente mediante la longitud de corte (cut-off, lc). Se cuantifica con Ra (media), Rp, Rv, Rti y Rz.",
+      "detalle": "En osteointegración actúan tres escalas complementarias: milimétrica (> 100 μm, p. ej. rosca, da estabilidad mecánica), micrométrica (1–100 μm, favorece formación ósea y anclaje celular) y nanométrica (< 1 μm, modula adsorción proteica y morfología/adhesión celular).",
+      "ejemplo": "Dos perfiles distintos pueden compartir el mismo Ra; por eso se complementa con Rp, Rv y Rz."
+    },
+    {
+      "titulo": "Energía superficial (γ) y mojabilidad (Young, Wenzel, Cassie)",
+      "definicion": "La energía superficial γ = W / (2A) refleja los enlaces vacantes al crear superficie: enlaces fuertes (iónicos, metales) implican alta γ y mayor tendencia a adsorber proteínas y células. La mojabilidad sintetiza topografía, química y γ mediante el ángulo de contacto θ.",
+      "detalle": "Hidrofílica: θ < 90° (superhidrofílica θ ≈ 0°); hidrofóbica: θ > 90° (superhidrofóbica > 150°). En superficies ideales rige Young: γSG = γSL + γLG·cos(θY). En superficies rugosas homogéneas rige Wenzel: cos(θW) = r·cos(θY) con r = A_real/A_proyectada ≥ 1 (la rugosidad vuelve lo hidrofílico aún más hidrofílico y lo hidrofóbico más hidrofóbico). En superficies químicamente heterogéneas rige Cassie: cos(θC) = Σ Φᵢ·cos(θYi).",
+      "ejemplo": "El titanio limpio presenta alta energía superficial (≈2050 mJ/m²) frente al PTFE (≈19 mJ/m²)."
+    },
+    {
+      "titulo": "Propiedades eléctricas: potencial zeta (ζ) y Doble Capa Electroquímica (EDL)",
+      "definicion": "Al contactar con un medio acuoso, la superficie adquiere un potencial superficial Ψ₀ por disociación/protonación de grupos (–COOH → –COO⁻ negativo; –NH₂ → –NH₃⁺ positivo) o adsorción preferencial de iones OH⁻ en superficies inertes.",
+      "detalle": "La EDL consta de una capa estacionaria (iones inmovilizados) y una capa difusa (iones móviles), separadas por el plano de cizallamiento o corte, cuyo potencial eléctrico es el potencial zeta (ζ). Al subir el pH, ζ se hace más negativo; el pH donde ζ = 0 es el punto isoeléctrico. A pH fisiológico (~7,4) la mayoría de implantes tienen ζ negativo.",
+      "ejemplo": "Potenciales zeta bajos/negativos favorecen la diferenciación osteogénica y gobiernan la conformación de la capa proteica inicial."
+    },
+    {
+      "titulo": "Las 4 etapas célula–implante, integrinas y secuencia RGD",
+      "definicion": "1) Hidratación (ns–s): capa de agua e iones Cl⁻, Na⁺, Ca²⁺. 2) Adsorción de proteínas de la matriz extracelular (s–h): forma la «superficie» real que ven las células. 3) Adhesión y proliferación (min–días): las integrinas transmembrana reconocen la secuencia peptídica RGD (Arg-Gly-Asp) en fibronectina, vitronectina o laminina; la célula explora con filopodios y tracciona con lamelipodios ricos en actina. 4) Diferenciación, secreción de ECM y angiogénesis (días–semanas).",
+      "detalle": "Existe un grado óptimo de adhesión celular: tanto la no adhesión como una adhesión excesiva que impida arrastrarse y proliferar resultan fatales para la célula.",
+      "ejemplo": "Grupos –COOH y –NH₂ promueven extensión y fibras de actina organizadas; grupos –CH₃ y PEG inhiben la adhesión celular."
+    },
+    {
+      "titulo": "Osteoinducción, osteoconducción y osteointegración",
+      "definicion": "Osteoinducción: diferenciación de células madre mesenquimales indiferenciadas en preosteoblastos → osteoblastos → osteocitos (osteogénesis). Osteoconducción: crecimiento guiado de hueso sobre la superficie adaptándose a su forma. Osteointegración: conexión directa estructural y funcional entre hueso vivo ordenado y superficie del implante bajo carga, sin tejido fibroso intermedio.",
+      "detalle": "En la zona periprotésica ocurren osteogénesis a distancia (del hueso hacia el implante) y osteogénesis de contacto (desde la superficie colonizada hacia el hueso). Su éxito depende de 6 factores: material, calidad superficial, diseño macroscópico, estado del hueso, técnica quirúrgica y condiciones de carga.",
+      "ejemplo": "Tornillos dentales roscados de titanio y cotilos de titanio poroso recubiertos de hidroxiapatita."
+    }
+  ],
+  "datos": [
+    {
+      "tipo": "Química superficial",
+      "grupo": "Carboxilo (–COOH)",
+      "efecto": "Carga negativa a pH fisiológico; incrementa la adsorción de fibronectina y albúmina y promueve extensión celular con fibras de actina."
+    },
+    {
+      "tipo": "Química superficial",
+      "grupo": "Hidroxilo (–OH)",
+      "efecto": "Favorece crecimiento de osteoblastos y adsorción de fibronectina; in vivo se han observado cápsulas fibrosas gruesas."
+    },
+    {
+      "tipo": "Química superficial",
+      "grupo": "Amino (–NH₂)",
+      "efecto": "Carga positiva al protonarse; favorece células endoteliales, fibroblastos y mineralización osteoblástica."
+    },
+    {
+      "tipo": "Química superficial",
+      "grupo": "Metilo (–CH₃) y PEG",
+      "efecto": "Inhiben la adhesión y extensión celular (células redondeadas); el –CH₃ favorece agregación plaquetaria y mala hemocompatibilidad."
+    },
+    {
+      "tipo": "Química superficial",
+      "grupo": "Combinación –NH₂ / –COOH (1:1)",
+      "efecto": "Minimiza la adhesión de plaquetas frente a superficies con un único grupo funcional."
+    },
+    {
+      "tipo": "Energía superficial",
+      "grupo": "Metales (Hierro 2550, Titanio 2050, Cobre 1850 mJ/m²)",
+      "efecto": "Alta energía superficial → mayor reactividad y tendencia a adsorber proteínas."
+    },
+    {
+      "tipo": "Energía superficial",
+      "grupo": "Polímeros (Poliamida 55, PVC 40, PE 31, PP 29, PTFE 19 mJ/m²)",
+      "efecto": "Baja energía superficial (enlaces débiles de van der Waals) → menor mojabilidad intrínseca."
+    }
+  ],
+  "hitos": [
+    {
+      "fecha": "Década de 1960 – 1976",
+      "titulo": "Acuñación y definición de osteointegración",
+      "protagonista": "Per-Ingvar Brånemark",
+      "material": "Titanio en hueso maxilar",
+      "descripcion": "En los años 60 introdujo el término tras anclar piezas de titanio en hueso; en 1976 lo definió como el contacto directo hueso–implante al nivel de resolución de un microscopio óptico."
+    }
+  ],
+  "normas": [
+    {
+      "codigo": "Modelo de Wenzel y Cassie",
+      "titulo": "Caracterización de mojabilidad en superficies reales",
+      "alcance": "Corrigen la ecuación ideal de Young introduciendo el ratio de rugosidad r (Wenzel) y las fracciones químicas Φᵢ (Cassie).",
+      "clave": "La mojabilidad sintetiza en un único parámetro (θ) la topografía, la química y la energía superficial."
+    }
+  ],
+  "preguntas": [
+    {
+      "pregunta": "¿Cuál es el error conceptual más grave respecto a la definición de biocompatibilidad?",
+      "opciones": [
+        "Considerar que la biocompatibilidad es una propiedad intrínseca exclusiva del material, independientemente de dónde y cómo se implante",
+        "Relacionarla con la respuesta inflamatoria del huésped",
+        "Evaluarla en función de la duración del contacto",
+        "Distinguir entre trombogenicidad y hemocompatibilidad"
+      ],
+      "correcta": 0,
+      "explicacion": "La biocompatibilidad pertenece al conjunto material–sistema biológico en una aplicación específica: la hidroxiapatita es biocompatible en cadera pero no en una válvula cardíaca."
+    },
+    {
+      "pregunta": "Durante las primeras horas tras implantar un biomaterial, ¿con qué interactúan directamente las células que llegan a la zona?",
+      "opciones": [
+        "Con la capa de proteínas de la matriz extracelular previamente adsorbidas sobre la superficie (p. ej. secuencias RGD de fibronectina)",
+        "Directamente con los átomos metálicos del volumen interior del implante",
+        "Con el cemento PMMA antes de que se forme la capa de hidratación",
+        "Únicamente con osteoclastos circulantes sin mediación de integrinas"
+      ],
+      "correcta": 0,
+      "explicacion": "En nanosegundos se forma la capa de hidratación e iones, en segundos-horas se adsorben proteínas de la ECM, y las células se unen a esa capa proteica mediante receptores integrina que reconocen el tripéptido RGD."
+    },
+    {
+      "pregunta": "Según la ecuación de Wenzel (cos θW = r · cos θY), ¿qué ocurre si añadimos rugosidad homogénea a un material intrínsecamente hidrofílico (θY < 90°)?",
+      "opciones": [
+        "Se vuelve todavía más hidrofílico (disminuye el ángulo de contacto θW)",
+        "Se vuelve superhidrofóbico (θW > 150°)",
+        "El ángulo de contacto no cambia porque r = 1 siempre",
+        "Se anula el potencial zeta de la doble capa electroquímica"
+      ],
+      "correcta": 0,
+      "explicacion": "Como el ratio de rugosidad r = A_real/A_proyectada es mayor que 1 y cos(θY) > 0 en superficies hidrofílicas, r·cos(θY) crece y el ángulo θW disminuye (más hidrofílico)."
+    },
+    {
+      "pregunta": "¿Dónde se mide exactamente el potencial zeta (ζ) en la Doble Capa Electroquímica (EDL)?",
+      "opciones": [
+        "En el plano de cizallamiento (plano de corte) que separa la capa estacionaria de la capa difusa",
+        "Exactamente sobre los núcleos atómicos del seno sólido del implante",
+        "En la fase gaseosa de la ecuación de Young",
+        "Únicamente en superficies neutras que carecen de grupos funcionales e iones adsorbidos"
+      ],
+      "correcta": 0,
+      "explicacion": "Ψ₀ es el potencial en la pared del sólido; el potencial zeta ζ corresponde al límite entre la capa de iones inmovilizados (estacionaria) y los móviles (difusa)."
+    },
+    {
+      "pregunta": "¿Qué diferencia existe entre osteoinducción y osteoconducción?",
+      "opciones": [
+        "La osteoinducción diferencia células madre mesenquimales en células formadoras de hueso; la osteoconducción guía el crecimiento óseo adaptándose a la superficie",
+        "La osteoconducción ocurre solo en polímeros y la osteoinducción solo en acero inoxidable",
+        "La osteoinducción requiere tejido fibroso grueso entre hueso e implante",
+        "Son sinónimos absolutos de reabsorción osteoclástica"
+      ],
+      "correcta": 0,
+      "explicacion": "Ambos procesos preceden a una buena osteointegración: la osteoinducción recluta y diferencia progenitores hacia osteoblastos, y la osteoconducción sirve de guía física tridimensional."
+    },
+    {
+      "pregunta": "¿Qué papel desempeñan los filopodios y lamelipodios en la adhesión celular sobre un implante?",
+      "opciones": [
+        "Los filopodios actúan como sensores finos de actina para localizar sitios de unión, y los lamelipodios transmiten fuerza de tracción para el desplazamiento celular",
+        "Son proteínas del plasma sanguíneo que desencadenan la coagulación en válvulas mecánicas",
+        "Son poros micrométricos grabados con láser sobre la superficie del titanio",
+        "Son partículas de desgaste de UHMWPE que activan osteoclastos"
+      ],
+      "correcta": 0,
+      "explicacion": "Ambas protuberancias ricas en actina permiten a la célula explorar la topografía/química superficial, establecer contactos focales y extenderse para proliferar."
+    }
+  ],
+  "fuentes": [
+    "Apuntes de clase UVigo (Curso 2026-2027). Biocompatibilidad y comportamiento mecánico de materiales en implantología — Temas 1.2, 2.2, 2.3 y 2.4.",
+    "Wagner, W. R., et al. (Eds.). (2020). Biomaterials Science (4th ed.). Elsevier. Part II: Host Reaction to Biomaterials.",
+    "Temenoff, J. S., & Mikos, A. G. (2022). Biomaterials: The Intersection of Biology and Materials Science (2nd ed.). Pearson."
+  ]
 }

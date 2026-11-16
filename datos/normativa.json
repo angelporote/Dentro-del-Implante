@@ -6,11 +6,217 @@
     "Gestión de riesgos (ISO 14971) y de calidad (ISO 13485)",
     "Familia ISO 10993 y secuencia de evaluación: caracterización → in vitro (SBF, citotoxicidad) → in vivo → ensayos clínicos"
   ],
-  "conceptos": [],
-  "datos": [],
-  "hitos": [],
-  "normas": [],
-  "preguntas": [],
-  "fuentes": [],
-  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+  "conceptos": [
+    {
+      "titulo": "Reglamento (UE) 2017/745 (MDR) y Marcado CE",
+      "definicion": "Norma europea de obligado cumplimiento que regula la introducción en el mercado, comercialización, puesta en servicio e investigaciones clínicas en humanos de los productos sanitarios (Medical Devices Regulation).",
+      "detalle": "Todos los productos sanitarios conformes deben llevar el marcado CE. En España, el organismo competente designado por el Ministerio de Sanidad es la AEMPS (Agencia Española de Medicamentos y Productos Sanitarios).",
+      "ejemplo": "El MDR exige prestar atención específica a toxicidad, compatibilidad entre partes implantables, impacto del procesado, solidez/ductilidad/desgaste/fatiga y propiedades superficiales."
+    },
+    {
+      "titulo": "Gestión de riesgos: UNE EN ISO 14971:2019",
+      "definicion": "Norma que establece las pautas para cumplir los Requisitos Generales de Seguridad y Funcionamiento del MDR mediante un sistema continuo de gestión de riesgos.",
+      "detalle": "El análisis de riesgos prevé posibles peligros durante las 5 fases del ciclo: Diseño → Fabricación → Transporte → Almacenamiento → Utilización, implantando controles y evaluando el riesgo residual frente al beneficio clínico.",
+      "ejemplo": "Evaluar el riesgo de fractura por fatiga o lixiviación de aditivos antes de pasar a ensayos clínicos."
+    },
+    {
+      "titulo": "Sistema de Gestión de Calidad: ISO 13485",
+      "definicion": "Norma específica para sistemas de gestión de la calidad en productos sanitarios (basada en ISO 9001:2015) con fines reglamentarios.",
+      "detalle": "Es la vía reglamentaria para acreditar ante la AEMPS la trazabilidad y control en 6 etapas: diseño y desarrollo, producción, almacenamiento/distribución, instalación, asistencia técnica y desinstalación/eliminación final.",
+      "ejemplo": "Trazabilidad completa de lote de Ti-6Al-4V desde la materia prima y esterilización hasta el quirófano."
+    },
+    {
+      "titulo": "Secuencia obligatoria de evaluación de la biocompatibilidad",
+      "definicion": "Antes de implantar un nuevo dispositivo en pacientes deben superarse secuencialmente 4 etapas: 1) Caracterización física y química. 2) Ensayos in vitro. 3) Ensayos in vivo. 4) Ensayos clínicos.",
+      "detalle": "Si los datos publicados/bases de datos o la caracterización química ya garantizan la seguridad o demuestran equivalencia, se evita repetir ensayos innecesarios en animales.",
+      "ejemplo": "Ningún implante pasa directamente a ensayo en animales ni a humanos sin caracterización físico-química y cribado in vitro."
+    },
+    {
+      "titulo": "Ensayos in vitro: sin células y con células (ISO 10993-5)",
+      "definicion": "Primera fase biológica fuera de un organismo completo: incluye ensayos sin células (liberación de iones e inmersión en líquido corporal simulado SBF para verificar formación de capa de HCA) y ensayos con cultivos celulares de citotoxicidad (contacto directo o indirecto por extractos).",
+      "detalle": "En todo ensayo in vitro deben incluirse 3 grupos con al menos 3 réplicas por material: muestra problema, control positivo (respuesta citotóxica conocida) y control negativo (respuesta no citotóxica conocida).",
+      "ejemplo": "Comprobar en SBF si un biovidrio forma hidroxiapatita carbonatada antes de ensayar osteoblastos in vitro."
+    },
+    {
+      "titulo": "Ensayos in vivo: protección animal e implantación local (ISO 10993-2 y -6)",
+      "definicion": "Evalúan la respuesta tisular en un organismo vivo completo solo cuando los datos previos y el in vitro no son suficientes.",
+      "detalle": "Requieren decidir: modelo animal (preferiblemente animales pequeños como ratón, rata, hámster o conejo según tamaño del implante y tejido receptor; nunca reutilizar animales de estudios previos), materiales (muestra y controles), número de animales y tiempos de implantación (p. ej. 13, 26, 52, 78 o 104 semanas según ISO 10993-6).",
+      "ejemplo": "Evaluación histológica de la cápsula fibrosa o del contacto hueso–implante tras 13 a 52 semanas."
+    }
+  ],
+  "datos": [
+    {
+      "categoria": "Clasificación MDR (UE) 2017/745",
+      "clase": "Clase I",
+      "riesgo": "Bajo",
+      "descripcion": "Productos no invasivos de menor peligro (p. ej., vendas, collarines, instrumental quirúrgico simple reutilizable con reglas específicas).",
+      "ejemplos": ["Gasas no estériles", "Camas hospitalarias", "Gafas correctoras"]
+    },
+    {
+      "categoria": "Clasificación MDR (UE) 2017/745",
+      "clase": "Clase IIa",
+      "riesgo": "Medio",
+      "descripcion": "Dispositivos de riesgo moderado, incluidos invasivos de corta duración que no interactúan de forma peligrosa con órganos vitales.",
+      "ejemplos": ["Lentes de contacto de uso diario", "Suturas no absorbibles estándar", "Guantes quirúrgicos"]
+    },
+    {
+      "categoria": "Clasificación MDR (UE) 2017/745",
+      "clase": "Clase IIb",
+      "riesgo": "Medio-alto",
+      "descripcion": "Dispositivos invasivos a largo plazo o activos que interactúan con el cuerpo de forma potencialmente peligrosa.",
+      "ejemplos": ["Lentes intraoculares (IOL)", "Placas y tornillos de osteosíntesis convencionales", "Implantes dentales", "Ventiladores pulmonares"]
+    },
+    {
+      "categoria": "Clasificación MDR (UE) 2017/745",
+      "clase": "Clase III",
+      "riesgo": "Alto",
+      "descripcion": "Dispositivos de máximo riesgo: la mayoría de implantes permanentes críticos, biodegradables o en contacto con corazón, sistema circulatorio central o sistema nervioso central.",
+      "ejemplos": ["Prótesis de cadera y rodilla", "Válvulas cardíacas", "Stents coronarios", "Marcapasos", "Implantes mamarios"]
+    },
+    {
+      "categoria": "Control en ensayos in vitro (ISO 10993-5)",
+      "clase": "Mínimo 3 réplicas por grupo",
+      "riesgo": "Obligatorio en todo ensayo",
+      "descripcion": "Se ensayan simultáneamente: 1) Muestra problema, 2) Control positivo (citotóxico conocido), 3) Control negativo (no citotóxico conocido).",
+      "ejemplos": ["Contacto directo sobre monocapa celular", "Contacto indirecto mediante extractos del biomaterial"]
+    }
+  ],
+  "hitos": [
+    {
+      "fecha": "5 de abril de 2017",
+      "titulo": "Aprobación del Reglamento (UE) 2017/745 (MDR)",
+      "protagonista": "Parlamento Europeo y Consejo de la UE",
+      "material": "Marco normativo europeo de productos sanitarios",
+      "descripcion": "Sustituyó a las antiguas directivas para reforzar la trazabilidad, la evaluación clínica, la vigilancia poscomercialización y el control de implantes de Clase III."
+    }
+  ],
+  "normas": [
+    {
+      "codigo": "Reglamento (UE) 2017/745 (MDR)",
+      "titulo": "Reglamento europeo sobre productos sanitarios",
+      "alcance": "Define qué es un producto sanitario, exige marcado CE, clasifica en Clases I–III y detalla requisitos químicos, físicos, mecánicos y superficiales.",
+      "clave": "En España lo supervisa la AEMPS."
+    },
+    {
+      "codigo": "UNE EN ISO 14971:2019",
+      "titulo": "Aplicación de la gestión del riesgo a los productos sanitarios",
+      "alcance": "Cubre Diseño, Fabricación, Transporte, Almacenamiento y Utilización.",
+      "clave": "Marco obligatorio para demostrar seguridad y balance riesgo/beneficio."
+    },
+    {
+      "codigo": "ISO 13485",
+      "titulo": "Sistemas de gestión de la calidad para productos sanitarios",
+      "alcance": "Abarca todo el ciclo de vida (diseño, producción, distribución, asistencia y eliminación).",
+      "clave": "Requisito exigido por la AEMPS para fabricantes e importadores."
+    },
+    {
+      "codigo": "ISO 10993-1",
+      "titulo": "Evaluación biológica como parte de un proceso de gestión del riesgo",
+      "alcance": "Anexo A: matriz de criterios (X: información previa requerida; E: criterios a evaluar según naturaleza y duración del contacto: A limitada ≤ 24 h, B prolongada 24 h–30 d, C largo plazo > 30 d). Anexo B: evaluación toxicológica.",
+      "clave": "Hoja de ruta central de toda la familia ISO 10993."
+    },
+    {
+      "codigo": "ISO 10993-2",
+      "titulo": "Requisitos relativos a la protección de los animales",
+      "alcance": "Principios éticos, reducción, reemplazo y refinamiento; prohíbe ensayos si ya existen datos suficientes y prohíbe reutilizar animales.",
+      "clave": "Marco ético previo a cualquier ensayo in vivo."
+    },
+    {
+      "codigo": "ISO 10993-5",
+      "titulo": "Ensayos de citotoxicidad in vitro",
+      "alcance": "Modalidades por contacto directo e indirecto con cultivos celulares.",
+      "clave": "Exige muestra + control positivo + control negativo, con mínimo 3 réplicas por material."
+    },
+    {
+      "codigo": "ISO 10993-6",
+      "titulo": "Ensayos relativos a efectos locales después de la implantación",
+      "alcance": "Evalúa la respuesta tisular local tras implantación en especies animales y periodos normalizados (13, 26, 52, 78, 104 semanas).",
+      "clave": "Confirma biocompatibilidad tisular in vivo antes de ensayos clínicos."
+    },
+    {
+      "codigo": "ISO 10993-17",
+      "titulo": "Establecimiento de límites permisibles para sustancias lixiviables",
+      "alcance": "Define sustancia lixiviable (agente químico extraído por agua u otros líquidos relacionados con el uso) y calcula límites toxicológicos tolerables.",
+      "clave": "Soporta la evaluación toxicológica del Anexo B de ISO 10993-1."
+    },
+    {
+      "codigo": "ISO 10993-18",
+      "titulo": "Caracterización química de materiales de productos sanitarios",
+      "alcance": "Identificación y cuantificación de la composición química y de posibles sustancias extraíbles o lixiviables.",
+      "clave": "Primer paso obligatorio antes de realizar ensayos biológicos con animales."
+    }
+  ],
+  "preguntas": [
+    {
+      "pregunta": "¿Cuál es la secuencia obligatoria para evaluar la biocompatibilidad de un nuevo implante antes de llegar al paciente?",
+      "opciones": [
+        "Caracterización física y química → ensayos in vitro → ensayos in vivo → ensayos clínicos",
+        "Ensayos clínicos → ensayos in vivo → caracterización química → ensayos in vitro",
+        "Ensayos in vivo → marcado CE → ensayos in vitro → caracterización física",
+        "Solo ensayos en SBF durante 24 horas y marcado CE directo"
+      ],
+      "correcta": 0,
+      "explicacion": "La evaluación progresa de menor a mayor complejidad biológica y riesgo ético: primero caracterización físico-química (ISO 10993-18), luego cribado in vitro (ISO 10993-5), después in vivo si procede (ISO 10993-2/-6) y finalmente ensayos clínicos."
+    },
+    {
+      "pregunta": "Según el Reglamento (UE) 2017/745 (MDR), ¿en qué clase de riesgo se encuadran dispositivos implantables críticos como válvulas cardíacas, stents coronarios o prótesis de cadera?",
+      "opciones": [
+        "Clase III (riesgo alto)",
+        "Clase I (riesgo bajo)",
+        "Clase IIa (riesgo medio)",
+        "No se consideran productos sanitarios"
+      ],
+      "correcta": 0,
+      "explicacion": "El MDR clasifica los productos sanitarios en I, IIa, IIb y III según su nivel de riesgo; los implantes de alto riesgo y los que interactúan con órganos vitales pertenecen a la Clase III."
+    },
+    {
+      "pregunta": "En un ensayo de citotoxicidad in vitro (ISO 10993-5), ¿qué materiales y cuántas réplicas mínimas deben ensayarse?",
+      "opciones": [
+        "La muestra problema, un control positivo (citotóxico) y un control negativo (no citotóxico), con al menos 3 réplicas por material",
+        "Solo la muestra problema por duplicado",
+        "La muestra y un control negativo, con 1 réplica cada uno",
+        "Únicamente extractos en SBF sin células"
+      ],
+      "correcta": 0,
+      "explicacion": "Los controles positivo y negativo validan que el cultivo celular responde correctamente al ensayo, y se exigen como mínimo 3 réplicas por material."
+    },
+    {
+      "pregunta": "¿Qué diferencia las partes ISO 10993-17 e ISO 10993-18 dentro de la evaluación biológica?",
+      "opciones": [
+        "La 10993-18 realiza la caracterización química del material y la 10993-17 establece los límites permisibles para las sustancias lixiviables",
+        "La 10993-17 regula la protección animal y la 10993-18 la citotoxicidad celular",
+        "Ambas son normas de calidad empresarial equivalentes a ISO 9001",
+        "Solo se aplican a lentes de contacto desechables"
+      ],
+      "correcta": 0,
+      "explicacion": "Primero la ISO 10993-18 identifica y cuantifica qué sustancias químicas pueden extraerse o lixiviarse; después la ISO 10993-17 evalúa su riesgo toxicológico fijando límites seguros."
+    },
+    {
+      "pregunta": "En el Anexo A de la norma ISO 10993-1, ¿qué significan las marcas «X» y «E» en la matriz de evaluación?",
+      "opciones": [
+        "X: información previa necesaria como requisito previo; E: criterios de valoración que deben evaluarse en la evaluación del riesgo biológico",
+        "X: ensayo prohibido por ética animal; E: ensayo opcional sin valor regulatorio",
+        "X: producto de Clase I; E: producto de Clase III",
+        "X: control negativo; E: control positivo"
+      ],
+      "correcta": 0,
+      "explicacion": "La tabla del Anexo A distingue entre la información previa obligatoria (X) —típicamente caracterización física/química— y los criterios biológicos a evaluar (E) según contacto y duración (≤24 h, 24 h–30 d, >30 d)."
+    },
+    {
+      "pregunta": "¿Qué norma exige habitualmente la AEMPS para acreditar que el fabricante dispone de un Sistema de Gestión de la Calidad para productos sanitarios?",
+      "opciones": [
+        "ISO 13485",
+        "ISO 10993-5",
+        "ISO 7206",
+        "Declaración de Chester de 1986"
+      ],
+      "correcta": 0,
+      "explicacion": "La ISO 13485 (basada en ISO 9001:2015) certifica el sistema de gestión de calidad específico del ciclo de vida de productos sanitarios; la ISO 14971 cubre gestión de riesgos."
+    }
+  ],
+  "fuentes": [
+    "Apuntes de clase UVigo (Curso 2026-2027). Biocompatibilidad y comportamiento mecánico de materiales en implantología — Tema 2.5.",
+    "Reglamento (UE) 2017/745 del Parlamento Europeo y del Consejo (MDR).",
+    "Wagner, W. R., et al. (Eds.). (2020). Biomaterials Science (4th ed.). Elsevier. Part III: The Medical Product Lifecycle."
+  ]
 }
