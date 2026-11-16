@@ -77,8 +77,8 @@ export const M = {
   stem:  new THREE.MeshPhysicalMaterial({ color:0xE4E7EE, metalness:1, roughness:0.3, anisotropy:0.6, transparent:true }),
   cup:   new THREE.MeshPhysicalMaterial({ color:0xC6CCD8, metalness:1, roughness:0.16, transparent:true }),                 // interior y borde pulidos
   cupOuter: new THREE.MeshPhysicalMaterial({ color:0xB4BAC7, metalness:0.9, roughness:0.8, transparent:true }),            // exterior poroso
-  // "transmission" (luz que atraviesa) obliga a dibujar la escena dos veces: solo en equipos potentes
-  liner: new THREE.MeshPhysicalMaterial({ color:0xF8F3E8, metalness:0, roughness:0.4, transmission:gamaBaja?0:0.35, thickness:0.25, ior:1.53, attenuationColor:0xF0DDB8, attenuationDistance:0.9, sheen:0.4, sheenColor:0xFFF6DE, transparent:true }),
+  // Sin "transmission": evita dibujar la escena entera dos veces por fotograma
+  liner: new THREE.MeshPhysicalMaterial({ color:0xF8F3E8, metalness:0, roughness:0.35, clearcoat:0.25, sheen:0.4, sheenColor:0xFFF6DE, transparent:true, opacity:0.88 }),
   head:  new THREE.MeshPhysicalMaterial({ color:0xF6EAEF, metalness:0, roughness:0.08, clearcoat:1, clearcoatRoughness:0.03, ior:1.76, sheen:0.25, sheenColor:0xFFE3EA, transparent:true })
 };
 // Materiales de cada pieza (la copa tiene dos: interior pulido y exterior poroso)
@@ -126,12 +126,12 @@ const parts = {};                        // grupo de cada pieza (para moverlas a
 function addPart(key, mesh){ const g=new THREE.Group(); g.add(mesh); mesh.userData.part=key; g.userData.part=key; prosthesis.add(g); parts[key]=g; return g; }
 
 // Cabeza: esfera pulida
-addPart('head', new THREE.Mesh(new THREE.SphereGeometry(1, 96, 64), M.head));
+addPart('head', new THREE.Mesh(new THREE.SphereGeometry(1, 64, 40), M.head));
 
 // Inserto y copa: dos casquetes, orientados para que la abertura mire hacia el fémur
-const linerMesh = new THREE.Mesh(shell(1.04, 1.26), M.liner); linerMesh.rotation.z = 0.62;
-const cupMesh   = new THREE.Mesh(shell(1.28, 1.48), M.cup);   cupMesh.rotation.z = 0.62;
-const cupOuter  = new THREE.Mesh(new THREE.SphereGeometry(1.492, 128, 48, 0, Math.PI*2, 0, Math.PI/2), M.cupOuter); cupOuter.rotation.z = 0.62;
+const linerMesh = new THREE.Mesh(shell(1.04, 1.26, 64), M.liner); linerMesh.rotation.z = 0.62;
+const cupMesh   = new THREE.Mesh(shell(1.28, 1.48, 64), M.cup);   cupMesh.rotation.z = 0.62;
+const cupOuter  = new THREE.Mesh(new THREE.SphereGeometry(1.492, 72, 32, 0, Math.PI*2, 0, Math.PI/2), M.cupOuter); cupOuter.rotation.z = 0.62;
 addPart('liner', linerMesh);
 addPart('cup', cupMesh);
 cupOuter.userData.part='cup'; parts.cup.add(cupOuter);
@@ -183,8 +183,8 @@ const field = new THREE.Group(); scene.add(field);
 const crystalGeo = new THREE.CylinderGeometry(0.35, 0.35, 1.4, 6);          // prisma hexagonal
 const fragGeo = new THREE.IcosahedronGeometry(0.6, 0);
 const crystalMats = [
-  new THREE.MeshPhysicalMaterial({ color:0x5FF2D2, roughness:0.15, metalness:0, transmission:0.3, thickness:1, flatShading:true, emissive:0x0E5E52, emissiveIntensity:0.4 }),
-  new THREE.MeshPhysicalMaterial({ color:0x9C83FF, roughness:0.2, flatShading:true, emissive:0x2A1A7A, emissiveIntensity:0.5 })
+  new THREE.MeshStandardMaterial({ color:0x5FF2D2, roughness:0.18, metalness:0.05, transparent:true, opacity:0.78, flatShading:true, emissive:0x0E5E52, emissiveIntensity:0.45 }),
+  new THREE.MeshStandardMaterial({ color:0x9C83FF, roughness:0.22, flatShading:true, emissive:0x2A1A7A, emissiveIntensity:0.5 })
 ];
 const fragMat = new THREE.MeshStandardMaterial({ color:0x5A4C8E, roughness:0.9, flatShading:true });
 const floaters = [];

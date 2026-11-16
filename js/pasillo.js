@@ -33,10 +33,10 @@ const lucesSala = [];    // por tramo: { pos (posición en el mundo), color, int
 /* ---- Materiales del pasillo ---- */
 const wallMat = std(0xCFDCE0, { roughness:0.75 });                                         // pared clínica
 const panelLineMat = std(0xC9D5DA, { roughness:0.6 });
-const frameMat = new THREE.MeshPhysicalMaterial({ color:0xD5DBE2, metalness:1, roughness:0.28, clearcoat:0.4 });   // acero inoxidable
+const frameMat = std(0xD5DBE2, { metalness:0.85, roughness:0.25 });                                 // acero inoxidable ligero
 const railMat = std(0xC49A6C, { roughness:0.45 });                                         // pasamanos de madera
 export const stripeMat = std(0x23A894, { roughness:0.5 });                                 // franja de señalización
-const glassMat = new THREE.MeshPhysicalMaterial({ color:0xffffff, metalness:0, roughness:0.02, transparent:true, opacity:0.035 });
+const glassMat = new THREE.MeshBasicMaterial({ color:0xffffff, transparent:true, opacity:0.035, depthWrite:false });
 
 // Señal de hospital: cartel blanco con bloque de color y texto oscuro
 function cartel(num, texto){ const m = canvasPlane(2.6,0.42,780,126,(g,w,h)=>{ g.clearRect(0,0,w,h);
@@ -67,7 +67,7 @@ export function crearPasillo(vitrinas, salas){
   mesh(new THREE.CircleGeometry(HR+0.6, 96), std(0xF2F6F7), 0, SEG_H/2, 0, hubScene).rotation.x = Math.PI/2;
   mesh(new THREE.RingGeometry(HR-1.6, HR-1.45, 200), stripeMat, 0, -SEG_H/2+0.01, 0, hubScene).rotation.x = -Math.PI/2;
 
-  const glowMats = [], glassMeshes = [], anims = [];   // anims: { seg, f } → solo se ejecutan si el tramo se ve
+  const glowMats = [], glassMeshes = [], anims = [], tramos = [];   // anims: { seg, f } → solo se ejecutan si el tramo se ve
   for(let i=0;i<HN;i++){
     const v=vitrinas[i%NR], g=new THREE.Group(); g.rotation.y = -i*HSTEP; hubScene.add(g);
     mesh(wallGeo, wallMat, 0,0,-HR-0.35, g);
@@ -84,6 +84,7 @@ export function crearPasillo(vitrinas, salas){
     const pl = cartel(String(i%NR+1).padStart(2,'0'), v.titulo); pl.position.set(0, WIN_Y+WIN_H/2+0.55, -HR+0.37); g.add(pl);
     // La sala de detrás: la construye su módulo con estas ayudas
     const d = new THREE.Group(); d.scale.setScalar(1.3); d.position.set(0,WIN_Y-0.2,-HR-0.36); g.add(d);
+    tramos.push({ g, d, seg:i });
     const ctx = {
       sala:(dd, color)=> mesh(new THREE.BoxGeometry(5.8, 4.8, 6.2), std(color,{ side:THREE.BackSide, roughness:0.85 }), 0, 0.15, -3.1, dd),
       luz:(dd, color, intensidad)=>{ g.updateMatrixWorld(true); const p=dd.localToWorld(new THREE.Vector3(0,1.5,-2.4)); lucesSala[i]={ pos:p, color:new THREE.Color(color), intensidad }; },
@@ -167,6 +168,12 @@ export function crearPasillo(vitrinas, salas){
     // Cámara: mira hacia la vitrina según el ángulo, con un leve balanceo y paralaje del ratón
     hubCam.rotation.y = -THREE.MathUtils.degToRad(state.angle) - puntero.x*0.04 + Math.sin(t*0.3)*0.006;
     hubCam.rotation.x = -puntero.y*0.03 + Math.sin(t*0.4)*0.004;
+    // Ocultamos los tramos y salas fuera de vista para evitar dibujarlos
+    for(const tr of tramos){
+      const rel=Math.abs(norm(tr.seg*STEP - state.angle));
+      tr.g.visible = rel < 95;
+      tr.d.visible = rel < 75;
+    }
     // Animaciones de las salas: solo las de los tramos visibles (las pantallas no se repintan si no se ven)
     for(const a of anims){ const rel=Math.abs(norm(a.seg*STEP - state.angle)); if(rel < STEP*1.3) a.f(t); }
     // Las 3 luces se colocan en la vitrina activa y en sus dos vecinas

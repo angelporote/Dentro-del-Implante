@@ -5,7 +5,7 @@
    ========================================================= */
 import * as THREE from 'three';
 import { gsap, D, estado } from './util.js';
-import { renderer, dibujar, redimensionar } from './motor.js';
+import { renderer, dibujar, redimensionar, vigilarRendimiento } from './motor.js';
 import * as portada from './portada.js';
 import { hubScene, hubCam, HUB_FOV, crearPasillo } from './pasillo.js';
 import { crearMesa, conectarAvisos } from './mesa.js';
@@ -26,7 +26,9 @@ let pasillo=null, mesa=null;
 const reloj = new THREE.Clock();
 let primero = true;
 renderer.setAnimationLoop(()=>{
-  const t = reloj.getElapsedTime();
+  const dt = reloj.getDelta();
+  const t = reloj.elapsedTime;
+  vigilarRendimiento(dt, pr => mesa && mesa.bajarResolucion && mesa.bajarResolucion(pr));
   if(estado.enPasillo && pasillo){
     pasillo.actualizar(t);
     dibujar(hubScene, hubCam, { fuerza:0.3, umbral:1.3, radio:0.5, exposicion:0.9 });

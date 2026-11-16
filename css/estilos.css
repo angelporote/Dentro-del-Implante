@@ -50,7 +50,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Controles del modo exploración */
 .explore-ui span{pointer-events:none;user-select:none}
 .explore-ui{position:fixed;left:clamp(1.2rem,4vw,3rem);bottom:clamp(1.5rem,6vh,3rem);z-index:4;display:flex;gap:.8rem;align-items:center;opacity:0;pointer-events:none}
-.ghost{border:1px solid var(--edge);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:99px;padding:.7rem 1.2rem;font-size:.92rem}
+.ghost{border:1px solid var(--edge);background:rgba(18,14,48,.84);border-radius:99px;padding:.7rem 1.2rem;font-size:.92rem}
 .ghost:hover{border-color:rgba(255,255,255,.35)}
 .explore-ui span{color:var(--dim);font-size:.9rem}
 
@@ -59,7 +59,7 @@ button{font:inherit;color:inherit;cursor:pointer}
        opacity:0;pointer-events:none;transform:translate(-9px,-50%);white-space:nowrap}
 .label .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--c);display:grid;place-items:center;flex:none}
 .label .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--c)}
-.label .txt{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--edge);border-radius:10px;padding:.45rem .75rem;text-align:left}
+.label .txt{background:rgba(18,14,48,.84);border:1px solid var(--edge);border-radius:10px;padding:.45rem .75rem;text-align:left}
 .label b{display:block;font-weight:600;font-size:.92rem}
 .label em{font-style:normal;color:var(--dim);font-size:.78rem}
 .label:hover .txt,.label.on .txt{border-color:var(--c)}
@@ -143,7 +143,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .imm-content > p{color:#D3CEF0;line-height:1.6;margin:0 0 1.8rem;max-width:48ch}
 .imm-q{font-weight:600;margin-bottom:.9rem}
 .acts{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
-.act{display:flex;gap:.9rem;align-items:flex-start;text-align:left;border:1px solid var(--edge);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+.act{display:flex;gap:.9rem;align-items:flex-start;text-align:left;border:1px solid var(--edge);background:rgba(18,14,48,.84);
   border-radius:16px;padding:1rem;transition:border-color .2s, transform .2s}
 .act:hover{border-color:rgba(95,242,210,.6);transform:translateY(-2px)}
 .act .ico{flex:none;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:rgba(95,242,210,.12);color:var(--bio)}

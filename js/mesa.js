@@ -298,25 +298,28 @@ function actualizar(t){
   let cambia = forzarDibujo; forzarDibujo=false;
   if(counter.position.y!==ultimoY){ ultimoY=counter.position.y; cambia=true; }
   if(estado.enSala){ if(cambia) renderDeskLayer(); return; }        // dentro de una sala no hay física ni latido
-  // latido de la válvula y pantalla del desfibrilador, a 30 fotogramas por segundo
-  const tick=Math.floor(t*30);
+  // latido de la válvula y pantalla del desfibrilador, a 18 fotogramas por segundo
+  const tick=Math.floor(t*18);
   if(tick!==ultimoLatido){ ultimoLatido=tick;
     const fase=(t*1.1)%1, open = fase<0.4 ? Math.sin(fase/0.4*Math.PI) : 0;
-    updateValve(open); if(tick%2===0) dScreen.userData.redraw(t); cambia=true; }
-  if(deskGrab) jointBody.position.copy(deskGrab.target);
-  world.step(1/120, dt, 8);
-  // el cable de las palas actúa como una cuerda: no deja que se alejen más de su longitud
-  for(const b of paddles){ const a=paddleAnchor(b), P=b.body.position; tmpV.set(P.x-a.x,P.y-a.y,P.z-a.z); const L=tmpV.length();
-    if(L>CABLE){ const z0=P.z; tmpV.multiplyScalar(CABLE/L); P.set(a.x+tmpV.x,a.y+tmpV.y,z0); const n=tmpV.normalize(), V=b.body.velocity, vn=V.x*n.x+V.y*n.y+V.z*n.z;
-      if(vn>0){ V.x-=n.x*vn; V.y-=n.y*vn; V.z-=n.z*vn; } } }
-  for(const b of deskBodies){
-    if(b.body.sleepState===CANNON.Body.SLEEPING && !deskGrab) continue;   // quieto: nada que hacer
-    const V=b.body.velocity, sp=V.length(); if(sp>3.5) V.scale(3.5/sp, V);  // límite de velocidad ante tirones bruscos
-    const W=b.body.angularVelocity; if(Math.abs(W.z)>12) W.z=Math.sign(W.z)*12;
-    if(b.body.position.y<TOP-0.6) resetBody(b);                            // si algo se escapa, vuelve a su sitio
-    b.obj.position.copy(b.body.position); b.obj.quaternion.copy(b.body.quaternion); cambia=true;
+    updateValve(open); dScreen.userData.redraw(t); cambia=true; }
+  const hayActivos = deskGrab || deskBodies.some(b=>b.body.sleepState!==CANNON.Body.SLEEPING);
+  if(hayActivos){
+    if(deskGrab) jointBody.position.copy(deskGrab.target);
+    world.step(1/120, dt, 6);
+    // el cable de las palas actúa como una cuerda: no deja que se alejen más de su longitud
+    for(const b of paddles){ const a=paddleAnchor(b), P=b.body.position; tmpV.set(P.x-a.x,P.y-a.y,P.z-a.z); const L=tmpV.length();
+      if(L>CABLE){ const z0=P.z; tmpV.multiplyScalar(CABLE/L); P.set(a.x+tmpV.x,a.y+tmpV.y,z0); const n=tmpV.normalize(), V=b.body.velocity, vn=V.x*n.x+V.y*n.y+V.z*n.z;
+        if(vn>0){ V.x-=n.x*vn; V.y-=n.y*vn; V.z-=n.z*vn; } } }
+    for(const b of deskBodies){
+      if(b.body.sleepState===CANNON.Body.SLEEPING && !deskGrab) continue;   // quieto: nada que hacer
+      const V=b.body.velocity, sp=V.length(); if(sp>3.5) V.scale(3.5/sp, V);  // límite de velocidad ante tirones bruscos
+      const W=b.body.angularVelocity; if(Math.abs(W.z)>12) W.z=Math.sign(W.z)*12;
+      if(b.body.position.y<TOP-0.6) resetBody(b);                            // si algo se escapa, vuelve a su sitio
+      b.obj.position.copy(b.body.position); b.obj.quaternion.copy(b.body.quaternion); cambia=true;
+    }
+    updateCables();
   }
-  updateCables();
   if(cambia) renderDeskLayer();
 }
 function redimensionar(w,h){ deskRenderer.setSize(w,h,false); layoutDesk(); forzarDibujo=true; }
@@ -359,5 +362,6 @@ function deskPointerUp(){
 
 listo = true;
 return { contador:counter, actualizar, redimensionar, dibujar:()=>{ forzarDibujo=true; },
+         bajarResolucion:(pr)=>{ deskRenderer.setPixelRatio(pr); deskRenderer.setSize(innerWidth,innerHeight,false); forzarDibujo=true; },
          pointerDown:deskPointerDown, pointerMove:deskPointerMove, pointerUp:deskPointerUp, agarrando:()=>!!deskGrab };
 }
