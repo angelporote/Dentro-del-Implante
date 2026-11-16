@@ -20,8 +20,35 @@ export function construir(d, ctx){
   mesh(new THREE.BoxGeometry(2.6,0.22,1.05), std(0x2F8A80,{roughness:.9}), 0.15,-0.85,-3.1, d);
   mesh(new THREE.SphereGeometry(0.2,24,16), std(0xE6D7B8), -1.2,-0.72,-3.1, d);
   mesh(new THREE.BoxGeometry(1.1,0.75,0.08), std(0x0A1E1C,{metalness:.4}), 1.95,0.55,-4.4, d);
-  const ecg = canvasPlane(1.0,0.65,260,170,(g,w,h,t)=>{ g.fillStyle='#04201C'; g.fillRect(0,0,w,h); g.strokeStyle='#5FF2D2'; g.lineWidth=4; g.beginPath();
-    for(let x=0;x<=w;x+=4){ const ph=((x/w)*2 - t*0.6)%1, p=(ph+1)%1; let y=h*0.6; if(p>.45&&p<.5)y-=h*.42; else if(p>.5&&p<.54)y+=h*.2; else if(p>.6&&p<.7)y-=h*.08; x?g.lineTo(x,y):g.moveTo(x,y); } g.stroke(); });
+  const ecg = canvasPlane(1.0, 0.65, 520, 340, (g, w, h, t) => {
+    g.fillStyle = '#04201C';
+    g.fillRect(0, 0, w, h);
+    g.strokeStyle = 'rgba(95,242,210,.12)';
+    g.lineWidth = 1.5;
+    for(let i = 1; i < 6; i++){ g.beginPath(); g.moveTo(i * w / 6, 0); g.lineTo(i * w / 6, h); g.stroke(); }
+    for(let j = 1; j < 4; j++){ g.beginPath(); g.moveTo(0, j * h / 4); g.lineTo(w, j * h / 4); g.stroke(); }
+    g.fillStyle = 'rgba(95,242,210,.88)';
+    g.font = '600 24px Sora, sans-serif';
+    g.textBaseline = 'top';
+    g.textAlign = 'left';
+    g.fillText('ECG · II', 22, 16);
+    g.textAlign = 'right';
+    g.fillText('72 bpm', w - 22, 16);
+    g.strokeStyle = '#5FF2D2';
+    g.lineWidth = 7;
+    g.lineCap = 'round';
+    g.lineJoin = 'round';
+    g.beginPath();
+    for(let x = 0; x <= w; x += 2){
+      const ph = ((x / w) * 2 - t * 0.6) % 1, p = (ph + 1) % 1;
+      let y = h * 0.62;
+      if(p > .45 && p < .5) y -= h * .38;
+      else if(p > .5 && p < .54) y += h * .19;
+      else if(p > .6 && p < .7) y -= h * .08;
+      x ? g.lineTo(x, y) : g.moveTo(x, y);
+    }
+    g.stroke();
+  });
   ecg.position.set(1.95,0.55,-4.35); d.add(ecg);
   ctx.anim(t=>{ beam.material.opacity=0.06+Math.sin(t*1.5)*0.012; if((t*30|0)%2===0) ecg.userData.redraw(t); });
 }

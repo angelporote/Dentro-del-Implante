@@ -20,8 +20,28 @@ function pedestal(d, x, z=-3.8){
   const g=new THREE.Group(); g.position.set(x,-0.25,z); d.add(g); return g;
 }
 // Placa con texto pintado
-function placa(d, texto, x, y, z, w=0.5){ const p=canvasPlane(w,0.16,320,100,(g,W,H)=>{ g.fillStyle='#F4EBD8'; g.fillRect(0,0,W,H); g.fillStyle='#3A2F1E'; g.font='700 46px Sora, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(texto,W/2,H/2); });
-  p.material.toneMapped=true; p.position.set(x,y,z); d.add(p); return p; }
+function placa(d, texto, x, y, z, w=0.5){
+  const p = canvasPlane(w, 0.16, 640, 180, (g, W, H) => {
+    g.fillStyle = '#F4EBD8';
+    g.fillRect(0, 0, W, H);
+    let tam = 84;
+    const maxW = W - 72;
+    g.font = `700 ${tam}px Sora, sans-serif`;
+    while(tam > 32 && g.measureText(texto).width > maxW){
+      tam -= 2;
+      g.font = `700 ${tam}px Sora, sans-serif`;
+    }
+    g.fillStyle = '#3A2F1E';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillText(texto, W / 2, H / 2);
+  });
+  p.material.toneMapped = true;
+  p.position.set(x, y, z);
+  d.add(p);
+  document.fonts?.ready?.then(() => p.userData.redraw(0));
+  return p;
+}
 
 export function construir(d, ctx){
   ctx.sala(d, 0x3A1A2E); ctx.luz(d, 0xFFC2C8, 16);
@@ -41,5 +61,6 @@ export function construir(d, ctx){
   mesh(new THREE.SphereGeometry(0.13,32,16), new THREE.MeshPhysicalMaterial({ color:0xEAF6FF, roughness:0.02, transparent:true, opacity:0.55, clearcoat:1 }), 0,0,0, lente).scale.z=0.3;
   for(const sgn of [-1,1]){ const c=new THREE.EllipseCurve(0,0,0.24,0.24, sgn>0?0:Math.PI, (sgn>0?0:Math.PI)+1.6);
     const pts=c.getPoints(20).map(p=>new THREE.Vector3(p.x,p.y,0)); mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),20,0.01,6), std(0x9FB4FF), 0,0,0, lente); }
+  [['Stent', -1.8], ['Válvula', -0.6], ['Marcapasos', 0.6], ['Lente IOL', 1.8]].forEach(([t, x]) => placa(d, t, x, -0.9, -3.38, 0.62));
   ctx.anim(t=>{ ps.forEach((g,i)=>{ g.rotation.y=t*0.5+i; g.position.y=-0.25+Math.sin(t+i)*0.04; }); });
 }

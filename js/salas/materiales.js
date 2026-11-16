@@ -30,10 +30,45 @@ export function construir(d, ctx){
   const cross = mesh(new THREE.BoxGeometry(1.3,0.16,0.32), std(0xA9B8F0,{metalness:.7,roughness:.25}), mx,0.4,mz, d);
   const spec = mesh(new THREE.CylinderGeometry(0.06,0.06,1,24), std(0xF2F2F6,{metalness:.9,roughness:.15}), mx,-0.5,mz, d);
   // pantalla con la curva tensión-deformación dibujándose
-  const scr = canvasPlane(1.7,1.05,340,210,(g,w,h,t)=>{ g.fillStyle='rgba(6,30,34,.92)'; g.fillRect(0,0,w,h);
-    g.strokeStyle='rgba(95,242,210,.15)'; for(let i=1;i<6;i++){ g.beginPath(); g.moveTo(i*w/6,0); g.lineTo(i*w/6,h); g.stroke(); }
-    const k=(t*0.25)%1; g.strokeStyle='#7FFFE0'; g.lineWidth=4; g.beginPath(); g.moveTo(20,h-20);
-    for(let i=0;i<=60*k;i++){ const x=i/60; const y= x<.18 ? x/.18*.7 : .7+.25*(1-Math.pow(1-(x-.18)/.82,2)) - (x>.85?(x-.85)*1.2:0); g.lineTo(20+x*(w-40), h-20-y*(h-40)); } g.stroke(); });
+  const scr = canvasPlane(1.7, 1.05, 680, 420, (g, w, h, t) => {
+    g.clearRect(0, 0, w, h);
+    g.fillStyle = 'rgba(6,30,34,.92)';
+    g.fillRect(0, 0, w, h);
+    g.strokeStyle = 'rgba(95,242,210,.15)';
+    g.lineWidth = 2;
+    for(let i = 1; i < 6; i++){ g.beginPath(); g.moveTo(i * w / 6, 0); g.lineTo(i * w / 6, h); g.stroke(); }
+    for(let j = 1; j < 4; j++){ g.beginPath(); g.moveTo(0, j * h / 4); g.lineTo(w, j * h / 4); g.stroke(); }
+    const padL = 48, padR = 40, padT = 36, padB = 46;
+    g.strokeStyle = 'rgba(127,255,224,.45)';
+    g.lineWidth = 3;
+    g.beginPath();
+    g.moveTo(padL, padT - 10);
+    g.lineTo(padL, h - padB);
+    g.lineTo(w - padR + 12, h - padB);
+    g.stroke();
+    g.fillStyle = 'rgba(127,255,224,.92)';
+    g.font = '700 32px Sora, sans-serif';
+    g.textAlign = 'left';
+    g.textBaseline = 'top';
+    g.fillText('σ', padL + 14, padT - 14);
+    g.textAlign = 'right';
+    g.textBaseline = 'bottom';
+    g.fillText('ε', w - padR + 14, h - padB - 10);
+    const k = (t * 0.25) % 1;
+    const plotW = w - padL - padR, plotH = h - padT - padB;
+    g.strokeStyle = '#7FFFE0';
+    g.lineWidth = 7;
+    g.lineCap = 'round';
+    g.lineJoin = 'round';
+    g.beginPath();
+    g.moveTo(padL, h - padB);
+    for(let i = 0; i <= 90 * k; i++){
+      const x = i / 90;
+      const y = x < .18 ? x / .18 * .7 : .7 + .25 * (1 - Math.pow(1 - (x - .18) / .82, 2)) - (x > .85 ? (x - .85) * 1.2 : 0);
+      g.lineTo(padL + x * plotW, h - padB - y * plotH);
+    }
+    g.stroke();
+  });
   scr.position.set(-1.25,0.15,-4.0); d.add(scr);
   ctx.anim(t=>{ const e=(Math.sin(t*0.8)+1)/2; cross.position.y=0.25+e*0.35; spec.scale.y=0.8+e*0.35; spec.position.y=-0.6+e*0.17; if((t*30|0)%3===0) scr.userData.redraw(t); });
 }

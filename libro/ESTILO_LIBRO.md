@@ -1,45 +1,50 @@
 # Guía editorial del libro de texto · *Dentro del implante*
 
-Este documento fija el criterio visual, tipográfico y didáctico común para los **6 capítulos descargables** (`libro/Capitulo_0X_*.pdf`), asociados a las 6 vitrinas de la web 3D. Todo capítulo nuevo —y la revisión del Capítulo 1— debe compilarse enlazando [plantilla.css](plantilla.css).
+Este documento define el estándar editorial, gráfico, tipográfico y didáctico de los **6 capítulos descargables** (`libro/Capitulo_0X_*.pdf`), asociados a las 6 vitrinas del museo 3D interactivo. Todos los capítulos se compilan enlazando [plantilla.css](plantilla.css) mediante un flujo multi-agente orquestado con `run_workflow`.
 
 ---
 
-## 1. Formato, tipografía y paleta
+## 1. Filosofía editorial: tratado ilustrado de referencia (no apuntes de examen)
 
-- **Soporte:** A4 vertical (`18 mm` arriba, `19 mm` abajo, `17 mm` laterales).
-- **Extensión objetivo:** **4 a 6 páginas completas y equilibradas** por capítulo (evitar que la última página quede por debajo del ~50 % de ocupación).
-- **Tipografía:**
-  - **Títulos, portadilla, etiquetas, cabeceras de tabla y rótulos de figura:** `Sora` (pesos 600–800).
-  - **Cuerpo de texto y listas:** `Inter` / `Segoe UI` a `9.7 pt`, interlineado `1.52`, **alineación a la izquierda** (`text-align: left`) para evitar espacios irregulares en términos largos (*osteointegración*, *hidroxiapatita*, *polimetilmetacrilato*).
-- **Paleta en papel (coherente con el museo 3D oscuro):**
-  - Portadilla: degradado `#0b0a22 → #1e1b4b → #134e4a` con subtítulo `#5eead4`.
-  - Tinta principal: `#1e293b` / encabezados `#0f172a`.
-  - Cajas semánticas fijas en los 6 capítulos:
-    - **Azul (`.box.def`):** Definiciones de consenso, ecuaciones o normas clave.
-    - **Rojo (`.box.warn`):** *Ojo · Trampa frecuente de examen*.
-    - **Verde bioactivo (`.box.bio`):** *Del laboratorio al paciente* (criterio clínico).
-    - **Violeta (`.box.lab`):** *Caso práctico o problema numérico resuelto* (mecánica, selección de material, etc.).
+- **Público objetivo:** cualquier lector, profesional o estudiante de ingeniería biomédica o ciencias de la salud que utilice la web como **fuente de estudio autónoma y completa**.
+- **Prohibido el lenguaje escolar o de examen:** quedan excluidas muletillas como *«trampa de examen»*, *«chuleta»*, *«esto entra en el parcial»* o referencias a asignaturas o cursos locales concretos.
+- **Extensión objetivo:** **8 a 10 páginas A4 completas y equilibradas** por capítulo, sin compresión artificial ni páginas finales semivacías.
+- **Profundidad explicativa:** cada sección desarrolla el *porqué* físico, químico, histológico, histórico y clínico de los fenómenos desde primeros principios, combinando narrativa rigurosa con gráficos de nivel editorial.
 
-## 2. Estructura uniforme de cada capítulo
+## 2. Tipografía, retícula y paleta
 
-1. **Portadilla superior (`.cover-band`)**: etiqueta del capítulo (`Capítulo X · Vitrina 0X`), título directo y una introducción breve de 2–3 líneas que conecte con el hilo *"del material en bruto al implante"*. *(Sin instrucciones meta sobre cómo usar la web: el documento se lee como un libro de texto autónomo).*
-2. **Barra de metadatos (`.meta-bar`)**: asignaturas de referencia (UVigo 3º *Biomateriales* / 4º *Biocompatibilidad y comportamiento mecánico*), autoría y licencia `CC BY-NC-SA 4.0`.
-3. **Bloques teóricos numerados (`X.1` a `X.4`)**:
-   - Fundamentos y definiciones clave.
-   - Tablas comparativas con parámetros reales y unidades (`GPa`, `MPa`, `%`, `g/cm³`).
-   - Mecanismos biológicos o de fallo + aplicación clínica.
-4. **Cierre estándar (`X.5`)**:
-   - **Ideas clave de repaso (chuleta)** + **Autoevaluación rápida** (3–4 preguntas con respuesta concisa) + **Bibliografía de referencia** (Wagner 2020, apuntes UVigo, normas ISO/ASTM citadas).
+- **Soporte:** A4 vertical (`16 mm` arriba, `17 mm` abajo, `15 mm` laterales), cabecera superior con el título de la obra y del capítulo, pie de página con autoría y licencia `CC BY-NC-SA 4.0`.
+- **Sistema tipográfico:**
+  - **Títulos, portadilla, insignias de sección, cabeceras de tabla y rótulos de figura:** `Sora` (pesos 600–800).
+  - **Cuerpo narrativo:** serifa editorial de alta legibilidad **`Source Serif 4`** a `9.4 pt`, interlineado `1.50`, alineación a la izquierda (`text-align: left`).
+  - **Tablas, recuadros, glosario y pies de figura:** **`Inter`** (`7.8–8.5 pt`) para máxima densidad limpia sin fatiga visual.
+- **Retícula mixta (inspirada en *Biomaterials Science* y *Nature Reviews Primers*):**
+  - **Doble columna (`.two-col`)** con filete vertical sutil para el texto narrativo continuo (~60 caracteres por línea).
+  - **Bandas de ancho completo** para portadilla, hojas de ruta, tablas comparativas, infografías vectoriales SVG multipanel (`.nature-fig`) y atlas de modelos 3D (`.atlas-panel`).
+- **Cuatro recuadros editoriales fijos (`.callout`):**
+  - **Azul (`.callout.concept`):** *Fundamento científico y consenso internacional*.
+  - **Ámbar (`.callout.history`):** *Crónica experimental e historia*.
+  - **Verde turquesa (`.callout.clinic`):** *En el quirófano y en el paciente*.
+  - **Violeta (`.callout.eng`):** *Análisis de ingeniería aplicado*.
 
-## 3. Criterio de imágenes y figuras
+## 3. Estándar gráfico: Atlas 3D completo + infografías SVG multipanel
 
-Cada capítulo incluye **como mínimo 2 elementos gráficos** numerados como `Figura X.1`, `Figura X.2`, etc. (y `Tabla X.1` para tablas principales):
+Cada capítulo combina dos familias visuales complementarias y obligatorias:
 
-1. **Diagramas vectoriales SVG propios** (`.diagram`): esquemas explicativos de mecanismos, curvas esfuerzo–deformación, diagramas de flujo o interfaces, con fondos claros (`#f8fafc` / `#ffffff`) y la misma paleta de acentos (`#0f766e`, `#1d4ed8`, `#6d28d9`, `#b45309`, `#b91c1c`).
-2. **Mini-renders 3D reales capturados de la vitrina web** (`.render-panel` / `.render-cards`): tarjetas oscuras (`#0b0a22`) con renders PNG exportados directamente de las escenas 3D mejoradas de cada vitrina, de modo que lo que el estudiante ve en el libro coincida exactamente con la pieza que gira en 3D en la web.
+1. **Atlas 3D real completo (`.atlas-panel` con `.atlas-grid-4` / `.atlas-grid-3`):** capturas PNG en alta resolución exportadas directamente desde las escenas WebGL PBR (`RoomEnvironment`) de la vitrina correspondiente. Cada tarjeta muestra insignia cronológica/categoría, título, material principal y explicación técnica.
+2. **Infografías vectoriales SVG multipanel propias (`.nature-fig`):** diagramas científicos con paneles codificados (**a**, **b**, **c**), esquemas químicos/histológicos, curvas mecánicas o cinéticas de degradación y árboles de decisión sobre fondo blanco/gris claro (`#ffffff` / `#f8fafc`).
 
-## 4. Hoja de ruta acordada (afinación antes de avanzar)
+## 4. Estructura uniforme de cada capítulo
 
-1. **Vitrina 01 · Mejora de modelado 3D (`js/visor3d.js` + `js/salas/historia.js`):** añadir iluminación de estudio PBR (`RoomEnvironment`) y sustituir las figuras geométricas simples por modelos 3D anatómicos/mecánicos trabajados (`LatheGeometry`, `TubeGeometry`, `ExtrudeGeometry`, mallas helicoidales y texturas procedimentales).
-2. **Capítulo 1 · Remaquetación con plantilla definitiva:** compilar `libro/Capitulo_01_Historia_y_Fundamentos.pdf` sobre `libro/plantilla.css` incorporando los mini-renders 3D reales ya mejorados de la Vitrina 01 y verificando que cierre en 4 páginas completas y equilibradas.
-3. **Siguientes vitrinas y capítulos (`02` → `06`):** repetir el ciclo *Modelos 3D trabajados + Simulador interactivo web → Capturas 3D + SVG + PDF en `plantilla.css`* en `materiales`, `interfaz`, `ortopedia`, `cardio` y `normativa`.
+1. **Portadilla + Hoja de ruta (`.cover-band` + `.chapter-roadmap`)**: resumen temático y objetivos conceptuales del capítulo.
+2. **Fundamentos y taxonomía**: definiciones de consenso, criterios de clasificación, diagramas de relaciones y marcos normativos.
+3. **Desarrollo científico, histórico o mecánico + Atlas 3D real**: narrativa por bloques temáticos con las piezas 3D reales de la vitrina documentadas.
+4. **Mecanismos interfaciales / fenómenos avanzados + Infografías SVG multipanel**.
+5. **Del material en bruto al implante clínico**: influencia del procesado, esterilización, biomecánica y análisis de casos reales.
+6. **Cierre de tratado**: **Glosario técnico fundamental** (`.glossary-grid`), **Problemas de reflexión aplicada** (`.qa-box`) y **Bibliografía comentada** (`.bib-box`).
+
+## 5. Flujo multi-agente para los Capítulos 1 a 6
+
+1. **Captura 3D completa (`capture_atlas_vitrina0X.mjs`)**: renderizado de todas las escenas 3D de la vitrina con Edge Headless + WebGL (`visor3d.js`) e inspección visual previa.
+2. **Orquestación en paralelo (`run_workflow`)**: tres agentes redactan e ilustran en paralelo los bloques HTML/SVG (Fundamentos/SVG, Historia/Atlas 3D o Familias/Ensayos, y Mecanismos/Traslación/Glosario).
+3. **Ensamblado, compilación y revisión visual**: generación del PDF en A4 con Edge Headless y verificación página a página con `read_file`.

@@ -46,7 +46,12 @@ export function canvasTex(w,h,draw){
 }
 // Pantalla: un plano con una textura de canvas que se puede repintar (redraw) cuando haga falta
 export function canvasPlane(w,h,pw,ph,draw){
-  const c=document.createElement('canvas'); c.width=pw; c.height=ph; const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
+  const c=document.createElement('canvas'); c.width=pw; c.height=ph;
+  const tex=new THREE.CanvasTexture(c);
+  tex.colorSpace=THREE.SRGBColorSpace;
+  tex.anisotropy=8;
+  tex.minFilter=THREE.LinearMipmapLinearFilter;
+  tex.magFilter=THREE.LinearFilter;
   const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h), new THREE.MeshBasicMaterial({ map:tex, transparent:true, toneMapped:false }));
   m.userData.redraw=(t)=>{ draw(c.getContext('2d'),pw,ph,t); tex.needsUpdate=true; }; m.userData.redraw(0); return m;
 }

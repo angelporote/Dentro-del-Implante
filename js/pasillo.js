@@ -39,12 +39,38 @@ export const stripeMat = std(0x23A894, { roughness:0.5 });                      
 const glassMat = new THREE.MeshBasicMaterial({ color:0xffffff, transparent:true, opacity:0.035, depthWrite:false });
 
 // Señal de hospital: cartel blanco con bloque de color y texto oscuro
-function cartel(num, texto){ const m = canvasPlane(2.6,0.42,780,126,(g,w,h)=>{ g.clearRect(0,0,w,h);
-  g.fillStyle='#FFFFFF'; g.beginPath(); g.roundRect(3,3,w-6,h-6,16); g.fill();
-  g.fillStyle='#1F6FB2'; g.beginPath(); g.roundRect(3,3,h-6,h-6,[16,0,0,16]); g.fill();
-  g.fillStyle='#FFFFFF'; g.font='700 50px Sora, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(num,(h-6)/2+3,h/2+2);
-  g.fillStyle='#1C2B3A'; g.font='600 34px Sora, sans-serif'; g.textAlign='left'; g.fillText(texto,h+22,h/2+2); });
-  m.material.toneMapped=true; return m; }
+function cartel(num, texto){
+  const m = canvasPlane(3.0, 0.44, 1860, 264, (g, w, h) => {
+    g.clearRect(0, 0, w, h);
+    g.fillStyle = '#FFFFFF';
+    g.beginPath();
+    g.roundRect(6, 6, w - 12, h - 12, 34);
+    g.fill();
+    g.fillStyle = '#1F6FB2';
+    g.beginPath();
+    g.roundRect(6, 6, h - 12, h - 12, [34, 0, 0, 34]);
+    g.fill();
+    g.fillStyle = '#FFFFFF';
+    g.font = '700 104px Sora, sans-serif';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillText(num, (h - 12) / 2 + 6, h / 2 + 4);
+    const xTexto = h + 46;
+    const maxW = w - xTexto - 54;
+    let tam = 72;
+    g.font = `600 ${tam}px Sora, sans-serif`;
+    while(tam > 28 && g.measureText(texto).width > maxW){
+      tam -= 2;
+      g.font = `600 ${tam}px Sora, sans-serif`;
+    }
+    g.fillStyle = '#1C2B3A';
+    g.textAlign = 'left';
+    g.fillText(texto, xTexto, h / 2 + 4);
+  });
+  m.material.toneMapped = true;
+  document.fonts?.ready?.then(() => m.userData.redraw(0));
+  return m;
+}
 
 /* =========================================================
    Construcción del pasillo a partir de los datos (vitrinas.json) y los módulos de sala

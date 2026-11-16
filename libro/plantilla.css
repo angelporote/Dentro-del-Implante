@@ -1,15 +1,18 @@
 /* ==========================================================================
-   plantilla.css · Hoja de estilo maestra del libro "Dentro del implante"
-   Usada por todos los capítulos (Cap. 01 – Cap. 06) al compilar a PDF A4.
+   plantilla.css · Hoja de estilo editorial del libro de texto "Dentro del implante"
+   Inspirada en tratados de ingeniería biomédica (Elsevier/Pearson) y primers
+   científicos visuales (Nature Reviews). Usada por los Capítulos 01 a 06.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap');
 
 :root {
   --ink: #1e293b;
   --ink-strong: #0f172a;
   --muted: #475569;
+  --subtle: #64748b;
   --line: #cbd5e1;
+  --line-soft: #e2e8f0;
   --soft: #f8fafc;
   --bio: #0d9488;
   --bio-dark: #0f766e;
@@ -18,36 +21,39 @@
   --lab: #6d28d9;
   --amber: #b45309;
   --night: #0b0a22;
-  --plasma: #2b1f66;
+  --plasma: #1e1b4b;
 }
 
 @page {
   size: A4;
-  margin: 18mm 17mm 19mm 17mm;
+  margin: 16mm 15mm 17mm 15mm;
   @top-left {
-    content: "DENTRO DEL IMPLANTE · MANUAL DE ESTUDIO";
+    content: "DENTRO DEL IMPLANTE · TRATADO DE BIOMATERIALES E IMPLANTOLOGÍA";
     font-family: 'Sora', 'Segoe UI', sans-serif;
-    font-size: 7.2pt;
+    font-size: 6.8pt;
+    font-weight: 600;
     color: #64748b;
-    letter-spacing: .04em;
+    letter-spacing: .05em;
   }
   @top-right {
     content: string(cap-title);
     font-family: 'Sora', 'Segoe UI', sans-serif;
-    font-size: 7.2pt;
-    color: #64748b;
+    font-size: 7pt;
+    font-weight: 600;
+    color: #0f766e;
   }
   @bottom-left {
     content: "Ángel Portela Otero · CC BY-NC-SA 4.0";
     font-family: 'Inter', 'Segoe UI', sans-serif;
-    font-size: 7.5pt;
+    font-size: 7.2pt;
     color: #64748b;
   }
   @bottom-right {
     content: "Página " counter(page) " de " counter(pages);
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-    font-size: 7.5pt;
-    color: #64748b;
+    font-family: 'Sora', 'Segoe UI', sans-serif;
+    font-size: 7.2pt;
+    font-weight: 600;
+    color: #475569;
   }
 }
 
@@ -59,128 +65,225 @@
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   color: var(--ink);
-  font-size: 9.7pt;
-  line-height: 1.52;
+  font-size: 9.4pt;
+  line-height: 1.5;
   margin: 0;
   text-align: left;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
 
-h1, h2, h3, .cover-kicker, .box-title, th, figcaption b {
+h1, h2, h3, h4, .cover-kicker, .callout-title, .box-title, th, figcaption b, .atlas-cap b, .panel-tag {
   font-family: 'Sora', 'Segoe UI', system-ui, sans-serif;
 }
 
-/* Título dinámico para la cabecera de página (las plantillas ponen data-cap en h1) */
+table, figcaption, .meta-bar, .chapter-roadmap, .callout p, .callout li, .atlas-cap, .glossary-item {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
 h1[data-cap] { string-set: cap-title attr(data-cap); }
 
-/* Portadilla de capítulo */
+/* ---- Portadilla editorial de capítulo ---- */
 .cover-band {
-  background: linear-gradient(135deg, var(--night) 0%, #1e1b4b 58%, #134e4a 100%);
+  background: linear-gradient(135deg, var(--night) 0%, var(--plasma) 56%, #115e59 100%);
   color: #f8fafc;
-  padding: 20px 22px;
-  border-radius: 12px;
-  margin-bottom: 12px;
+  padding: 22px 24px 18px 24px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  position: relative;
 }
 .cover-kicker {
-  font-size: 7.8pt;
+  font-size: 7.5pt;
   text-transform: uppercase;
-  letter-spacing: .07em;
+  letter-spacing: .09em;
   color: #5eead4;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 .cover-band h1 {
-  font-size: 20pt;
-  line-height: 1.15;
-  margin: 0 0 7px 0;
-  letter-spacing: -.02em;
+  font-size: 21.5pt;
+  line-height: 1.14;
+  margin: 0 0 8px 0;
+  letter-spacing: -.025em;
+  color: #ffffff;
 }
 .cover-band p {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   margin: 0;
-  font-size: 9.5pt;
-  color: #dbeafe;
-  line-height: 1.45;
+  font-size: 9.2pt;
+  color: #e0f2fe;
+  line-height: 1.46;
 }
 
 .meta-bar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
-  font-size: 8pt;
+  font-size: 7.6pt;
   color: var(--muted);
   border-bottom: 1.5px solid var(--line);
   padding-bottom: 6px;
-  margin-bottom: 12px;
+  margin-bottom: 11px;
 }
 
-/* Jerarquía de secciones */
+.chapter-roadmap {
+  display: grid;
+  grid-template-columns: 1.1fr 1.9fr;
+  gap: 12px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--bio-dark);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 13px;
+  font-size: 8.3pt;
+  line-height: 1.42;
+  break-inside: avoid;
+}
+.chapter-roadmap h4 {
+  font-size: 7.6pt;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--bio-dark);
+  margin: 0 0 5px 0;
+}
+.chapter-roadmap ul {
+  margin: 0;
+  padding-left: 15px;
+}
+.chapter-roadmap li { margin-bottom: 2.5px; color: var(--ink); }
+
+/* ---- Jerarquía de secciones ---- */
 h2 {
-  font-size: 12.6pt;
+  font-size: 13pt;
   color: var(--ink-strong);
-  border-left: 4px solid var(--bio);
-  padding-left: 9px;
-  margin: 16px 0 7px 0;
+  border-bottom: 2px solid var(--bio);
+  padding-bottom: 4px;
+  margin: 14px 0 8px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  break-after: avoid;
   page-break-after: avoid;
+}
+h2 .sec-num {
+  display: inline-block;
+  background: var(--night);
+  color: #5eead4;
+  font-size: 8.6pt;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: .03em;
 }
 h3 {
-  font-size: 10.2pt;
+  font-size: 10pt;
   color: #1e3a8a;
-  margin: 11px 0 4px 0;
+  margin: 10px 0 4px 0;
+  break-after: avoid;
   page-break-after: avoid;
 }
-p { margin: 0 0 7px 0; }
-ul, ol { margin: 4px 0 9px 0; padding-left: 18px; }
+h4 {
+  font-size: 8.8pt;
+  color: var(--ink-strong);
+  margin: 7px 0 3px 0;
+  break-after: avoid;
+}
+p { margin: 0 0 6.5px 0; }
+.lead-p::first-letter {
+  font-family: 'Sora', sans-serif;
+  float: left;
+  font-size: 27pt;
+  line-height: .88;
+  font-weight: 800;
+  color: var(--bio-dark);
+  margin: 2px 6px 0 0;
+}
+ul, ol { margin: 3px 0 7px 0; padding-left: 17px; }
 li { margin-bottom: 3px; }
 b, strong { color: var(--ink-strong); }
 code {
   font-family: 'Cascadia Code', Consolas, monospace;
-  font-size: 8.6pt;
+  font-size: 8.2pt;
   background: #f1f5f9;
   padding: 1px 4px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
-/* 4 cajas didácticas semánticas */
-.box {
-  border-radius: 8px;
-  padding: 9px 12px;
-  margin: 9px 0 11px 0;
+/* ---- Retícula editorial a doble columna (estilo tratado científico) ---- */
+.two-col {
+  column-count: 2;
+  column-gap: 6.5mm;
+  column-rule: 0.6pt solid var(--line-soft);
+  margin-bottom: 10px;
+}
+.two-col > h3:first-child { margin-top: 0; }
+.span-all {
+  column-span: all;
+  margin: 8px 0;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin: 8px 0 10px 0;
+  break-inside: avoid;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 8px 0 10px 0;
+  break-inside: avoid;
+}
+
+/* ---- Recuadros pedagógicos de libro de texto ---- */
+.callout, .box {
+  border-radius: 7px;
+  padding: 8.5px 11px;
+  margin: 8px 0 10px 0;
+  break-inside: avoid;
   page-break-inside: avoid;
   border: 1px solid var(--line);
   background: var(--soft);
+  font-size: 8.45pt;
+  line-height: 1.44;
 }
-.box.def  { border-left: 4px solid var(--def);  background: #eff6ff; border-color: #bfdbfe; }
-.box.warn { border-left: 4px solid var(--warn); background: #fef2f2; border-color: #fecaca; }
-.box.bio  { border-left: 4px solid var(--bio);  background: #f0fdfa; border-color: #99f6e4; }
-.box.lab  { border-left: 4px solid var(--lab);  background: #f5f3ff; border-color: #ddd6fe; }
+.callout.concept, .box.def    { border-left: 4px solid var(--def);   background: #eff6ff; border-color: #bfdbfe; }
+.callout.history, .box.warn   { border-left: 4px solid var(--amber); background: #fffbeb; border-color: #fde68a; }
+.callout.clinic,  .box.bio    { border-left: 4px solid var(--bio);   background: #f0fdfa; border-color: #99f6e4; }
+.callout.eng,     .box.lab    { border-left: 4px solid var(--lab);   background: #f5f3ff; border-color: #ddd6fe; }
+.callout.alert                { border-left: 4px solid var(--warn);  background: #fef2f2; border-color: #fecaca; }
 
-.box-title {
-  font-size: 8pt;
+.callout-title, .box-title {
+  font-size: 7.4pt;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .05em;
-  margin-bottom: 3px;
+  letter-spacing: .06em;
+  margin-bottom: 3.5px;
 }
-.box.def  .box-title { color: var(--def); }
-.box.warn .box-title { color: var(--warn); }
-.box.bio  .box-title { color: var(--bio-dark); }
-.box.lab  .box-title { color: var(--lab); }
+.callout.concept .callout-title, .box.def .box-title   { color: var(--def); }
+.callout.history .callout-title, .box.warn .box-title  { color: var(--amber); }
+.callout.clinic  .callout-title, .box.bio .box-title   { color: var(--bio-dark); }
+.callout.eng     .callout-title, .box.lab .box-title   { color: var(--lab); }
+.callout.alert   .callout-title                        { color: var(--warn); }
 
-/* Tablas técnicas */
+/* ---- Tablas técnicas de tratado ---- */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 8px 0 13px 0;
-  font-size: 8.5pt;
+  margin: 6px 0 10px 0;
+  font-size: 8.1pt;
+  line-height: 1.36;
 }
-tr { page-break-inside: avoid; }
+tr { break-inside: avoid; page-break-inside: avoid; }
 thead { display: table-header-group; }
 th, td {
   border: 1px solid var(--line);
-  padding: 4.5px 7px;
+  padding: 4.5px 6.5px;
   text-align: left;
   vertical-align: top;
 }
@@ -188,77 +291,164 @@ th {
   background: var(--ink-strong);
   color: #f8fafc;
   font-weight: 600;
+  font-size: 7.8pt;
 }
 tr:nth-child(even) td { background: var(--soft); }
+.table-cap {
+  font-family: 'Inter', sans-serif;
+  font-size: 7.8pt;
+  color: var(--muted);
+  margin: -5px 0 10px 0;
+  line-height: 1.36;
+}
+.table-cap b { font-family: 'Sora', sans-serif; color: var(--ink-strong); }
 
-/* Rejillas de comparación */
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+/* ---- Figuras científicas SVG (estilo Nature Reviews / Elsevier) ---- */
+.diagram, .nature-fig {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 11px 8px 11px;
+  background: #ffffff;
   margin: 8px 0 11px 0;
+  break-inside: avoid;
   page-break-inside: avoid;
 }
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin: 8px 0 11px 0;
-  page-break-inside: avoid;
+.nature-fig .fig-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 4px;
+  margin-bottom: 7px;
+  font-family: 'Sora', sans-serif;
+  font-size: 8pt;
+  font-weight: 700;
+  color: var(--ink-strong);
+}
+.diagram figcaption, .nature-fig figcaption, .atlas-panel figcaption, .render-panel figcaption {
+  font-size: 7.9pt;
+  color: var(--muted);
+  margin-top: 6px;
+  text-align: left;
+  line-height: 1.4;
 }
 
-/* Figuras: diagramas SVG y capturas de modelos 3D reales */
-.diagram, .render-panel {
+/* ---- Atlas 3D real (galerías de piezas capturadas del visor PBR) ---- */
+.atlas-panel, .render-panel {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 9px 10px;
   background: #ffffff;
-  margin: 9px 0 13px 0;
-  text-align: center;
+  margin: 8px 0 11px 0;
+  break-inside: avoid;
   page-break-inside: avoid;
 }
-.diagram figcaption, .render-panel figcaption {
-  font-size: 8.1pt;
-  color: var(--muted);
-  margin-top: 6px;
-  text-align: left;
-}
-.render-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-.render-card {
+.atlas-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+.atlas-grid-3, .render-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.atlas-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+
+.atlas-card, .render-card {
   background: #0b0a22;
   color: #e2e8f0;
   border-radius: 7px;
   padding: 6px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #1e1b4b;
 }
-.render-card img {
+.atlas-card img, .render-card img {
   width: 100%;
   height: auto;
   display: block;
   border-radius: 5px;
+  background: #09081c;
 }
-.render-card span {
+.atlas-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: 'Sora', sans-serif;
+  font-size: 6.6pt;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #0b0a22;
+  background: #5eead4;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-top: 5px;
+}
+.atlas-card .atlas-title, .render-card span {
   display: block;
   font-family: 'Sora', sans-serif;
-  font-size: 7.6pt;
-  font-weight: 600;
-  color: #5eead4;
-  margin-top: 4px;
+  font-size: 7.5pt;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-top: 3.5px;
+  line-height: 1.25;
 }
-.render-card small {
+.atlas-card .atlas-mat {
   display: block;
-  font-size: 7.2pt;
+  font-family: 'Inter', sans-serif;
+  font-size: 6.7pt;
+  font-weight: 600;
+  color: #fcd34d;
+  margin-top: 2px;
+}
+.atlas-card .atlas-desc, .render-card small {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 6.8pt;
   color: #cbd5e1;
+  margin-top: 2.5px;
+  line-height: 1.3;
 }
 
-/* Bloques indivisibles y saltos controlados */
-.keep { page-break-inside: avoid; }
-.page-break { page-break-before: always; }
+/* ---- Glosario técnico, ejercicios de reflexión y bibliografía ---- */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 10px;
+  margin: 7px 0 11px 0;
+}
+.glossary-item {
+  background: var(--soft);
+  border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--bio-dark);
+  border-radius: 5px;
+  padding: 6px 8px;
+  font-size: 7.95pt;
+  line-height: 1.38;
+  break-inside: avoid;
+}
+.glossary-item b {
+  font-family: 'Sora', sans-serif;
+  color: var(--ink-strong);
+  font-size: 8pt;
+}
 
-/* Autoevaluación rápida */
-.qa { font-size: 8.7pt; margin-bottom: 5px; page-break-inside: avoid; }
+.qa-box {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin: 8px 0 10px 0;
+  break-inside: avoid;
+}
+.qa { font-family: 'Inter', sans-serif; font-size: 8.2pt; margin-bottom: 5px; line-height: 1.4; break-inside: avoid; }
+.qa:last-child { margin-bottom: 0; }
 .qa em { color: var(--muted); font-style: normal; }
+
+.bib-box {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--ink-strong);
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin-top: 9px;
+  break-inside: avoid;
+}
+.bib-box ul { margin: 4px 0 0 0; font-family: 'Inter', sans-serif; font-size: 7.9pt; line-height: 1.42; color: var(--muted); }
+.bib-box li { margin-bottom: 3px; }
+
+.keep { break-inside: avoid; page-break-inside: avoid; }
+.page-break { break-before: page; page-break-before: always; }
