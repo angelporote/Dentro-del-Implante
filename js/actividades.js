@@ -3,6 +3,7 @@
    - La inmersión: la cámara cruza el cristal de la vitrina y entra en la sala 3D
    - El panel de la sala con sus actividades (salen de datos/vitrinas.json)
    - El visor: una ventana común donde se abre cada actividad (plantilla para las 6 salas)
+   - Carga bajo demanda de datos/<sala>.json y motor común de Test para todas las vitrinas
    - Los avisos breves (toast)
    ========================================================= */
 import * as THREE from 'three';
@@ -23,18 +24,122 @@ const ICONOS = {
 const immerseEl=document.getElementById('immerse'), acts=document.getElementById('acts'), toast=document.getElementById('toast');
 const visor=document.getElementById('visor'), visorTitulo=document.getElementById('visorTitulo'), visorCuerpo=document.getElementById('visorCuerpo');
 
+// Escape seguro para texto dentro de plantillas HTML
+export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// Caché de los JSON de cada sala (datos/<id>.json)
+const cacheDatos = new Map();
+export function cargarDatosSala(id){
+  if(!cacheDatos.has(id)){
+    cacheDatos.set(id, fetch(`datos/${id}.json`).then(r=>{
+      if(!r.ok) throw new Error(`No se pudo cargar datos/${id}.json`);
+      return r.json();
+    }));
+  }
+  return cacheDatos.get(id);
+}
+
 // Avisos breves en la parte de abajo
 export function avisar(t){ toast.textContent=t; gsap.killTweensOf(toast); gsap.fromTo(toast,{opacity:0,y:10},{opacity:1,y:0,duration:D(.3)}); gsap.to(toast,{opacity:0,duration:D(.4),delay:D(2.6)}); }
+
+/* =========================================================
+   Motor común de Test (funciona en las 6 vitrinas usando datos.preguntas)
+   ========================================================= */
+export function crearTest(contenedor, { datos, vitrina }){
+  const preguntas = datos?.preguntas || [];
+  if(!preguntas.length){
+    contenedor.innerHTML = '<p class="v-dim">Aún no hay preguntas cargadas para esta vitrina.</p>';
+    return;
+  }
+  let idx = 0, aciertos = 0;
+  const respuestas = []; // { pregunta, elegida, correcta, explicacion, opciones }
+
+  function pintarPregunta(){
+    const p = preguntas[idx];
+    const letras = ['A','B','C','D'];
+    contenedor.innerHTML = `
+      <div class="v-quiz">
+        <div class="v-quiz-top">
+          <span class="v-badge">${esc(vitrina.titulo)}</span>
+          <span class="v-dim">Pregunta <b>${idx+1}</b> de ${preguntas.length} · Aciertos: <b>${aciertos}</b></span>
+        </div>
+        <div class="v-progress"><i style="width:${((idx)/preguntas.length)*100}%"></i></div>
+        <h3 class="v-qtitle">${esc(p.pregunta)}</h3>
+        <div class="v-opts">
+          ${p.opciones.map((op,k)=>`<button class="v-opt" data-k="${k}"><span class="v-letra">${letras[k]||k+1}</span><span>${esc(op)}</span></button>`).join('')}
+        </div>
+        <div class="v-feedback" id="qFeedback" hidden></div>
+        <div class="v-quiz-foot">
+          <button class="ghost" id="qNext" hidden>${idx+1 < preguntas.length ? 'Siguiente pregunta →' : 'Ver resultado final'}</button>
+        </div>
+      </div>`;
+
+    const opts = [...contenedor.querySelectorAll('.v-opt')];
+    const fb = contenedor.querySelector('#qFeedback');
+    const next = contenedor.querySelector('#qNext');
+
+    opts.forEach(btn=>btn.addEventListener('click', ()=>{
+      const elegida = +btn.dataset.k;
+      const ok = elegida === p.correcta;
+      if(ok) aciertos++;
+      respuestas.push({ ...p, elegida });
+
+      opts.forEach((b,k)=>{
+        b.disabled = true;
+        if(k === p.correcta) b.classList.add('ok');
+        else if(k === elegida) b.classList.add('bad');
+      });
+      fb.hidden = false;
+      fb.className = 'v-feedback ' + (ok ? 'ok' : 'bad');
+      fb.innerHTML = `<b>${ok ? '¡Correcto!' : 'No del todo'}</b><p>${esc(p.explicacion)}</p>`;
+      next.hidden = false;
+    }));
+
+    next.addEventListener('click', ()=>{
+      idx++;
+      if(idx < preguntas.length) pintarPregunta();
+      else pintarResumen();
+    });
+  }
+
+  function pintarResumen(){
+    const pct = Math.round((aciertos / preguntas.length) * 100);
+    const nota = pct >= 85 ? '¡Nivel de matrícula! Dominas esta vitrina.' : pct >= 60 ? 'Buen repaso, ya tienes la base clara.' : 'Conviene repasar las tarjetas teóricas e intentarlo de nuevo.';
+    contenedor.innerHTML = `
+      <div class="v-quiz">
+        <div class="v-result">
+          <span class="v-badge">${esc(vitrina.titulo)}</span>
+          <h3>${aciertos} / ${preguntas.length} aciertos (${pct} %)</h3>
+          <p>${nota}</p>
+          <button class="cta" id="qRetry">Repetir test</button>
+        </div>
+        <h4 class="v-sub">Revisión de respuestas</h4>
+        <div class="v-review">
+          ${respuestas.map((r,i)=>{
+            const ok = r.elegida === r.correcta;
+            return `<div class="v-rev-item ${ok?'ok':'bad'}">
+              <div class="v-rev-head"><b>${i+1}. ${esc(r.pregunta)}</b><span>${ok?'Correcta':'Revisar'}</span></div>
+              <p class="v-dim">Tu respuesta: ${esc(r.opciones[r.elegida])}${ok?'':` · <b>Correcta:</b> ${esc(r.opciones[r.correcta])}`}</p>
+              <p>${esc(r.explicacion)}</p>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+    contenedor.querySelector('#qRetry').addEventListener('click', ()=>{ idx=0; aciertos=0; respuestas.length=0; pintarPregunta(); });
+  }
+
+  pintarPregunta();
+}
 
 export function crearActividades({ vitrinas, salas, pasillo, mesa }){
   const { state, snapAngle, rotateTo } = pasillo;
   const ocultables = ['.hub-head','.caption','.hub-nav','#home','.arrow.side'];
-  let salaActual=null;
 
   function entrar(i){
     if(estado.enSala) return; estado.enSala=true;
     rotateTo(snapAngle(state.angle), .4);
-    const v=vitrinas[i]; salaActual=v;
+    const v=vitrinas[i];
+    cargarDatosSala(v.id).catch(()=>{});   // precarga los datos de la sala mientras entra la cámara
     document.getElementById('immPlate').textContent=`Vitrina ${String(i+1).padStart(2,'0')}`;
     document.getElementById('immTitle').textContent=v.titulo;
     document.getElementById('immText').textContent=v.texto;
@@ -65,15 +170,26 @@ export function crearActividades({ vitrinas, salas, pasillo, mesa }){
 
   /* ---- Visor de actividades: plantilla común ----
      Si el módulo de la sala exporta una función para esa actividad (salas[id].actividades[clave]),
-     se le pasa el cuerpo del visor para que pinte su contenido. Si no, la actividad está en construcción. */
-  function disponible(v,a){ return !!(salas[v.id]?.actividades?.[a.clave]); }
-  function abrir(v,a){
-    const f = salas[v.id]?.actividades?.[a.clave];
+     se le pasa el JSON completo de la sala (datos/<id>.json). Las actividades clave "test" usan
+     automáticamente el motor común si la sala no define uno propio. */
+  function resolverActividad(v, a){
+    return salas[v.id]?.actividades?.[a.clave] || (a.clave === 'test' ? crearTest : null);
+  }
+  function disponible(v,a){ return !!resolverActividad(v, a); }
+  async function abrir(v,a){
+    const f = resolverActividad(v, a);
     if(!f){ avisar('Esta actividad está en construcción: la diseñaremos juntos.'); return; }
-    visorTitulo.textContent=a.titulo; visorCuerpo.innerHTML='';
-    estado.visorAbierto=true;
+    visorTitulo.textContent = a.titulo;
+    visorCuerpo.innerHTML = '<p class="v-dim">Cargando contenido…</p>';
+    estado.visorAbierto = true;
     gsap.set(visor,{visibility:'visible'}); gsap.fromTo(visor,{opacity:0,y:20},{opacity:1,y:0,duration:D(.4)});
-    f(visorCuerpo, { datos:v, avisar });
+    try{
+      const datosSala = await cargarDatosSala(v.id);
+      visorCuerpo.innerHTML = '';
+      f(visorCuerpo, { datos:datosSala, vitrina:v, avisar });
+    }catch(err){
+      visorCuerpo.innerHTML = `<p class="v-dim">No se pudo cargar el contenido de ${esc(v.id)}.</p>`;
+    }
   }
   function cerrarVisor(){ if(visor.style.visibility==='visible'){ estado.visorAbierto=false; gsap.to(visor,{opacity:0,duration:D(.25),onComplete:()=>gsap.set(visor,{visibility:'hidden'})}); } }
   document.getElementById('visorCerrar').addEventListener('click',cerrarVisor);
