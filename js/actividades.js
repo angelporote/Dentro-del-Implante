@@ -39,6 +39,11 @@ export function crearActividades({ vitrinas, salas, pasillo, mesa }){
     document.getElementById('immPlate').textContent=`Vitrina ${String(i+1).padStart(2,'0')}`;
     document.getElementById('immTitle').textContent=v.titulo;
     document.getElementById('immText').textContent=v.texto;
+    const pdfBtn = document.getElementById('immPdf');
+    if(pdfBtn){
+      if(v.pdf){ pdfBtn.href = v.pdf; pdfBtn.hidden = false; }
+      else { pdfBtn.hidden = true; pdfBtn.removeAttribute('href'); }
+    }
     acts.innerHTML = v.actividades.map((a,k)=>`<button class="act" data-k="${k}"><span class="ico">${ICONOS[a.tipo]||ICONOS.teoria}</span><span><b>${a.titulo}</b><span>${a.texto}</span>${disponible(v,a)?'':'<em>Próximamente</em>'}</span></button>`).join('');
     acts.querySelectorAll('.act').forEach(b=>b.addEventListener('click',()=>abrir(v, v.actividades[+b.dataset.k])));
     // La cámara cruza el cristal (justo al otro lado se ve la sala entera) y aparece el panel

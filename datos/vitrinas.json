@@ -10,6 +10,7 @@
       "id": "historia",
       "titulo": "Historia de los biomateriales",
       "texto": "De las suturas de la Antigüedad a los materiales regenerativos: las tres generaciones y las definiciones de consenso.",
+      "pdf": "libro/Capitulo_01_Historia_y_Fundamentos.pdf",
       "actividades": [
         {
           "clave": "linea-temporal",

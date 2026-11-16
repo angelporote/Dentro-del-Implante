@@ -166,9 +166,12 @@ button{font:inherit;color:inherit;cursor:pointer}
 }
 
 /* Panel de la sala plegable (para poder usar la mesa del quirófano) */
-.imm-toggle{font-size:.82rem;padding:.45rem .9rem;margin-bottom:1rem}
+.imm-bar{display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;margin-bottom:1rem}
+.imm-toggle{font-size:.82rem;padding:.45rem .9rem}
+.imm-pdf{font-size:.82rem;padding:.45rem .9rem;text-decoration:none;border-color:rgba(95,242,210,.45);color:var(--bio)}
+.imm-pdf:hover{background:rgba(95,242,210,.12)}
 .imm-hint{color:var(--bio)!important;font-size:.9rem;margin:1rem 0 0!important}
-.imm-content.collapsed > :not(.imm-toggle):not(h2):not(.imm-hint){display:none}
+.imm-content.collapsed > :not(.imm-bar):not(h2):not(.imm-hint){display:none}
 .imm-content.collapsed{top:auto;bottom:1.5rem;transform:none}
 .imm-content.collapsed h2{font-size:clamp(1.6rem,3vw,2.2rem)}
 .immerse.light-shade .imm-shade{background:linear-gradient(90deg,rgba(9,7,28,.55) 0%,transparent 40%),linear-gradient(0deg,rgba(9,7,28,.55),transparent 35%)}
