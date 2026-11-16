@@ -274,9 +274,17 @@ function explode(){
   Object.entries(EXPLODE).forEach(([k,v],i)=> gsap.to(parts[k].position,{ x:v.x, y:v.y, z:v.z, duration:D(1.3), delay:D(.15+i*.06), ease:'power3.inOut' }));
   gsap.to(rot,{ x:0.08, y:-0.25, duration:D(1.4), ease:'power3.inOut' });
   gsap.to(exploreUi,{ autoAlpha:1, duration:D(.5), delay:D(1.1), onStart:()=>exploreUi.style.pointerEvents='auto' });
+  labelBox.style.visibility='';
   Object.values(labels).forEach((l,i)=>{ gsap.to(l,{ opacity:1, duration:D(.4), delay:D(1.2+i*.08) }); l.style.pointerEvents='auto'; });
 }
+// Cancela las animaciones de la vista desmontada que aún no han empezado (carteles, piezas, botones)
+function cancelarPendientes(){
+  gsap.killTweensOf(Object.values(labels));
+  gsap.killTweensOf(exploreUi);
+  Object.keys(parts).forEach(k=>gsap.killTweensOf(parts[k].position));
+}
 function assemble(){
+  cancelarPendientes();
   resetDetached();
   deselect(); mode='hero'; autoRotate=!reduceMotion;
   Object.values(labels).forEach(l=>{ gsap.to(l,{opacity:0,duration:D(.25)}); l.style.pointerEvents='none'; });
@@ -502,8 +510,9 @@ export function actualizarPortada(t){
 /* ---- Para el viaje al pasillo (main.js) ---- */
 // Prepara la portada para el viaje: monta la prótesis, para el balanceo y oculta los textos
 export function prepararViaje(){
-  if(mode==='explore') assemble();
+  if(mode==='explore') assemble();   // assemble ya cancela lo pendiente sin frenar el montaje
   autoRotate=false;
+  labelBox.style.visibility='hidden';   // ningún cartel puede verse en el pasillo
   gsap.killTweensOf(hero);
   gsap.to(hero,{autoAlpha:0,duration:D(.4)}); gsap.to(exploreUi,{autoAlpha:0,duration:D(.3)});
   Object.values(labels).forEach(l=>{l.style.opacity=0;l.style.pointerEvents='none'});
@@ -513,5 +522,6 @@ export function prepararViaje(){
 export function volverAPortada(){
   look.set(0,0,0); camera.position.set(0,0.6,17);
   mode='hero'; autoRotate=!reduceMotion; moveStage(true);
+  labelBox.style.visibility='';
   gsap.to(hero,{autoAlpha:1,y:0,duration:D(.6),delay:D(.3)});
 }

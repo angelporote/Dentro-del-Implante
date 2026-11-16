@@ -52,7 +52,9 @@ function cartel(num, texto){ const m = canvasPlane(2.6,0.42,780,126,(g,w,h)=>{ g
 export function crearPasillo(vitrinas, salas){
   const NR = vitrinas.length, HN = NR*2, HSTEP = 2*Math.PI/HN, STEP = 360/HN;
   HR = Math.max(11, (WIN_W + 0.7) / (2*Math.sin(Math.PI/HN)));   // cada tramo deja ~0,7 de pared entre cristales
-  const chord = 2*HR*Math.sin(HSTEP/2) + 0.03;
+  // Ancho de cada pared: el pasillo es un polígono, así que se usa la tangente y el radio de la cara trasera
+  // para que los tramos se solapen y no quede rendija en las juntas
+  const chord = 2*(HR+0.35)*Math.tan(HSTEP/2) + 0.02;
 
   // Geometrías compartidas por los 12 tramos
   const wallShape = rrect(chord, SEG_H, 0.001); wallShape.holes.push(rrect(WIN_W, WIN_H, 0.45, WIN_Y));
