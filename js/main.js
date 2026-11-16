@@ -28,6 +28,7 @@ let primero = true;
 renderer.setAnimationLoop(()=>{
   const dt = reloj.getDelta();
   const t = reloj.elapsedTime;
+  if(estado.visorAbierto) return;   // mientras el usuario lee o hace un test, el 3D del fondo descansa
   vigilarRendimiento(dt, pr => mesa && mesa.bajarResolucion && mesa.bajarResolucion(pr));
   if(estado.enPasillo && pasillo){
     pasillo.actualizar(t);

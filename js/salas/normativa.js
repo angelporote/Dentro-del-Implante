@@ -8,13 +8,20 @@ import * as THREE from 'three';
 import { mesh, std, basicGlow, canvasPlane } from '../util.js';
 
 
+const bookCols = [0x1F6FB2,0xE5484D,0x23A894,0xF2B21B,0x7A4FA6].map(c=>std(c,{roughness:.6}));
+const bookGeo = new THREE.BoxGeometry(0.2,0.5,0.4);
+const dishMat = new THREE.MeshStandardMaterial({ color:0xFFFFFF, transparent:true, opacity:0.4, roughness:0.1 });
+const dishGeo = new THREE.CylinderGeometry(0.16,0.16,0.04,20);
+const agarGeo = new THREE.CylinderGeometry(0.14,0.14,0.02,20);
+const agarOk = std(0xF29BB5,{roughness:.3});
+const agarWarn = std(0xF4D35E,{roughness:.3});
+
 export function construir(d, ctx){
   ctx.sala(d, 0xD8DEE6); ctx.luz(d, 0xFFFFFF, 18);
   // Estantería con archivadores de colores (normas)
   mesh(new THREE.BoxGeometry(2.4,0.06,0.5), std(0x8A95A3), -1.4,1.2,-5.7, d);
   mesh(new THREE.BoxGeometry(2.4,0.06,0.5), std(0x8A95A3), -1.4,0.5,-5.7, d);
-  const cols=[0x1F6FB2,0xE5484D,0x23A894,0xF2B21B,0x7A4FA6];
-  for(let f=0;f<2;f++) for(let i=0;i<9;i++) mesh(new THREE.BoxGeometry(0.2,0.5,0.4), std(cols[(i+f*2)%5],{roughness:.6}), -2.45+i*0.25,0.78+f*0.7,-5.7, d);
+  for(let f=0;f<2;f++) for(let i=0;i<9;i++) mesh(bookGeo, bookCols[(i+f*2)%5], -2.45+i*0.25,0.78+f*0.7,-5.7, d);
   // Carteles: marcado CE e ISO 10993
   const ce=canvasPlane(0.9,0.6,360,240,(g,w,h)=>{ g.fillStyle='#0E2433'; g.fillRect(0,0,w,h); g.fillStyle='#5FF2D2'; g.font='800 150px Sora, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('CE',w/2,h/2-10); g.font='500 26px Sora, sans-serif'; g.fillText('MDR (UE) 2017/745',w/2,h-30); });
   ce.position.set(1.0,1.25,-6.1); d.add(ce);
@@ -31,7 +38,7 @@ export function construir(d, ctx){
   contador.position.set(mx,0.55,mz+0.2); d.add(contador);
   // Mesa de laboratorio con placas de cultivo (citotoxicidad)
   mesh(new THREE.BoxGeometry(2.2,0.08,1.0), std(0xF2F4F6,{roughness:.4}), -1.1,-1.0,-3.4, d);
-  for(let i=0;i<5;i++){ mesh(new THREE.CylinderGeometry(0.16,0.16,0.04,24), new THREE.MeshPhysicalMaterial({ color:0xFFFFFF, transparent:true, opacity:0.4, roughness:0.05 }), -1.9+i*0.4,-0.93,-3.3, d);
-    mesh(new THREE.CylinderGeometry(0.14,0.14,0.02,24), std(i===3?0xF4D35E:0xF29BB5,{roughness:.3}), -1.9+i*0.4,-0.94,-3.3, d); }
+  for(let i=0;i<5;i++){ mesh(dishGeo, dishMat, -1.9+i*0.4,-0.93,-3.3, d);
+    mesh(agarGeo, i===3?agarWarn:agarOk, -1.9+i*0.4,-0.94,-3.3, d); }
   ctx.anim(t=>{ const y=Math.sin(t*6)*0.05; act.position.y=-0.9+y; probeta.scale.y=1+y*0.15; if((t*20|0)%3===0) contador.userData.redraw(t); });
 }

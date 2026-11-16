@@ -7,11 +7,16 @@
 import * as THREE from 'three';
 import { mesh, std, basicGlow, canvasPlane } from '../util.js';
 
+// Materiales compartidos
+const pedMat = std(0x3A2F6E,{roughness:.35,metalness:.3});
+const pedGlow = basicGlow(0xFFD58A,1.8);
+const pedCone = new THREE.MeshBasicMaterial({ color:0xFFE2A8, transparent:true, opacity:0.06, depthWrite:false, blending:THREE.AdditiveBlending, side:THREE.DoubleSide });
+
 // Pedestal de museo con foco cenital
 function pedestal(d, x, z=-3.8){
-  mesh(new THREE.CylinderGeometry(0.38,0.42,1.4,32), std(0x3A2F6E,{roughness:.35,metalness:.3}), x,-1.45,z, d);
-  mesh(new THREE.CylinderGeometry(0.39,0.39,0.03,32), basicGlow(0xFFD58A,1.8), x,-0.74,z, d);
-  mesh(new THREE.ConeGeometry(0.7,2.6,32,1,true), new THREE.MeshBasicMaterial({ color:0xFFE2A8, transparent:true, opacity:0.06, depthWrite:false, blending:THREE.AdditiveBlending, side:THREE.DoubleSide }), x,0.55,z, d);
+  mesh(new THREE.CylinderGeometry(0.38,0.42,1.4,24), pedMat, x,-1.45,z, d);
+  mesh(new THREE.CylinderGeometry(0.39,0.39,0.03,24), pedGlow, x,-0.74,z, d);
+  mesh(new THREE.ConeGeometry(0.7,2.6,24,1,true), pedCone, x,0.55,z, d);
   const g=new THREE.Group(); g.position.set(x,-0.25,z); d.add(g); return g;
 }
 // Placa con texto pintado

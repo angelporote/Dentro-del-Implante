@@ -10,7 +10,8 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { gamaBaja } from './util.js';
 
 export const lienzo = document.getElementById('scene');
-export const renderer = new THREE.WebGLRenderer({ canvas:lienzo, antialias:!gamaBaja, alpha:true, powerPreference:'high-performance' });
+// alpha:false porque tanto la portada como el pasillo pintan fondo opaco (evita mezclar el canvas con la página en Edge/integradas)
+export const renderer = new THREE.WebGLRenderer({ canvas:lienzo, antialias:!gamaBaja, alpha:false, powerPreference:'high-performance' });
 // En equipos modestos dibujamos a menos resolución: es lo que más alivia a la tarjeta gráfica
 export let pixelRatio = Math.min(devicePixelRatio, gamaBaja ? 1 : 1.5);
 renderer.setPixelRatio(pixelRatio);
@@ -27,17 +28,23 @@ const renderPass = new RenderPass(new THREE.Scene(), new THREE.PerspectiveCamera
 const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.35, 0.6, 0.85);
 composer.addPass(renderPass); composer.addPass(bloom); composer.addPass(new OutputPass());
 
-// Ajuste automático de calidad: si el equipo no llega a ~40 fps durante 45 fotogramas seguidos,
-// desactiva el bloom y baja la resolución para priorizar fluidez.
-let modoAhorro = gamaBaja, muestras = 0, sumaDt = 0;
+// Ajuste automático en 2 escalones tras el arranque:
+// 1) Si baja de ~50 fps, quita el bloom (ahorra 6 pases de GPU sin perder nitidez)
+// 2) Si sigue por debajo de ~42 fps, baja el pixelRatio a 1
+let nivelAhorro = gamaBaja ? 2 : 0, muestras = 0, sumaDt = 0, calentamiento = 60;
 export function vigilarRendimiento(dt, onCambio){
-  if(modoAhorro || dt <= 0 || dt > 0.25) return;
+  if(nivelAhorro >= 2 || dt <= 0 || dt > 0.25) return;
+  if(calentamiento > 0){ calentamiento--; return; }
   muestras++; sumaDt += dt;
-  if(muestras < 45) return;
+  if(muestras < 35) return;
   const media = sumaDt / muestras;
   muestras = 0; sumaDt = 0;
-  if(media > 0.026){
-    modoAhorro = true;
+  if(nivelAhorro === 0 && media > 0.020){
+    nivelAhorro = 1;
+    usarBloom = false;
+    redimensionar(innerWidth, innerHeight);
+  } else if(nivelAhorro <= 1 && media > 0.024){
+    nivelAhorro = 2;
     usarBloom = false;
     pixelRatio = 1;
     renderer.setPixelRatio(1);

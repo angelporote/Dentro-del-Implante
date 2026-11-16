@@ -71,10 +71,11 @@ export function crearActividades({ vitrinas, salas, pasillo, mesa }){
     const f = salas[v.id]?.actividades?.[a.clave];
     if(!f){ avisar('Esta actividad está en construcción: la diseñaremos juntos.'); return; }
     visorTitulo.textContent=a.titulo; visorCuerpo.innerHTML='';
+    estado.visorAbierto=true;
     gsap.set(visor,{visibility:'visible'}); gsap.fromTo(visor,{opacity:0,y:20},{opacity:1,y:0,duration:D(.4)});
     f(visorCuerpo, { datos:v, avisar });
   }
-  function cerrarVisor(){ if(visor.style.visibility==='visible') gsap.to(visor,{opacity:0,duration:D(.25),onComplete:()=>gsap.set(visor,{visibility:'hidden'})}); }
+  function cerrarVisor(){ if(visor.style.visibility==='visible'){ estado.visorAbierto=false; gsap.to(visor,{opacity:0,duration:D(.25),onComplete:()=>gsap.set(visor,{visibility:'hidden'})}); } }
   document.getElementById('visorCerrar').addEventListener('click',cerrarVisor);
   document.getElementById('immBack').addEventListener('click',salir);
   document.getElementById('immToggle').addEventListener('click',()=>{ const c=document.getElementById('immContent'); c.classList.toggle('collapsed'); document.getElementById('immToggle').textContent = c.classList.contains('collapsed') ? 'Ver actividades' : 'Ocultar panel'; });
