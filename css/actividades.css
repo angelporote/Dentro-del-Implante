@@ -70,8 +70,14 @@
 .lt-leyenda{display:flex;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:var(--dim);margin-bottom:1.2rem}
 .lt-leyenda span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--g);margin-right:.4rem}
 .lt-ficha{border:1px solid var(--edge);border-top:3px solid var(--g);border-radius:16px;padding:1.3rem 1.4rem;background:rgba(255,255,255,.03)}
-.lt-split{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:1.25rem;align-items:center}
+.lt-split{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:1.25rem;align-items:start}
+/* Columna del modelo 3D: visor + chips para enfocar cada pieza + nota breve de la pieza enfocada */
+.lt-izq{display:flex;flex-direction:column;gap:.6rem;min-width:0}
+.lt-partes{display:flex;flex-wrap:wrap;gap:.35rem}
+.lt-partes .chip{font-size:.78rem;padding:.3rem .7rem}
+.lt-parte-nota{font-size:.84rem;line-height:1.45;color:var(--dim);margin:0!important;min-height:2.9em}
 .lt-ficha h3{margin:.3rem 0 .6rem;font-size:1.3rem;letter-spacing:-.015em;line-height:1.3}
+.lt-contador{font-size:.78rem;color:var(--dim);margin:0 0 .35rem!important}
 .lt-fecha{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;color:var(--g);font-weight:600;font-size:.9rem;margin:0!important}
 .etq{font-weight:500;font-size:.75rem;color:var(--text);border:1px solid var(--edge);border-radius:999px;padding:.15rem .6rem}
 .lt-ficha dl{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0 0}
@@ -120,6 +126,22 @@
 .cl-ficha.ko{background:rgba(255,122,138,.14);color:#FF9AA6}
 .cl-feedback{margin-top:1.2rem;display:flex;flex-direction:column;align-items:flex-start;gap:1rem}
 .cl-feedback:empty{display:none}
+/* Tarjeta del dispositivo: silueta anatómica con la zona marcada + icono + región */
+.cl-ficha-dispositivo{display:flex;align-items:center;gap:.9rem;min-width:0}
+.cl-silueta{width:68px;height:68px;flex:none;border-radius:12px;background:rgba(11,10,34,.55);border:1px solid var(--edge)}
+.cl-silueta .cuerpo{fill:rgba(244,239,255,.1);stroke:rgba(244,239,255,.5);stroke-width:.9;stroke-linejoin:round}
+.cl-silueta .halo{transform-box:fill-box;transform-origin:center;animation:cl-pulso 1.8s ease-out infinite}
+@keyframes cl-pulso{0%{transform:scale(.45);opacity:.65}100%{transform:scale(1.7);opacity:0}}
+.cl-icono{width:1em;height:1em;vertical-align:-.1em;margin-right:.4rem;color:var(--bio)}
+.cl-zona{font-size:.84rem;color:var(--dim)}
+/* Semáforo regulatorio MDR / ISO 10993 tras responder */
+.cl-regula{--s:var(--bio);border-left:3px solid var(--s);padding:.2rem 0 .2rem 1rem;max-width:48rem}
+.cl-regula.sem-rojo{--s:#FF7A8A} .cl-regula.sem-ambar{--s:#FFD98A} .cl-regula.sem-verde{--s:#5FF2D2}
+.cl-regula-cab{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:0 0 .3rem!important}
+.cl-regula .punto{width:10px;height:10px;border-radius:50%;background:var(--s);box-shadow:0 0 0 3px color-mix(in srgb,var(--s) 25%,transparent)}
+.cl-regula .clase{font-size:.8rem;font-weight:600;color:var(--s);border:1px solid color-mix(in srgb,var(--s) 55%,transparent);border-radius:999px;padding:.12rem .6rem}
+.cl-regula .iso{font-size:.78rem;color:var(--dim)}
+.cl-regula p:last-child{color:var(--dim);font-size:.92rem}
 
 /* ---------- Historia · Las tres generaciones ---------- */
 .gn-pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
@@ -166,5 +188,7 @@
   .cl-fila{writing-mode:vertical-rl;transform:rotate(180deg)}
   .cl-casilla{min-height:7rem;padding:.7rem}
   .cl-casilla > span{font-size:.82rem}
+  .cl-silueta{width:56px;height:56px}
+  .cl-cabecera{align-items:flex-start}
 }
-@media (prefers-reduced-motion:reduce){ .test-progreso span,.lt-hito .punto{transition:none} }
+@media (prefers-reduced-motion:reduce){ .test-progreso span,.lt-hito .punto{transition:none} .cl-silueta .halo{animation:none;opacity:.35} }

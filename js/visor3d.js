@@ -17,6 +17,14 @@ function activarSombras(obj){
   });
 }
 
+// Distancia de cámara para que una esfera de radio dado quepa en pantalla (según fov y aspecto)
+function distanciaPara(radio, camera, margen = 1.22){
+  const vFov = THREE.MathUtils.degToRad(camera.fov);
+  const hFov = 2 * Math.atan(Math.tan(vFov / 2) * Math.max(0.5, camera.aspect));
+  const minHalfFov = Math.min(vFov, hFov) * 0.5;
+  return (radio / Math.sin(minHalfFov)) * margen;
+}
+
 function encuadrarGrupo(grupo, camera, controls, dirBase, conservarAngulo = false){
   const box = new THREE.Box3().setFromObject(grupo);
   if(box.isEmpty()) return;
@@ -27,11 +35,8 @@ function encuadrarGrupo(grupo, camera, controls, dirBase, conservarAngulo = fals
   const dir = conservarAngulo ? camera.position.clone().sub(controls.target) : dirBase.clone();
   if(dir.lengthSq() < 1e-6) dir.copy(dirBase);
   controls.target.set(0, 0, 0);
-  const vFov = THREE.MathUtils.degToRad(camera.fov);
-  const hFov = 2 * Math.atan(Math.tan(vFov / 2) * Math.max(0.5, camera.aspect));
-  const minHalfFov = Math.min(vFov, hFov) * 0.5;
   const radius = Math.max(0.45, sphere.radius);
-  const dist = Math.max(2.1, (radius / Math.sin(minHalfFov)) * 1.22);
+  const dist = Math.max(2.1, distanciaPara(radius, camera));
   camera.position.copy(dir.normalize().multiplyScalar(dist));
   camera.far = Math.max(50, dist * 4);
   camera.updateProjectionMatrix();
@@ -131,6 +136,50 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
 
   let raf = 0, destruido = false;
   const reloj = new THREE.Clock();
+
+  /* ---- Enfoque por partes ----
+     Las escenas marcan sus piezas con obj.userData.parte = 'id'. enfocarParte(id) acerca la cámara
+     a la caja de todas las mallas con ese id, sin cambiar el ángulo de vista; vistaGeneral() vuelve. */
+  let vuelo = null;
+  controls.addEventListener('start', () => { vuelo = null; });   // si el alumno arrastra, manda él
+  function volarA(destinoTarget, destinoPos){
+    if(reduceMotion){
+      controls.target.copy(destinoTarget); camera.position.copy(destinoPos); controls.update(); return;
+    }
+    vuelo = { t0:reloj.getElapsedTime(), dur:0.8,
+      desdeT:controls.target.clone(), hastaT:destinoTarget.clone(),
+      desdeP:camera.position.clone(), hastaP:destinoPos.clone() };
+  }
+  function direccionActual(){
+    const d = camera.position.clone().sub(controls.target);
+    return d.lengthSq() < 1e-6 ? dirBase.clone() : d.normalize();
+  }
+  function cajaParte(id){
+    const box = new THREE.Box3();
+    grupo.updateMatrixWorld(true);
+    grupo.traverse(o => { if(o.userData?.parte === id) box.expandByObject(o); });
+    return box;
+  }
+  function enfocar(objetivo, radio){
+    const dist = Math.max(0.55, distanciaPara(Math.max(0.12, radio), camera, 1.45));
+    controls.minDistance = Math.min(controls.minDistance, dist * 0.6);
+    volarA(objetivo, objetivo.clone().add(direccionActual().multiplyScalar(dist)));
+  }
+  function enfocarParte(id){
+    const box = cajaParte(id);
+    if(box.isEmpty()) return false;
+    const esfera = box.getBoundingSphere(new THREE.Sphere());
+    enfocar(esfera.center, esfera.radius);
+    return true;
+  }
+  function vistaGeneral(){
+    const box = new THREE.Box3().setFromObject(grupo);
+    if(box.isEmpty()) return;
+    const radio = Math.max(0.45, box.getBoundingSphere(new THREE.Sphere()).radius);
+    const dist = Math.max(2.1, distanciaPara(radio, camera));
+    controls.minDistance = dist * 0.55;
+    volarA(new THREE.Vector3(0, 0, 0), direccionActual().multiplyScalar(dist));
+  }
   const ro = new ResizeObserver(()=>{
     if(destruido) return;
     const nw = wrap.clientWidth, nh = wrap.clientHeight;
@@ -173,6 +222,12 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
       return;
     }
     const t = reloj.getElapsedTime();
+    if(vuelo){
+      const k = Math.min(1, (t - vuelo.t0) / vuelo.dur), e = k * k * (3 - 2 * k);
+      controls.target.lerpVectors(vuelo.desdeT, vuelo.hastaT, e);
+      camera.position.lerpVectors(vuelo.desdeP, vuelo.hastaP, e);
+      if(k >= 1) vuelo = null;
+    }
     animRef.fn(t, grupo);
     controls.update();
     renderer.render(scene, camera);
@@ -183,6 +238,7 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
   return {
     reemplazar(nuevaEscena){
       if(destruido) return;
+      vuelo = null;
       limpiarGrupo();
       grupo.position.set(0,0,0);
       grupo.rotation.set(0,0,0);
@@ -193,6 +249,9 @@ export function montarVisor3D(contenedor, construirEscena, { fondo=0x0E0C2A, cam
       activarSombras(grupo);
       encuadrarGrupo(grupo, camera, controls, dirBase, false);
     },
+    enfocar,
+    enfocarParte,
+    vistaGeneral,
     destruir,
     renderer,
     scene,
