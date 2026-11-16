@@ -6,7 +6,7 @@
    ========================================================= */
 import * as THREE from 'three';
 import { mesh, std, basicGlow, canvasPlane } from '../util.js';
-import { esc } from '../actividades.js';
+import { esc, el, barajar, sinDatos, raiz } from '../ui.js';
 
 // Materiales y geometrías compartidas en la galería de historia
 const pedMat = std(0x3A2F6E,{roughness:.35,metalness:.3});
@@ -53,181 +53,201 @@ export function construir(d, ctx){
 }
 
 /* =========================================================
-   Actividades interactivas de Vitrina 01 (en el visor)
+   Actividades de la sala (se abren en el visor con { datos, vitrina, avisar })
+   Todo el contenido sale de datos/historia.json
    ========================================================= */
-export const actividades = {
-  'linea-temporal': (contenedor, { datos }) => {
-    const hitos = [...(datos.hitos || [])].sort((a,b)=>(a.anio??0)-(b.anio??0));
-    const eras = ['Todas', ...new Set(hitos.map(h=>h.era).filter(Boolean))];
-    let eraActiva = 'Todas', pestana = 'hitos';
 
-    function pintar(){
-      const lista = eraActiva === 'Todas' ? hitos : hitos.filter(h=>h.era === eraActiva);
-      contenedor.innerHTML = `
-        <div class="v-tabs">
-          <button class="v-tab ${pestana==='hitos'?'on':''}" data-p="hitos">Cronología (${hitos.length} hitos)</button>
-          <button class="v-tab ${pestana==='conceptos'?'on':''}" data-p="conceptos">Definiciones y Consenso (${(datos.conceptos||[]).length})</button>
-          <button class="v-tab ${pestana==='fuentes'?'on':''}" data-p="fuentes">Bibliografía</button>
-        </div>
-        ${pestana==='hitos' ? `
-          <div class="v-pills">${eras.map(e=>`<button class="v-pill ${e===eraActiva?'on':''}" data-e="${esc(e)}">${esc(e)}</button>`).join('')}</div>
-          <div class="v-timeline">
-            ${lista.map(h=>`
-              <article class="v-tl-item">
-                <div class="v-tl-dot"></div>
-                <div class="v-tl-card">
-                  <div class="v-tl-meta"><span class="v-badge">${esc(h.fecha)}</span><span class="v-tag">${esc(h.generacion)}</span></div>
-                  <h3>${esc(h.titulo)}</h3>
-                  <p class="v-meta-line"><b>Protagonistas:</b> ${esc(h.protagonista)} · <b>Materiales:</b> ${esc(h.material)}</p>
-                  <p>${esc(h.descripcion)}</p>
-                </div>
-              </article>`).join('')}
-          </div>` : ''}
-        ${pestana==='conceptos' ? `
-          <div class="v-grid-2">
-            ${(datos.normas||[]).map(n=>`
-              <article class="v-card v-card-accent">
-                <span class="v-badge">${esc(n.codigo)}</span>
-                <h3>${esc(n.titulo)}</h3>
-                <p class="v-dim">${esc(n.alcance)}</p>
-                <p><b>Idea clave:</b> ${esc(n.clave)}</p>
-              </article>`).join('')}
-            ${(datos.conceptos||[]).map(c=>`
-              <article class="v-card">
-                <h3>${esc(c.titulo)}</h3>
-                <p>${esc(c.definicion)}</p>
-                <p class="v-dim">${esc(c.detalle)}</p>
-                <p class="v-ex"><b>Ejemplo:</b> ${esc(c.ejemplo)}</p>
-              </article>`).join('')}
-          </div>` : ''}
-        ${pestana==='fuentes' ? `
-          <div class="v-card">
-            <h3>Referencias bibliográficas de esta vitrina</h3>
-            <ul class="v-list">${(datos.fuentes||[]).map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
-          </div>` : ''}`;
+// Generación a la que pertenece un hito o tarjeta: 1, 2, 3 o 0 (antes de las generaciones)
+function genDe(texto=''){ return /3ª/.test(texto) ? 3 : /2ª/.test(texto) ? 2 : /1ª/.test(texto) ? 1 : 0; }
+const anioTxt = (a) => a<0 ? `${Math.abs(a)} a. C.` : a<1000 ? `${a} d. C.` : String(a);
 
-      contenedor.querySelectorAll('.v-tab').forEach(b=>b.addEventListener('click',()=>{ pestana=b.dataset.p; pintar(); }));
-      contenedor.querySelectorAll('.v-pill').forEach(b=>b.addEventListener('click',()=>{ eraActiva=b.dataset.e; pintar(); }));
-    }
-    pintar();
-  },
+/* ---- 1 · Línea temporal: hitos, consensos y conceptos ---- */
+function lineaTemporal(contenedor, { datos }){
+  const hitos = (datos.hitos||[]).slice().sort((a,b)=>a.anio-b.anio);
+  if(!hitos.length) return sinDatos(contenedor, 'hitos');
+  const r = raiz(contenedor, 'linea');
+  const eras = [...new Set(hitos.map(h=>h.era))];
+  let sel = 0;
 
-  'implante-o-protesis': (contenedor, { datos }) => {
-    const casos = datos.datos || [];
-    const categorias = [
-      'Implante y prótesis',
-      'Implante (no prótesis)',
-      'Prótesis (no implante)',
-      'Dispositivo médico (ni implante ni prótesis)'
-    ];
-    let idx = 0, aciertos = 0;
-    const historial = [];
+  r.innerHTML = `
+    <p class="actv-intro">Recorre los ${hitos.length} hitos con las flechas del teclado o tocando cada año. El color indica la generación de biomateriales.</p>
+    <div class="lt-eras" role="group" aria-label="Saltar a una época">
+      ${eras.map(e=>`<button class="chip" data-era="${esc(e)}">${esc(e)}</button>`).join('')}
+    </div>
+    <div class="lt-pista" role="listbox" aria-label="Hitos">
+      ${hitos.map((h,k)=>`<button class="lt-hito g${genDe(h.generacion)}" role="option" data-k="${k}" aria-selected="false">
+        <span class="punto"></span><b>${anioTxt(h.anio)}</b><span class="tit">${esc(h.titulo)}</span></button>`).join('')}
+    </div>
+    <div class="lt-leyenda" aria-hidden="true"><span class="g0">Antes de las generaciones</span><span class="g1">1ª generación</span><span class="g2">2ª generación</span><span class="g3">3ª generación</span></div>
+    <article class="lt-ficha" aria-live="polite"></article>
+    <div class="lt-nav"><button class="btn-secundario" id="ltPrev">Hito anterior</button><button class="btn-secundario" id="ltNext">Hito siguiente</button></div>
+    ${(datos.normas||[]).length?`<h3 class="actv-sub">Las definiciones de consenso</h3>
+    <div class="lt-normas">${datos.normas.map(n=>`<div class="lt-norma"><b>${esc(n.codigo)}</b><span>${esc(n.titulo)}</span><p>${esc(n.clave)}</p><p class="dim">${esc(n.alcance)}</p></div>`).join('')}</div>`:''}
+    ${(datos.conceptos||[]).length?`<h3 class="actv-sub">Conceptos clave</h3>
+    <div class="lt-conceptos">${datos.conceptos.map(c=>`<details><summary>${esc(c.titulo)}</summary>
+      <p>${esc(c.definicion)}</p>${c.detalle?`<p class="dim">${esc(c.detalle)}</p>`:''}${c.ejemplo?`<p class="ej"><b>Ejemplo:</b> ${esc(c.ejemplo)}</p>`:''}</details>`).join('')}</div>`:''}`;
 
-    function pintar(){
-      if(idx >= casos.length){
-        contenedor.innerHTML = `
-          <div class="v-result">
-            <span class="v-badge">Clasificación completada</span>
-            <h3>${aciertos} / ${casos.length} dispositivos clasificados correctamente</h3>
-            <p>Recuerda la regla de oro de Chengdu: <b>implante</b> exige colocación dentro del cuerpo; <b>prótesis</b> exige reemplazar o aumentar una parte.</p>
-            <button class="cta" id="ipRetry">Practicar otra vez</button>
-          </div>
-          <div class="v-table-wrap"><table class="v-table">
-            <thead><tr><th>Dispositivo</th><th>¿Dentro del cuerpo?</th><th>¿Reemplaza parte?</th><th>Clasificación</th></tr></thead>
-            <tbody>${casos.map(c=>`<tr><td><b>${esc(c.dispositivo)}</b></td><td>${c.en_el_cuerpo?'Sí':'No'}</td><td>${c.reemplaza_aumenta?'Sí':'No'}</td><td><span class="v-tag">${esc(c.clasificacion)}</span></td></tr>`).join('')}</tbody>
-          </table></div>`;
-        contenedor.querySelector('#ipRetry').addEventListener('click', ()=>{ idx=0; aciertos=0; historial.length=0; pintar(); });
-        return;
-      }
-
-      const c = casos[idx];
-      contenedor.innerHTML = `
-        <div class="v-quiz">
-          <div class="v-card v-legend">
-            <span><b>Implante:</b> colocado intencionadamente, total o parcialmente, dentro del cuerpo.</span>
-            <span><b>Prótesis:</b> reemplaza o aumenta una parte del cuerpo (puede estar fuera o dentro).</span>
-          </div>
-          <div class="v-quiz-top">
-            <span class="v-badge">Caso ${idx+1} de ${casos.length}</span>
-            <span class="v-dim">Aciertos: <b>${aciertos}</b></span>
-          </div>
-          <div class="v-progress"><i style="width:${(idx/casos.length)*100}%"></i></div>
-          <h3 class="v-qtitle">¿Cómo clasificarías: <span style="color:var(--bio)">${esc(c.dispositivo)}</span>?</h3>
-          <div class="v-grid-2">
-            ${categorias.map((cat,k)=>`<button class="v-opt" data-cat="${esc(cat)}"><span class="v-letra">${k+1}</span><span>${esc(cat)}</span></button>`).join('')}
-          </div>
-          <div class="v-feedback" id="ipFb" hidden></div>
-          <div class="v-quiz-foot"><button class="ghost" id="ipNext" hidden>${idx+1<casos.length?'Siguiente dispositivo →':'Ver tabla resumen'}</button></div>
-        </div>`;
-
-      const btns = [...contenedor.querySelectorAll('.v-opt')];
-      const fb = contenedor.querySelector('#ipFb');
-      const next = contenedor.querySelector('#ipNext');
-      btns.forEach(b=>b.addEventListener('click', ()=>{
-        const elegida = b.dataset.cat;
-        const ok = elegida === c.clasificacion;
-        if(ok) aciertos++;
-        historial.push({ ...c, ok });
-        btns.forEach(x=>{
-          x.disabled = true;
-          if(x.dataset.cat === c.clasificacion) x.classList.add('ok');
-          else if(x.dataset.cat === elegida) x.classList.add('bad');
-        });
-        fb.hidden = false;
-        fb.className = 'v-feedback ' + (ok?'ok':'bad');
-        fb.innerHTML = `<b>${ok?'¡Exacto!':'Ojo con la definición'}</b>
-          <p>¿Dentro del cuerpo? <b>${c.en_el_cuerpo?'Sí':'No'}</b> · ¿Reemplaza o aumenta? <b>${c.reemplaza_aumenta?'Sí':'No'}</b></p>
-          <p>${esc(c.explicacion)}</p>`;
-        next.hidden = false;
-      }));
-      next.addEventListener('click', ()=>{ idx++; pintar(); });
-    }
-    pintar();
-  },
-
-  'tres-generaciones': (contenedor, { datos }) => {
-    const gens = datos.generaciones || [];
-    let activa = 0; // 0, 1, 2 o 'todas'
-
-    function pintar(){
-      const g = typeof activa === 'number' ? gens[activa] : null;
-      contenedor.innerHTML = `
-        <div class="v-tabs">
-          ${gens.map((item,i)=>`<button class="v-tab ${activa===i?'on':''}" data-g="${i}">${item.numero}ª Generación</button>`).join('')}
-          <button class="v-tab ${activa==='todas'?'on':''}" data-g="todas">Comparar las 3</button>
-        </div>
-        ${g ? `
-          <div class="v-card v-gen-hero">
-            <div class="v-tl-meta"><span class="v-badge">${g.numero}ª Generación</span><span class="v-tag">${esc(g.epoca)}</span></div>
-            <h3>${esc(g.nombre)}</h3>
-            <p class="v-ex"><b>Filosofía:</b> ${esc(g.filosofia)}</p>
-            <div class="v-grid-2">
-              <div class="v-subbox"><b>Objetivo biológico</b><p>${esc(g.objetivo_biologico)}</p></div>
-              <div class="v-subbox"><b>Mecanismo en la interfaz</b><p>${esc(g.mecanismo)}</p></div>
-              <div class="v-subbox"><b>Materiales representativos</b><div class="v-chips">${(g.ejemplos_materiales||[]).map(m=>`<span>${esc(m)}</span>`).join('')}</div></div>
-              <div class="v-subbox"><b>Dispositivos clave</b><div class="v-chips">${(g.ejemplos_dispositivos||[]).map(m=>`<span>${esc(m)}</span>`).join('')}</div></div>
-            </div>
-            <div class="v-grid-2" style="margin-top:.9rem">
-              <div class="v-subbox warn"><b>Principal limitación</b><p>${esc(g.limitacion)}</p></div>
-              <div class="v-subbox bio"><b>Cómo convive hoy</b><p>${esc(g.matiz_actual)}</p></div>
-            </div>
-          </div>` : `
-          <div class="v-grid-3">
-            ${gens.map(item=>`
-              <article class="v-card">
-                <span class="v-badge">${item.numero}ª Gen. · ${esc(item.epoca)}</span>
-                <h3>${esc(item.nombre.replace(/^[^:]+:\s*/,''))}</h3>
-                <p><b>Filosofía:</b> ${esc(item.filosofia)}</p>
-                <p><b>Objetivo:</b> ${esc(item.objetivo_biologico)}</p>
-                <p class="v-dim"><b>Limitación:</b> ${esc(item.limitacion)}</p>
-              </article>`).join('')}
-          </div>`}`;
-
-      contenedor.querySelectorAll('.v-tab').forEach(b=>b.addEventListener('click', ()=>{
-        activa = b.dataset.g === 'todas' ? 'todas' : +b.dataset.g;
-        pintar();
-      }));
-    }
-    pintar();
+  const botones = [...r.querySelectorAll('.lt-hito')], ficha = r.querySelector('.lt-ficha');
+  function elegir(k, desplazar=true){
+    sel = Math.max(0, Math.min(hitos.length-1, k)); const h = hitos[sel];
+    botones.forEach((b,j)=>{ b.classList.toggle('on', j===sel); b.setAttribute('aria-selected', j===sel); });
+    if(desplazar) botones[sel].scrollIntoView({ inline:'center', block:'nearest', behavior:'smooth' });
+    r.querySelectorAll('.lt-eras .chip').forEach(c=>c.classList.toggle('on', c.dataset.era===h.era));
+    ficha.className = `lt-ficha g${genDe(h.generacion)}`;
+    ficha.innerHTML = `
+      <p class="lt-fecha">${esc(h.fecha)} <span class="etq">${esc(h.generacion)}</span></p>
+      <h3>${esc(h.titulo)}</h3>
+      <p>${esc(h.descripcion)}</p>
+      <dl><div><dt>Protagonistas</dt><dd>${esc(h.protagonista)}</dd></div><div><dt>Material</dt><dd>${esc(h.material)}</dd></div></dl>`;
+    r.querySelector('#ltPrev').disabled = sel===0; r.querySelector('#ltNext').disabled = sel===hitos.length-1;
   }
+  botones.forEach((b,k)=>b.addEventListener('click',()=>elegir(k)));
+  r.querySelectorAll('.lt-eras .chip').forEach(c=>c.addEventListener('click',()=>elegir(hitos.findIndex(h=>h.era===c.dataset.era))));
+  r.querySelector('#ltPrev').addEventListener('click',()=>elegir(sel-1));
+  r.querySelector('#ltNext').addEventListener('click',()=>elegir(sel+1));
+  r.addEventListener('keydown',e=>{
+    if(e.target.closest('details')) return;
+    if(e.key==='ArrowRight'){ e.preventDefault(); elegir(sel+1); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); elegir(sel-1); }
+  });
+  elegir(0, false); r.focus({ preventScroll:true });
+}
+
+/* ---- 2 · ¿Implante, prótesis o ambos? Clasificador en una matriz 2×2 ----
+   Las casillas salen de los dos criterios del JSON: en_el_cuerpo y reemplaza_aumenta */
+const CASILLAS = [
+  { dentro:true,  reemplaza:true,  nombre:'Implante y prótesis' },
+  { dentro:false, reemplaza:true,  nombre:'Prótesis (no implante)' },
+  { dentro:true,  reemplaza:false, nombre:'Implante (no prótesis)' },
+  { dentro:false, reemplaza:false, nombre:'Ni implante ni prótesis' }
+];
+function implanteOProtesis(contenedor, { datos }){
+  const banco = (datos.datos||[]).filter(d=>d.dispositivo && typeof d.en_el_cuerpo==='boolean' && typeof d.reemplaza_aumenta==='boolean');
+  if(!banco.length) return sinDatos(contenedor, 'dispositivos para clasificar');
+  const r = raiz(contenedor, 'clasif');
+  let orden, i, aciertos, respondido;
+  const acierto = new Map();   // dispositivo → si se clasificó bien (sin tocar los datos en caché)
+
+  function empezar(){ orden = barajar(banco); i = 0; aciertos = 0; acierto.clear(); pintar(); }
+  function pintar(){
+    respondido = false;
+    r.innerHTML = `
+      <p class="actv-intro">Coloca cada dispositivo en su casilla. Un <b>implante</b> se coloca a propósito dentro del cuerpo; una <b>prótesis</b> reemplaza o aumenta una parte del cuerpo. Puede ser las dos cosas, una o ninguna.</p>
+      <div class="cl-cabecera">
+        <div class="cl-carta"><span class="dim">Dispositivo ${i+1} de ${orden.length}</span><b>${esc(orden[i].dispositivo)}</b></div>
+        <p class="cl-marcador">${aciertos} ${aciertos===1?'acierto':'aciertos'}</p>
+      </div>
+      <div class="cl-matriz">
+        <span class="cl-eje x">¿Se coloca dentro del cuerpo?</span>
+        <span class="cl-col c1">Sí</span><span class="cl-col c2">No</span>
+        <span class="cl-eje y">¿Reemplaza o aumenta una parte del cuerpo?</span>
+        <span class="cl-fila f1">Sí</span>
+        ${CASILLAS.slice(0,2).map((c,k)=>`<button class="cl-casilla" data-k="${k}" style="grid-area:${'ab'[k]}"><span>${c.nombre}</span><div class="cl-fichas"></div></button>`).join('')}
+        <span class="cl-fila f2">No</span>
+        ${CASILLAS.slice(2).map((c,k)=>`<button class="cl-casilla" data-k="${k+2}" style="grid-area:${'cd'[k]}"><span>${c.nombre}</span><div class="cl-fichas"></div></button>`).join('')}
+      </div>
+      <div class="cl-feedback" aria-live="polite"></div>`;
+    // Los dispositivos ya colocados se quedan en su casilla
+    orden.slice(0,i).forEach(d=>ponerFicha(d, acierto.get(d)));
+    r.querySelectorAll('.cl-casilla').forEach(b=>b.addEventListener('click',()=>responder(+b.dataset.k)));
+    r.focus({ preventScroll:true });
+  }
+  const casillaDe = (d)=> CASILLAS.findIndex(c=>c.dentro===d.en_el_cuerpo && c.reemplaza===d.reemplaza_aumenta);
+  function ponerFicha(d, ok){ r.querySelectorAll('.cl-casilla')[casillaDe(d)].querySelector('.cl-fichas').appendChild(el(`<span class="cl-ficha ${ok?'ok':'ko'}">${esc(d.dispositivo)}</span>`)); }
+  function responder(k){
+    if(respondido) return; respondido = true;
+    const d = orden[i], buena = casillaDe(d), ok = k===buena;
+    acierto.set(d, ok); if(ok) aciertos++;
+    ponerFicha(d, ok);
+    const cas = r.querySelectorAll('.cl-casilla');
+    cas.forEach(b=>b.disabled=true);
+    cas[buena].classList.add('buena'); if(!ok) cas[k].classList.add('mala');
+    r.querySelector('.cl-marcador').textContent = `${aciertos} ${aciertos===1?'acierto':'aciertos'}`;
+    const ultima = i===orden.length-1;
+    const fb = r.querySelector('.cl-feedback');
+    fb.innerHTML = `<div class="test-explica ${ok?'ok':'ko'}"><b>${ok?'Correcto':'No es esa casilla'}: ${esc(d.clasificacion || CASILLAS[buena].nombre)}.</b>${d.explicacion?`<p>${esc(d.explicacion)}</p>`:''}</div>
+      <button class="btn-primario" id="clSigue">${ultima?'Ver resultado':'Siguiente dispositivo'}</button>`;
+    const b = fb.querySelector('#clSigue'); b.focus({ preventScroll:true });
+    fb.scrollIntoView({ block:'nearest', behavior:'smooth' });
+    b.addEventListener('click',()=>{ if(ultima) final(); else { i++; pintar(); } });
+  }
+  function final(){
+    const n = orden.length;
+    r.querySelector('.cl-cabecera').innerHTML = `<div class="cl-carta"><span class="dim">Resultado</span><b>${aciertos} de ${n} bien clasificados</b></div>`;
+    r.querySelector('.cl-feedback').innerHTML = `<p class="actv-intro">${aciertos===n?'Clasificación perfecta.':'Las fichas en rojo son las que fallaste: ya están en su casilla correcta.'}</p>
+      <button class="btn-primario" id="clOtra">Volver a empezar</button>`;
+    r.querySelector('#clOtra').addEventListener('click',empezar);
+    r.querySelector('#clOtra').focus({ preventScroll:true });
+  }
+  empezar();
+}
+
+/* ---- 3 · Las tres generaciones: recorrido paso a paso y tabla comparativa ---- */
+// «Primera generación: materiales bioinertes» → «Materiales bioinertes»
+function nombreCorto(n=''){ const t = (n.split(':')[1] || n).trim(); return t.charAt(0).toUpperCase()+t.slice(1); }
+function tresGeneraciones(contenedor, { datos }){
+  const gens = (datos.generaciones||[]).slice().sort((a,b)=>a.numero-b.numero);
+  if(!gens.length) return sinDatos(contenedor, 'generaciones');
+  const r = raiz(contenedor, 'gens');
+  let sel = 0, comparar = false;
+  const lista = (arr)=> (arr||[]).map(t=>`<li>${esc(t)}</li>`).join('');
+
+  r.innerHTML = `
+    <div class="gn-pasos" role="tablist" aria-label="Generaciones">
+      ${gens.map((g,k)=>`<button class="gn-paso g${g.numero}" role="tab" data-k="${k}"><span class="num">${g.numero}</span><span><b>${esc(nombreCorto(g.nombre))}</b><span class="dim">${esc(g.epoca)}</span></span></button>`).join('')}
+    </div>
+    <div class="gn-barra"><button class="btn-secundario" id="gnComparar" aria-pressed="false">Comparar las tres</button></div>
+    <div class="gn-cuerpo" aria-live="polite"></div>`;
+  const cuerpo = r.querySelector('.gn-cuerpo'), pasos = [...r.querySelectorAll('.gn-paso')];
+
+  function ficha(){
+    const g = gens[sel];
+    cuerpo.innerHTML = `<article class="gn-ficha g${g.numero}">
+      <h3>${esc(g.nombre)}</h3>
+      <p class="gn-filo">${esc(g.filosofia)}</p>
+      <div class="gn-rejilla">
+        <section><h4>Objetivo biológico</h4><p>${esc(g.objetivo_biologico)}</p></section>
+        <section><h4>Cómo lo consigue</h4><p>${esc(g.mecanismo)}</p></section>
+        <section><h4>Materiales</h4><ul class="gn-chips">${lista(g.ejemplos_materiales)}</ul></section>
+        <section><h4>Dispositivos</h4><ul class="gn-chips">${lista(g.ejemplos_dispositivos)}</ul></section>
+        <section><h4>Limitación</h4><p>${esc(g.limitacion)}</p></section>
+        <section><h4>Hoy</h4><p>${esc(g.matiz_actual)}</p></section>
+      </div>
+      <div class="lt-nav">
+        <button class="btn-secundario" id="gnPrev" ${sel===0?'disabled':''}>Generación anterior</button>
+        <button class="btn-primario" id="gnNext" ${sel===gens.length-1?'disabled':''}>Siguiente generación</button>
+      </div></article>`;
+    cuerpo.querySelector('#gnPrev').addEventListener('click',()=>ir(sel-1));
+    cuerpo.querySelector('#gnNext').addEventListener('click',()=>ir(sel+1));
+  }
+  function tabla(){
+    const filas = [['Filosofía','filosofia'],['Objetivo biológico','objetivo_biologico'],['Cómo lo consigue','mecanismo'],['Materiales','ejemplos_materiales'],['Limitación','limitacion']];
+    cuerpo.innerHTML = `<div class="gn-tabla-wrap"><table class="gn-tabla">
+      <thead><tr><th></th>${gens.map(g=>`<th class="g${g.numero}"><span class="num">${g.numero}</span> ${esc(g.epoca)}</th>`).join('')}</tr></thead>
+      <tbody>${filas.map(([t,k])=>`<tr><th>${t}</th>${gens.map(g=>`<td>${Array.isArray(g[k])?`<ul>${lista(g[k])}</ul>`:esc(g[k])}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div>`;
+  }
+  function ir(k){
+    sel = Math.max(0, Math.min(gens.length-1, k)); comparar = false;
+    pintar(); pasos[sel].focus({ preventScroll:true });
+  }
+  function pintar(){
+    pasos.forEach((p,j)=>{ p.classList.toggle('on', !comparar && j===sel); p.setAttribute('aria-selected', !comparar && j===sel); });
+    const b = r.querySelector('#gnComparar'); b.setAttribute('aria-pressed', comparar); b.textContent = comparar ? 'Volver al recorrido' : 'Comparar las tres';
+    comparar ? tabla() : ficha();
+  }
+  pasos.forEach((p,k)=>p.addEventListener('click',()=>ir(k)));
+  r.querySelector('#gnComparar').addEventListener('click',()=>{ comparar=!comparar; pintar(); });
+  r.addEventListener('keydown',e=>{
+    if(comparar) return;
+    if(e.key==='ArrowRight'){ e.preventDefault(); ir(sel+1); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); ir(sel-1); }
+  });
+  pintar(); r.focus({ preventScroll:true });
+}
+
+export const actividades = {
+  'linea-temporal': lineaTemporal,
+  'implante-o-protesis': implanteOProtesis,
+  'tres-generaciones': tresGeneraciones
 };

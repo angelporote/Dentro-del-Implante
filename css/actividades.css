@@ -1,0 +1,159 @@
+/* =========================================================
+   actividades.css · Lo que se pinta dentro del visor (tests y actividades de cada sala)
+   Colores de generación: g0 antes de las generaciones · g1 bioinertes · g2 bioactivos · g3 regenerativos
+   ========================================================= */
+.actv{max-width:62rem;margin:0 auto;outline:none;line-height:1.55}
+.actv .g0{--g:var(--bone)} .actv .g1{--g:var(--metal)} .actv .g2{--g:var(--bio)} .actv .g3{--g:var(--polymer)}
+.actv p{margin:.4rem 0}
+.actv .dim{color:var(--dim)}
+.actv-intro{color:var(--dim);max-width:46rem;margin:0 0 1.2rem!important}
+.actv-intro b{color:var(--text);font-weight:600}
+.actv-sub{font-size:1.1rem;margin:2.4rem 0 .9rem;letter-spacing:-.01em}
+.visor-on #immBack,.visor-on #immToggle{visibility:hidden}
+.visor-carga{color:var(--dim);text-align:center;padding:3rem 1rem}
+
+/* Botones comunes */
+.btn-primario,.btn-secundario{border-radius:999px;padding:.7rem 1.3rem;font-weight:600;font-size:.95rem;border:1px solid transparent;transition:background .2s,border-color .2s,opacity .2s}
+.btn-primario{background:var(--text);color:#16123A}
+.btn-primario:hover{background:#fff}
+.btn-secundario{background:transparent;border-color:var(--edge)}
+.btn-secundario:hover{border-color:rgba(255,255,255,.4)}
+.btn-primario:disabled,.btn-secundario:disabled{opacity:.35;cursor:default}
+.chip{border:1px solid var(--edge);background:rgba(255,255,255,.04);border-radius:999px;padding:.4rem .85rem;font-size:.85rem;color:var(--dim);white-space:nowrap}
+.chip:hover{color:var(--text)}
+.chip.on{color:var(--text);border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+
+/* ---------- Test (motor común) ---------- */
+.test-progreso{height:4px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.test-progreso span{display:block;height:100%;background:var(--bio);transition:width .4s}
+.test-cuenta{display:flex;justify-content:space-between;color:var(--dim);font-size:.88rem;margin:.8rem 0 1.4rem!important}
+.test-pregunta{font-size:clamp(1.15rem,2.2vw,1.45rem);font-weight:600;line-height:1.35;letter-spacing:-.015em;margin:0 0 1.4rem;max-width:48rem}
+.test-opciones{display:grid;gap:.6rem}
+.test-op{display:flex;gap:.9rem;align-items:flex-start;text-align:left;padding:.9rem 1rem;border-radius:14px;border:1px solid var(--edge);background:rgba(255,255,255,.03);line-height:1.45;transition:border-color .2s,background .2s}
+.test-op:hover:not(:disabled){border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.06)}
+.test-op .letra{flex:none;width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:700;border:1px solid var(--edge);color:var(--dim)}
+.test-op:disabled{cursor:default}
+.test-op.buena{border-color:var(--bio);background:rgba(95,242,210,.1)}
+.test-op.buena .letra{background:var(--bio);color:#06261F;border-color:var(--bio)}
+.test-op.mala{border-color:#FF7A8A;background:rgba(255,122,138,.1)}
+.test-op.mala .letra{background:#FF7A8A;color:#2A0910;border-color:#FF7A8A}
+.test-op:disabled:not(.buena):not(.mala){opacity:.5}
+.test-feedback{margin-top:1.2rem;display:flex;flex-direction:column;align-items:flex-start;gap:1rem}
+.test-feedback:empty{display:none}
+.test-explica{border-left:3px solid var(--bio);padding:.2rem 0 .2rem 1rem;max-width:48rem}
+.test-explica.ko{border-color:#FF7A8A}
+.test-explica b{display:block;font-weight:600}
+.test-explica p{color:var(--dim)}
+.test-final{text-align:center;padding:1.5rem 0 1rem}
+.test-nota{margin:0!important;font-size:clamp(3.5rem,9vw,5.5rem);font-weight:700;letter-spacing:-.04em;line-height:1}
+.test-nota span{font-size:.4em;color:var(--dim);font-weight:500}
+.test-frase{color:var(--dim);margin:.8rem 0 1.6rem!important}
+.test-botones{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
+.test-repaso-tit{font-size:1rem;margin:2.4rem 0 .8rem}
+.test-repaso{padding-left:1.2rem;display:grid;gap:1.1rem}
+.test-repaso li b{font-weight:600}
+.test-repaso .resp{color:var(--bio)}
+.test-repaso p:not(.resp){color:var(--dim);font-size:.92rem}
+
+/* ---------- Historia · Línea temporal ---------- */
+.lt-eras{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.4rem;scrollbar-width:none}
+.lt-pista{display:flex;gap:.3rem;overflow-x:auto;padding:1.6rem .2rem 1rem;margin-top:.4rem;scroll-snap-type:x proximity;scrollbar-width:thin}
+.lt-hito{position:relative;flex:0 0 8.4rem;display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;text-align:left;background:none;border:0;padding:0 .4rem 0 0;scroll-snap-align:center;color:var(--dim)}
+.lt-hito::before{content:"";position:absolute;top:8px;left:0;right:-.3rem;height:2px;background:rgba(255,255,255,.12)}
+.lt-hito:last-child::before{right:auto;width:9px}
+.lt-hito .punto{width:18px;height:18px;border-radius:50%;border:2px solid var(--g);background:#0E0C26;position:relative;z-index:1;transition:transform .2s}
+.lt-hito b{color:var(--text);font-size:.95rem}
+.lt-hito .tit{font-size:.78rem;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.lt-hito:hover .punto{transform:scale(1.15)}
+.lt-hito.on .punto{background:var(--g);transform:scale(1.25)}
+.lt-hito.on b{color:var(--g)}
+.lt-leyenda{display:flex;flex-wrap:wrap;gap:1rem;font-size:.78rem;color:var(--dim);margin-bottom:1.2rem}
+.lt-leyenda span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--g);margin-right:.4rem}
+.lt-ficha{border:1px solid var(--edge);border-top:3px solid var(--g);border-radius:16px;padding:1.3rem 1.4rem;background:rgba(255,255,255,.03)}
+.lt-ficha h3{margin:.3rem 0 .6rem;font-size:1.3rem;letter-spacing:-.015em;line-height:1.3}
+.lt-fecha{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;color:var(--g);font-weight:600;font-size:.9rem;margin:0!important}
+.etq{font-weight:500;font-size:.75rem;color:var(--text);border:1px solid var(--edge);border-radius:999px;padding:.15rem .6rem}
+.lt-ficha dl{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0 0}
+.lt-ficha dt{font-size:.78rem;color:var(--dim)}
+.lt-ficha dd{margin:.2rem 0 0;font-size:.92rem}
+.lt-nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1rem}
+.lt-normas{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:.8rem}
+.lt-norma{border:1px solid var(--edge);border-radius:14px;padding:1rem 1.1rem}
+.lt-norma > b{display:block}
+.lt-norma > span{font-size:.85rem;color:var(--bio)}
+.lt-norma p{font-size:.92rem}
+.lt-norma .dim{font-size:.85rem}
+.lt-conceptos details{border-bottom:1px solid var(--edge)}
+.lt-conceptos summary{cursor:pointer;padding:.85rem 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+.lt-conceptos summary::-webkit-details-marker{display:none}
+.lt-conceptos summary::after{content:"+";color:var(--dim);font-weight:400}
+.lt-conceptos details[open] summary::after{content:"−"}
+.lt-conceptos details > p{max-width:48rem;font-size:.95rem}
+.lt-conceptos details > p:last-child{margin-bottom:1rem}
+.lt-conceptos .ej{color:var(--bio)}
+.lt-conceptos .ej b{color:var(--text);font-weight:600}
+
+/* ---------- Historia · ¿Implante, prótesis o ambos? ---------- */
+.cl-cabecera{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:1.2rem}
+.cl-carta{display:flex;flex-direction:column;gap:.2rem}
+.cl-carta .dim{font-size:.82rem}
+.cl-carta b{font-size:clamp(1.3rem,3vw,1.8rem);letter-spacing:-.02em;line-height:1.2}
+.cl-marcador{color:var(--dim);font-size:.88rem;white-space:nowrap}
+.cl-matriz{display:grid;gap:.5rem;grid-template-columns:auto auto 1fr 1fr;
+  grid-template-areas:". . x x" ". . c1 c2" "y f1 a b" "y f2 c d"}
+.cl-eje{font-size:.82rem;color:var(--dim)}
+.cl-eje.x{grid-area:x;text-align:center}
+.cl-eje.y{grid-area:y;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;align-self:center}
+.cl-col{text-align:center;font-weight:600;font-size:.9rem}
+.cl-col.c1{grid-area:c1} .cl-col.c2{grid-area:c2}
+.cl-fila{align-self:center;font-weight:600;font-size:.9rem}
+.cl-fila.f1{grid-area:f1} .cl-fila.f2{grid-area:f2}
+.cl-casilla{min-height:8.5rem;display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;text-align:left;padding:.9rem;border-radius:14px;border:1px dashed rgba(255,255,255,.22);background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
+.cl-casilla > span{font-weight:600;font-size:.92rem}
+.cl-casilla:hover:not(:disabled){border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.05)}
+.cl-casilla:disabled{cursor:default}
+.cl-casilla.buena{border-style:solid;border-color:var(--bio);background:rgba(95,242,210,.07)}
+.cl-casilla.mala{border-style:solid;border-color:#FF7A8A}
+.cl-fichas{display:flex;flex-wrap:wrap;gap:.35rem}
+.cl-ficha{font-size:.76rem;padding:.2rem .55rem;border-radius:999px;background:rgba(95,242,210,.14);color:var(--bio)}
+.cl-ficha.ko{background:rgba(255,122,138,.14);color:#FF9AA6}
+.cl-feedback{margin-top:1.2rem;display:flex;flex-direction:column;align-items:flex-start;gap:1rem}
+.cl-feedback:empty{display:none}
+
+/* ---------- Historia · Las tres generaciones ---------- */
+.gn-pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.gn-paso{display:flex;gap:.8rem;align-items:center;text-align:left;padding:.85rem 1rem;border-radius:14px;border:1px solid var(--edge);background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
+.gn-paso b{display:block;font-size:.92rem;line-height:1.3}
+.gn-paso .dim{font-size:.78rem}
+.num{flex:none;width:2rem;height:2rem;border-radius:50%;display:inline-grid;place-items:center;font-weight:700;border:2px solid var(--g);color:var(--g)}
+.gn-paso:hover{border-color:rgba(255,255,255,.4)}
+.gn-paso.on{border-color:var(--g);background:color-mix(in srgb,var(--g) 9%,transparent)}
+.gn-paso.on .num{background:var(--g);color:#16123A}
+.gn-barra{display:flex;justify-content:flex-end;margin:.9rem 0 1.1rem}
+.gn-ficha{border-top:3px solid var(--g);padding-top:1.2rem}
+.gn-ficha h3{margin:0 0 .5rem;font-size:1.35rem;letter-spacing:-.02em}
+.gn-filo{font-size:1.05rem;color:var(--g);max-width:48rem;margin-bottom:1.4rem!important}
+.gn-rejilla{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem 2rem}
+.gn-rejilla h4{margin:0 0 .3rem;font-size:.82rem;color:var(--dim);font-weight:500}
+.gn-rejilla p{font-size:.94rem;margin:0}
+.gn-chips{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.35rem}
+.gn-chips li{font-size:.8rem;border:1px solid var(--edge);border-radius:999px;padding:.2rem .65rem}
+.gn-tabla-wrap{overflow-x:auto}
+.gn-tabla{border-collapse:collapse;min-width:44rem;width:100%;font-size:.88rem}
+.gn-tabla th,.gn-tabla td{text-align:left;vertical-align:top;padding:.8rem .9rem;border-bottom:1px solid var(--edge)}
+.gn-tabla thead th{font-weight:600;border-bottom:2px solid var(--g,var(--edge));white-space:nowrap}
+.gn-tabla thead .num{width:1.6rem;height:1.6rem;font-size:.8rem;margin-right:.3rem}
+.gn-tabla tbody th{color:var(--dim);font-weight:500;width:9rem}
+.gn-tabla ul{margin:0;padding-left:1rem}
+
+@media (max-width:720px){
+  .visor .cuerpo{padding:1rem}
+  .lt-ficha dl,.gn-rejilla{grid-template-columns:1fr}
+  .gn-pasos{grid-template-columns:1fr}
+  .cl-matriz{grid-template-columns:auto 1fr 1fr;grid-template-areas:". x x" ". c1 c2" "f1 a b" "f2 c d"}
+  .cl-eje.y{display:none}
+  .cl-fila{writing-mode:vertical-rl;transform:rotate(180deg)}
+  .cl-casilla{min-height:7rem;padding:.7rem}
+  .cl-casilla > span{font-size:.82rem}
+}
+@media (prefers-reduced-motion:reduce){ .test-progreso span,.lt-hito .punto{transition:none} }
