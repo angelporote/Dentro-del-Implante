@@ -1,0 +1,17 @@
+{
+  "id": "materiales",
+  "temas": [
+    "Metales: acero 316L, Co-Cr, Ti c.p. y Ti-6Al-4V, Nitinol, aleaciones de Mg",
+    "Cerámicas: inertes (alúmina, circona, carbono pirolítico), bioactivas (hidroxiapatita, Bioglass 45S5), reabsorbibles y cementos",
+    "Polímeros: no degradables (UHMWPE, PMMA, PEEK, silicona, ePTFE, PET, PU) y degradables (PLA, PGA, PLGA); compuestos",
+    "Comportamiento mecánico: elasticidad y anisotropía del hueso frente al metal, apantallamiento de tensiones, viscoelasticidad, fractura y fatiga",
+    "Corrosión, tribología y degradación"
+  ],
+  "conceptos": [],
+  "datos": [],
+  "hitos": [],
+  "normas": [],
+  "preguntas": [],
+  "fuentes": [],
+  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+}

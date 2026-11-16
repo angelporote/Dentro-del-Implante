@@ -1,0 +1,16 @@
+{
+  "id": "interfaz",
+  "temas": [
+    "La biocompatibilidad es del conjunto material–sistema biológico, no del material solo",
+    "Reacción a cuerpo extraño y cápsula fibrosa; hemocompatibilidad, trombogenicidad, inmunogenicidad",
+    "Cuerpo frente a superficie: topografía (Ra, Rz), grupos funcionales, energía superficial, mojabilidad (Young, Wenzel, Cassie), potencial zeta y doble capa",
+    "Etapas celulares: hidratación → proteínas → integrinas/RGD → diferenciación; osteoinducción, osteoconducción y osteointegración"
+  ],
+  "conceptos": [],
+  "datos": [],
+  "hitos": [],
+  "normas": [],
+  "preguntas": [],
+  "fuentes": [],
+  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+}

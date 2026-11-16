@@ -1,0 +1,16 @@
+{
+  "id": "normativa",
+  "temas": [
+    "Reglamento (UE) 2017/745 (MDR), marcado CE y AEMPS",
+    "Clasificación de riesgo: clases I, IIa, IIb y III",
+    "Gestión de riesgos (ISO 14971) y de calidad (ISO 13485)",
+    "Familia ISO 10993 y secuencia de evaluación: caracterización → in vitro (SBF, citotoxicidad) → in vivo → ensayos clínicos"
+  ],
+  "conceptos": [],
+  "datos": [],
+  "hitos": [],
+  "normas": [],
+  "preguntas": [],
+  "fuentes": [],
+  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+}

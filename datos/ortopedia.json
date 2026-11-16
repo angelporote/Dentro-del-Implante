@@ -1,0 +1,16 @@
+{
+  "id": "ortopedia",
+  "temas": [
+    "Prótesis de cadera: total, parcial, revisión, resuperficialización; cementada (PMMA) o no cementada; pares de fricción",
+    "Prótesis de rodilla: materiales por pieza y cascada de osteólisis por desgaste del UHMWPE",
+    "Osteosíntesis: estabilidad, micromovimiento y dinamización; metálica frente a biodegradable (PLA/PGA)",
+    "Cajas intersomáticas (Ti poroso frente a PEEK) e implantes dentales (Ti frente a ZrO₂)"
+  ],
+  "conceptos": [],
+  "datos": [],
+  "hitos": [],
+  "normas": [],
+  "preguntas": [],
+  "fuentes": [],
+  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+}

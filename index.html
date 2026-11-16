@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dentro del implante</title>
+<!--
+  ESTRUCTURA DEL PROYECTO
+  - index.html          → el esqueleto: textos, botones y los lienzos 3D
+  - css/estilos.css     → el aspecto
+  - js/main.js          → arranca todo y dirige el viaje portada → pasillo → salas
+  - js/portada.js       → prótesis de cadera interactiva
+  - js/pasillo.js       → pasillo de hospital con las 6 vitrinas
+  - js/mesa.js          → mesa con física y 5 dispositivos
+  - js/actividades.js   → inmersión en las salas y visor de actividades
+  - js/salas/*.js       → el interior 3D de cada vitrina (y, más adelante, sus actividades)
+  - datos/*.json        → el contenido (textos, actividades, datos) separado del código
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
+
+<!-- Librerías: GSAP (animaciones) como script clásico; Three.js y cannon-es como módulos -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+    "cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+} }
+</script>
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="loader" id="loader">Montando la prótesis…</div>
+
+<header class="top">
+  <div class="mark">
+    <!-- Logotipo: un hexágono, la forma del cristal de hidroxiapatita -->
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><circle cx="12" cy="12" r="3.2" fill="#5FF2D2" stroke="none"/></svg>
+    Dentro del implante
+  </div>
+  <div class="pill">Prototipo: capítulo 1</div>
+</header>
+
+<section class="hero" id="hero">
+  <small>Material de estudio para Ingeniería Biomédica</small>
+  <h1>Cuatro materiales. <span>Un millón de pasos al año.</span></h1>
+  <p>Una prótesis de cadera reúne metales, cerámicas y polímeros que tienen que convivir con hueso vivo durante décadas. Despiézala y descubre por qué cada pieza está hecha de lo que está hecha.</p>
+  <div class="cta-row">
+    <button class="cta" id="visit">Empezar el recorrido
+      <i><svg viewBox="0 0 16 16" fill="none" stroke="#F1EEFF" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></i>
+    </button>
+    <button class="cta alt" id="start">Despiezar la prótesis</button>
+  </div>
+  <span class="drag">Arrastra una pieza para separarla, como si fuera un imán</span>
+</section>
+
+<div class="explore-ui" id="exploreUi">
+  <button class="ghost" id="back">Montar de nuevo</button>
+  <button class="ghost" id="visit2">Empezar el recorrido</button>
+  <span>Toca una pieza para ver su ficha, o arrástrala con fuerza para sacarla</span>
+</div>
+
+<div id="labels"></div>
+<!-- ===== Transición: destello y frases de introducción ===== -->
+<div class="flash" id="flash"></div>
+<div class="intro" id="intro"><p id="introText"></p></div>
+<button class="skip" id="skip">Saltar</button>
+
+<!-- ===== Pasillo: pared curva continua con una ventana por sala ===== -->
+<section class="hub" id="hub" aria-label="Salas del recorrido">
+  <div class="ring-wrap" id="ringWrap"></div>
+  <div class="shade"></div>
+  <button class="ghost home" id="home">Volver a la prótesis</button>
+  <div class="hub-head"><h2>La historia de los biomateriales</h2></div>
+  <div class="caption" id="caption" aria-live="polite"><h3></h3><p></p><button class="enter" id="enterRoom">Entrar en la sala</button></div>
+  <!-- capa 3D transparente solo con la mesa: así los dispositivos quedan por delante de los textos -->
+  <canvas class="desk-layer" id="deskLayer" aria-hidden="true"></canvas>
+  <button class="arrow side left" id="prevDoor" aria-label="Sala anterior"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button>
+  <button class="arrow side right" id="nextDoor" aria-label="Sala siguiente"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+  <nav class="hub-nav"><span>Desliza para recorrer las salas</span><div class="dots" id="dots"></div></nav>
+</section>
+
+<!-- ===== Inmersión: dentro de la sala eliges qué hacer ===== -->
+<section class="immerse" id="immerse" aria-label="Sala">
+  <div class="imm-shade"></div>
+  <button class="ghost imm-back" id="immBack">Volver al pasillo</button>
+  <div class="imm-content" id="immContent">
+    <button class="ghost imm-toggle" id="immToggle">Ocultar panel</button>
+    <small id="immPlate"></small>
+    <h2 id="immTitle"></h2>
+    <p id="immText"></p>
+    <div class="imm-q">¿Qué quieres hacer en esta sala?</div>
+    <div class="acts" id="acts"></div>
+    <p class="imm-hint" id="immHint"></p>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+</section>
+
+<!-- ===== Visor común de actividades ===== -->
+<section class="visor" id="visor" role="dialog" aria-modal="true" aria-labelledby="visorTitulo">
+  <header><h2 id="visorTitulo"></h2><button class="ghost" id="visorCerrar">Cerrar</button></header>
+  <div class="cuerpo" id="visorCuerpo"></div>
+</section>
+
+
+<aside class="card" id="card" aria-live="polite">
+  <button class="close" id="close" aria-label="Cerrar ficha">
+    <svg width="12" height="12" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.8"><path d="M1 1l10 10M11 1L1 11"/></svg>
+  </button>
+  <div id="cardBody"></div>
+</aside>
+
+</body>
+</html>

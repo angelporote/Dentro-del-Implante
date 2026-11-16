@@ -1,0 +1,196 @@
+{
+  "titulo": "La historia de los biomateriales",
+  "frasesIntro": [
+    "Todo implante empieza siendo un material.",
+    "Antes de llegar al paciente, pasa por el laboratorio, el microscopio y el quirófano.",
+    "Recorreremos la historia de los biomateriales."
+  ],
+  "vitrinas": [
+    {
+      "id": "historia",
+      "titulo": "Historia de los biomateriales",
+      "texto": "De las suturas de la Antigüedad a los materiales regenerativos: las tres generaciones y las definiciones de consenso.",
+      "actividades": [
+        {
+          "clave": "linea-temporal",
+          "tipo": "linea",
+          "titulo": "Línea temporal 3D",
+          "texto": "De la Antigüedad a Chengdu 2018, hito a hito."
+        },
+        {
+          "clave": "implante-o-protesis",
+          "tipo": "practica",
+          "titulo": "¿Implante o prótesis?",
+          "texto": "Clasifica dispositivos según las definiciones de consenso."
+        },
+        {
+          "clave": "tres-generaciones",
+          "tipo": "simulacion",
+          "titulo": "Las 3 generaciones",
+          "texto": "Bioinertes, bioactivos y regenerativos, paso a paso."
+        },
+        {
+          "clave": "test",
+          "tipo": "test",
+          "titulo": "Test de fundamentos",
+          "texto": "Preguntas tipo test sobre historia y definiciones."
+        }
+      ]
+    },
+    {
+      "id": "materiales",
+      "titulo": "Materiales y mecánica",
+      "texto": "Metales, cerámicas, polímeros y compuestos: propiedades, fatiga, corrosión, desgaste y degradación.",
+      "actividades": [
+        {
+          "clave": "familias",
+          "tipo": "teoria",
+          "titulo": "Familias de biomateriales",
+          "texto": "Las cuatro familias y sus materiales clave."
+        },
+        {
+          "clave": "traccion",
+          "tipo": "practica",
+          "titulo": "Ensayo de tracción virtual",
+          "texto": "Probeta en la máquina y curva tensión-deformación."
+        },
+        {
+          "clave": "comparador",
+          "tipo": "simulacion",
+          "titulo": "Comparador frente al hueso",
+          "texto": "Módulo, resistencia y apantallamiento de tensiones."
+        },
+        {
+          "clave": "test",
+          "tipo": "test",
+          "titulo": "Test de materiales",
+          "texto": "Preguntas tipo test sobre materiales y mecánica."
+        }
+      ]
+    },
+    {
+      "id": "interfaz",
+      "titulo": "Interfaz tejido-implante",
+      "texto": "Biocompatibilidad, propiedades de superficie, adhesión celular y osteointegración.",
+      "actividades": [
+        {
+          "clave": "superficie",
+          "tipo": "teoria",
+          "titulo": "Anatomía de una superficie",
+          "texto": "Por qué mandan los últimos nanómetros."
+        },
+        {
+          "clave": "mojabilidad",
+          "tipo": "simulacion",
+          "titulo": "Mojabilidad y adhesión celular",
+          "texto": "Ángulo de contacto, energía superficial y células."
+        },
+        {
+          "clave": "osteointegracion",
+          "tipo": "simulacion",
+          "titulo": "De la proteína a la osteointegración",
+          "texto": "Las cuatro etapas celulares en la interfaz."
+        },
+        {
+          "clave": "test",
+          "tipo": "test",
+          "titulo": "Test de biocompatibilidad",
+          "texto": "Preguntas tipo test sobre la interfaz."
+        }
+      ]
+    },
+    {
+      "id": "ortopedia",
+      "titulo": "Implantes I: ortopedia y dental",
+      "texto": "Prótesis de cadera y rodilla, osteosíntesis, cajas vertebrales e implantes dentales.",
+      "actividades": [
+        {
+          "clave": "visor-3d",
+          "tipo": "pieza",
+          "titulo": "Despiece de cadera y rodilla",
+          "texto": "Cada componente y su material, en 3D."
+        },
+        {
+          "clave": "fijacion",
+          "tipo": "simulacion",
+          "titulo": "Cementada u osteointegrada",
+          "texto": "Y titanio frente a PEEK en columna."
+        },
+        {
+          "clave": "osteolisis",
+          "tipo": "caso",
+          "titulo": "Cascada de fallo",
+          "texto": "Del desgaste del UHMWPE a la osteólisis."
+        },
+        {
+          "clave": "test",
+          "tipo": "test",
+          "titulo": "Test de implantes ortopédicos",
+          "texto": "Preguntas tipo test sobre ortopedia y dental."
+        }
+      ]
+    },
+    {
+      "id": "cardio",
+      "titulo": "Implantes II: cardio y blandos",
+      "texto": "Stents, válvulas, marcapasos, injertos vasculares, lentes intraoculares e implantes mamarios.",
+      "actividades": [
+        {
+          "clave": "stent-valvulas",
+          "tipo": "simulacion",
+          "titulo": "Stent y válvulas",
+          "texto": "Stent expandible; válvula mecánica frente a biológica."
+        },
+        {
+          "clave": "marcapasos-injertos",
+          "tipo": "pieza",
+          "titulo": "Marcapasos e injertos",
+          "texto": "Materiales según el diámetro del vaso."
+        },
+        {
+          "clave": "optica-blandos",
+          "tipo": "teoria",
+          "titulo": "Óptica y tejidos blandos",
+          "texto": "Lentes intraoculares e implantes mamarios."
+        },
+        {
+          "clave": "test",
+          "tipo": "test",
+          "titulo": "Test de cardiología",
+          "texto": "Preguntas tipo test sobre cardio y tejidos blandos."
+        }
+      ]
+    },
+    {
+      "id": "normativa",
+      "titulo": "Validación y normativa",
+      "texto": "Del laboratorio al paciente: MDR 2017/745, clases de riesgo, ISO 14971, ISO 13485 e ISO 10993.",
+      "actividades": [
+        {
+          "clave": "clasificador",
+          "tipo": "practica",
+          "titulo": "Clasificador MDR",
+          "texto": "Asigna la clase de riesgo (I a III) a cada dispositivo."
+        },
+        {
+          "clave": "selector-iso",
+          "tipo": "teoria",
+          "titulo": "Selector de ensayos ISO 10993",
+          "texto": "Qué ensayos pide cada tipo de contacto."
+        },
+        {
+          "clave": "citotoxicidad",
+          "tipo": "simulacion",
+          "titulo": "Laboratorio virtual",
+          "texto": "Citotoxicidad e inmersión en SBF."
+        },
+        {
+          "clave": "test",
+          "tipo": "test",
+          "titulo": "Test de normativa",
+          "texto": "Preguntas tipo test sobre regulación y ensayos."
+        }
+      ]
+    }
+  ]
+}

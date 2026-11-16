@@ -1,0 +1,16 @@
+{
+  "id": "cardio",
+  "temas": [
+    "Stents coronarios: convencionales, farmacoactivos y biodegradables",
+    "Válvulas: mecánicas (carbono pirolítico) frente a biológicas (fijadas con glutaraldehído)",
+    "Marcapasos: carcasa de Ti, cables Pt/Co-Cr, aislante PU/silicona",
+    "Injertos vasculares (< 5 mm frente a > 5 mm), lentes intraoculares (PMMA, PHEMA, silicona) e implantes mamarios (5 generaciones, contractura capsular)"
+  ],
+  "conceptos": [],
+  "datos": [],
+  "hitos": [],
+  "normas": [],
+  "preguntas": [],
+  "fuentes": [],
+  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "historia",
+  "temas": [
+    "De la Antigüedad (suturas, implantes dentales mayas) al cirujano-héroe: Ridley (PMMA en lentes intraoculares), Kolff (celofán en diálisis), Charnley (cadera con PMMA), Voorhees (Dacron/ePTFE), Hufnagel (válvulas)",
+    "Las 3 generaciones: bioinertes → bioactivos y reabsorbibles (Bioglass 45S5 de Hench, osteointegración de Brånemark) → regenerativos e inteligentes",
+    "Definiciones de consenso: Chester 1986 y Chengdu 2018 (biomaterial, implante, prótesis, dispositivo médico)"
+  ],
+  "conceptos": [],
+  "datos": [],
+  "hitos": [],
+  "normas": [],
+  "preguntas": [],
+  "fuentes": [],
+  "_nota": "Rellenar con la información seleccionada (Antigravity). Cada pregunta: {pregunta, opciones[4], correcta, explicacion}."
+}
