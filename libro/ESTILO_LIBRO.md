@@ -14,10 +14,11 @@ Este documento define el estándar editorial, gráfico, tipográfico y didáctic
 ## 2. Tipografía, retícula y paleta
 
 - **Soporte:** A4 vertical (`16 mm` arriba, `17 mm` abajo, `15 mm` laterales), cabecera superior con el título de la obra y del capítulo, pie de página con autoría y licencia `CC BY-NC-SA 4.0`.
-- **Sistema tipográfico:**
-  - **Títulos, portadilla, insignias de sección, cabeceras de tabla y rótulos de figura:** `Sora` (pesos 600–800).
-  - **Cuerpo narrativo:** serifa editorial de alta legibilidad **`Source Serif 4`** a `9.4 pt`, interlineado `1.50`, alineación a la izquierda (`text-align: left`).
-  - **Tablas, recuadros, glosario y pies de figura:** **`Inter`** (`7.8–8.5 pt`) para máxima densidad limpia sin fatiga visual.
+- **Sistema tipográfico y justificación:**
+  - **Títulos, portadilla, insignias de sección, cabeceras de tabla y rótulos de figura:** `Sora` (pesos 600–800), alineados a la izquierda.
+  - **Cuerpo narrativo:** serifa editorial de alta legibilidad **`Source Serif 4`** (`Georgia`/`Cambria` en Word) a `9.4–10 pt`, interlineado `1.50`, **siempre justificado (`text-align: justify` con guionado automático en español)** para lograr una mancha tipográfica de libro impreso sin ríos de espacio en blanco.
+  - **Tablas, recuadros, glosario y pies de figura:** **`Inter`** (`Segoe UI`/`Calibri` en Word, `7.8–8.5 pt`), con textos descriptivos, recuadros, glosario, bibliografía y pies de figura también justificados.
+- **Formatos entregables:** cada capítulo se genera tanto en **Word editable (`.docx`)** como en **PDF (`.pdf`)** sincronizados, manteniendo exactamente la misma calidad gráfica, infografías multipanel y atlas 3D.
 - **Retícula mixta (inspirada en *Biomaterials Science* y *Nature Reviews Primers*):**
   - **Doble columna (`.two-col`)** con filete vertical sutil para el texto narrativo continuo (~60 caracteres por línea).
   - **Bandas de ancho completo** para portadilla, hojas de ruta, tablas comparativas, infografías vectoriales SVG multipanel (`.nature-fig`) y atlas de modelos 3D (`.atlas-panel`).

@@ -41,35 +41,77 @@ renderer.setAnimationLoop(()=>{
   if(primero){ primero=false; requestAnimationFrame(arrancar); }
 });
 
-// Tras el primer fotograma: animación de entrada y, sin bloquear, el trabajo pesado
-// (texturas pintadas con código y construcción del pasillo y de la mesa)
-function arrancar(){
-  portada.intro();
-  setTimeout(()=>{
+const siguienteTurno = () => new Promise(r => setTimeout(r, 0));
+function precalentarEscena(escena, camara){
+  renderer.compile(escena, camara);
+  const vistas = new Set();
+  escena.traverse(o => {
+    if(!o.isMesh) return;
+    [].concat(o.material || []).forEach(m => {
+      if(!m) return;
+      for(const v of Object.values(m)){
+        if(v?.isTexture && !v.isRenderTargetTexture && !vistas.has(v)){
+          vistas.add(v);
+          renderer.initTexture?.(v);
+        }
+      }
+    });
+  });
+}
+
+let prepararPasilloPromise = null;
+function asegurarPasillo(){
+  if(prepararPasilloPromise) return prepararPasilloPromise;
+  prepararPasilloPromise = (async () => {
     portada.generarTexturas();
-    setTimeout(()=>{
-      pasillo = crearPasillo(datos.vitrinas, SALAS);
-      conectarAvisos(avisar);
-      mesa = crearMesa();
-      const actividades = crearActividades({ vitrinas:datos.vitrinas, salas:SALAS, pasillo, mesa });
-      pasillo.hooks.mesa = mesa;
-      pasillo.hooks.entrar = actividades.entrar;
-      renderer.compile(hubScene, hubCam);     // prepara los shaders del pasillo ahora, no al llegar
-    }, 50);
-  }, 300);
+    await siguienteTurno();
+    pasillo = crearPasillo(datos.vitrinas, SALAS);
+    await siguienteTurno();
+    conectarAvisos(avisar);
+    mesa = crearMesa();
+    const actividades = crearActividades({ vitrinas:datos.vitrinas, salas:SALAS, pasillo, mesa });
+    pasillo.hooks.mesa = mesa;
+    pasillo.hooks.entrar = actividades.entrar;
+    alRedimensionar();
+    await siguienteTurno();
+    precalentarEscena(hubScene, hubCam);
+    mesa.precompilar();
+  })();
+  return prepararPasilloPromise;
+}
+
+// Tras el primer fotograma: texturas + shaders de portada listos desde el inicio, animación de entrada
+// y construcción escalonada del pasillo y la mesa en segundo plano (sin bloqueos ni polling)
+function arrancar(){
+  portada.generarTexturas();
+  precalentarEscena(portada.scene, portada.camera);
+  portada.intro();
+  asegurarPasillo();
 }
 
 /* ---- Viaje de la portada al pasillo ---- */
 const hub=document.getElementById('hub'), flash=document.getElementById('flash'), intro=document.getElementById('intro'), introText=document.getElementById('introText'), skipBtn=document.getElementById('skip');
-let viaje=null;
-function mostrarPasillo(){
+let viaje=null, entrandoPasillo=false;
+async function mostrarPasillo(){
   if(viaje){ viaje.kill(); viaje=null; }
-  if(!pasillo){ setTimeout(mostrarPasillo,100); return; }   // por si aún se está construyendo
+  if(entrandoPasillo) return;
+  entrandoPasillo = true;
+  try{
+    await asegurarPasillo();
+    if(!entrandoPasillo) return;
+  } finally {
+    entrandoPasillo = false;
+  }
   estado.enPasillo=true;
   gsap.to([intro,skipBtn],{autoAlpha:0,duration:D(.3)}); skipBtn.style.pointerEvents='none';
-  gsap.set(hub,{autoAlpha:1}); gsap.set('.top',{autoAlpha:0}); hubCam.position.set(0,0.3,0);
+  gsap.set('.top',{autoAlpha:0}); hubCam.position.set(0,0.3,0);
   // Aparecemos en el pasillo girando hasta la primera vitrina
-  pasillo.state.angle = -pasillo.STEP*1.4; pasillo.renderRing(); pasillo.rotateTo(0, 2.2);
+  pasillo.state.angle = -pasillo.STEP*1.4; pasillo.renderRing();
+  hubCam.fov = HUB_FOV()+30; hubCam.updateProjectionMatrix();
+  hubCam.updateMatrixWorld(true);
+  pasillo.actualizar(reloj.elapsedTime);
+  pasillo.rotateTo(0, 2.2);
+  gsap.set(hub,{autoAlpha:1});
   gsap.fromTo(hubCam,{fov:HUB_FOV()+30},{fov:HUB_FOV(),duration:D(2.2),ease:'power3.out',onUpdate:()=>hubCam.updateProjectionMatrix()});
   gsap.to(flash,{opacity:0,duration:D(1.1),delay:D(.1)});
   mesa.dibujar();
@@ -93,6 +135,7 @@ function empezarRecorrido(){
   viaje.add(mostrarPasillo, D(1.9+datos.frasesIntro.length*2.3));
 }
 function volverAPortada(){
+  entrandoPasillo = false;
   if(viaje){ viaje.kill(); viaje=null; }
   estado.enPasillo=false;
   gsap.killTweensOf([hub,'.top',flash,intro,skipBtn]);

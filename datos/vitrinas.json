@@ -103,19 +103,13 @@
     {
       "id": "ortopedia",
       "titulo": "Implantes I: ortopedia y dental",
-      "texto": "Prótesis de cadera y rodilla, osteosíntesis, cajas vertebrales e implantes dentales.",
+      "texto": "Cinco implantes sobre la mesa: cadera, rodilla, osteosíntesis, dental y columna. Pulsa uno para estudiar su historia, sus biomateriales, su biomecánica y su cirugía.",
       "actividades": [
         {
-          "clave": "visor-3d",
+          "clave": "implante",
           "tipo": "pieza",
-          "titulo": "Despiece de cadera y rodilla",
-          "texto": "Cada componente y su material, en 3D."
-        },
-        {
-          "clave": "fijacion",
-          "tipo": "simulacion",
-          "titulo": "Cementada u osteointegrada",
-          "texto": "Y titanio frente a PEEK en columna."
+          "titulo": "Ficha de los 5 implantes",
+          "texto": "Historia, biomateriales, calculadora biomecánica y técnica quirúrgica."
         },
         {
           "clave": "osteolisis",

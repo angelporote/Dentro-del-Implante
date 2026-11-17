@@ -85,7 +85,10 @@ export const M = {
 export const MATS = { stem:[M.stem], cup:[M.cup,M.cupOuter], liner:[M.liner], head:[M.head] };
 
 export const texturas = {};   // aquí quedan las texturas para que otros módulos (la mesa) las reutilicen
+let texturasListas = false;
 export function generarTexturas(){
+  if(texturasListas) return;
+  texturasListas = true;
   const T = gamaBaja ? 0.5 : 1;     // en gama baja, texturas a mitad de resolución
   // Titanio trabecular (copa): celdas abiertas, como una espuma metálica
   const poresTex = canvasTex(1024*T,1024*T,(g,w,h)=>{
@@ -265,7 +268,10 @@ const exploreUi = document.getElementById('exploreUi');
 const card = document.getElementById('card');
 const cardBody = document.getElementById('cardBody');
 
+let bloqueada = false;   // durante el viaje al pasillo y mientras se está en él, la portada no responde a toques
+
 function explode(){
+  if(bloqueada) return;
   introTl?.kill(); introTl = null;
   resetDetached();
   mode='explore';
@@ -296,6 +302,7 @@ function assemble(){
   gsap.to(hero,{ autoAlpha:1, y:0, duration:D(.6), delay:D(.8) });
 }
 function select(k){
+  if(bloqueada) return;
   if(mode!=='explore') explode();
   selected=k; const p=PARTS[k];
   // Las demás piezas se vuelven translúcidas para destacar la elegida
@@ -317,7 +324,7 @@ function deselect(){
 document.getElementById('start').addEventListener('click', explode);
 document.getElementById('back').addEventListener('click', assemble);
 document.getElementById('close').addEventListener('click', deselect);
-addEventListener('keydown', e=>{ if(estado.enPasillo) return; if(e.key==='Escape') selected?deselect():(mode==='explore'&&assemble()); });
+addEventListener('keydown', e=>{ if(estado.enPasillo || bloqueada) return; if(e.key==='Escape') selected?deselect():(mode==='explore'&&assemble()); });
 
 // =========================================================
 // PIEZAS MAGNÉTICAS: arrastrar para separar, acercar para encajar
@@ -385,6 +392,7 @@ function updateRides(){
 }
 
 lienzo.addEventListener('pointerdown', e=>{
+  if(bloqueada) return;
   downAt={x:e.clientX,y:e.clientY};
   const h = pick(e);
   if(!h){ spin={x:e.clientX,y:e.clientY,uy:userY,ux:userX}; lienzo.setPointerCapture(e.pointerId); return; }
@@ -397,6 +405,7 @@ lienzo.addEventListener('pointerdown', e=>{
 });
 
 lienzo.addEventListener('pointermove', e=>{
+  if(bloqueada) return;
   if(spin){
     // Giro limitado: como mucho unos 40° a cada lado
     userY = THREE.MathUtils.clamp(spin.uy + (e.clientX-spin.x)*0.005, -0.7, 0.7);
@@ -448,6 +457,7 @@ function endDrag(){
   drag=null; downAt=null;
 }
 lienzo.addEventListener('pointerup', e=>{
+  if(bloqueada){ drag=null; spin=null; downAt=null; return; }
   if(!drag && downAt && Math.hypot(e.clientX-downAt.x, e.clientY-downAt.y)<6 && selected) deselect();
   endDrag();
 });
@@ -515,7 +525,10 @@ export function actualizarPortada(t){
 export function prepararViaje(){
   introTl?.kill(); introTl = null;
   const estabaExplorando = mode==='explore';
-  if(estabaExplorando) assemble();   // assemble ya cancela lo pendiente sin frenar el montaje
+  if(estabaExplorando) assemble();
+  else { cancelarPendientes(); deselect(); }
+  bloqueada = true; drag = null; spin = null; downAt = null; hovered = null;
+  card.classList.remove('open'); exploreUi.style.pointerEvents='none';   // assemble ya cancela lo pendiente sin frenar el montaje
   autoRotate=false;
   labelBox.style.visibility='hidden';   // ningún cartel puede verse en el pasillo
   gsap.killTweensOf(hero);
@@ -533,6 +546,9 @@ export function prepararViaje(){
 // Vuelve a dejar la portada como al principio
 export function volverAPortada(){
   gsap.killTweensOf([hero, exploreUi, camera.position, look]);
+  bloqueada = false; selected = null; card.classList.remove('open');
+  gsap.set(exploreUi,{autoAlpha:0}); exploreUi.style.pointerEvents='none';
+  Object.values(labels).forEach(l=>{ gsap.killTweensOf(l); gsap.set(l,{autoAlpha:0}); l.style.pointerEvents='none'; l.classList.remove('on'); });
   userX=0; userY=0; hovered=null; spin=null; drag=null;
   look.set(0,0,0); camera.position.set(0,0.6,17);
   mode='hero'; autoRotate=!reduceMotion; moveStage(true);

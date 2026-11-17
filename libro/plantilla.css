@@ -49,7 +49,7 @@
     color: #64748b;
   }
   @bottom-right {
-    content: "Página " counter(page) " de " counter(pages);
+    content: "Página " counter(page) "\0000a0de\0000a0" counter(pages);
     font-family: 'Sora', 'Segoe UI', sans-serif;
     font-size: 7.2pt;
     font-weight: 600;
@@ -70,13 +70,29 @@ body {
   font-size: 9.4pt;
   line-height: 1.5;
   margin: 0;
-  text-align: left;
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
 
-h1, h2, h3, h4, .cover-kicker, .callout-title, .box-title, th, figcaption b, .atlas-cap b, .panel-tag {
+h1, h2, h3, h4, .cover-kicker, .callout-title, .box-title, th, figcaption b, .atlas-cap b, .panel-tag,
+.atlas-card .atlas-title, .atlas-card .atlas-mat, .atlas-tag {
   font-family: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  text-align: left;
+  -webkit-hyphens: none;
+  hyphens: none;
+}
+
+p, li, .callout p, .callout li, .chapter-roadmap p, .chapter-roadmap li,
+.diagram figcaption, .nature-fig figcaption, .atlas-panel figcaption, .render-panel figcaption,
+.table-cap, .glossary-item, .qa, .bib-box li, .atlas-card .atlas-desc, .cover-band p {
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 table, figcaption, .meta-bar, .chapter-roadmap, .callout p, .callout li, .atlas-cap, .glossary-item {
@@ -287,6 +303,12 @@ th, td {
   text-align: left;
   vertical-align: top;
 }
+td:last-child {
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
 th {
   background: var(--ink-strong);
   color: #f8fafc;
@@ -329,7 +351,10 @@ tr:nth-child(even) td { background: var(--soft); }
   font-size: 7.9pt;
   color: var(--muted);
   margin-top: 6px;
-  text-align: left;
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
   line-height: 1.4;
 }
 
@@ -432,7 +457,7 @@ tr:nth-child(even) td { background: var(--soft); }
   border-radius: 8px;
   padding: 9px 12px;
   margin: 8px 0 10px 0;
-  break-inside: avoid;
+  break-inside: auto;
 }
 .qa { font-family: 'Inter', sans-serif; font-size: 8.2pt; margin-bottom: 5px; line-height: 1.4; break-inside: avoid; }
 .qa:last-child { margin-bottom: 0; }

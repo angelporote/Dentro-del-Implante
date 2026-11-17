@@ -171,5 +171,256 @@
   "fuentes": [
     "Apuntes de clase UVigo (Curso 2026-2027). Biocompatibilidad y comportamiento mecánico de materiales en implantología — Tema 2.1.4 y 2.1.5.",
     "Wagner, W. R., et al. (Eds.). (2020). Biomaterials Science (4th ed.). Elsevier. Chapters 2.5.4 (Orthopedic) y 2.5.5 (Dental)."
+  ],
+  "implantes": [
+    {
+      "id": "cadera",
+      "nombre": "Prótesis total de cadera",
+      "etiqueta": "Prótesis mecánica",
+      "subtitulo": "Artroplastia coxofemoral · vástago, cabeza, inserto y cotilo",
+      "resumen_mesa": "Sustituye cabeza femoral y acetábulo bajo flexocompresión de 3–4 veces el peso corporal.",
+      "posicion_mesa": [-1.75, 0.25, -3.55],
+      "color": "#9FB4FF",
+      "historia": {
+        "hito_clave": "1958–1961 · Sir John Charnley y Dennis Smith",
+        "resumen": "Charnley probó inicialmente PTFE (Teflon) en el cotilo por su baja fricción en seco, pero se desgastó a >2 mm/año provocando osteólisis masiva. En 1961 fundó la cadera moderna combinando cabeza pequeña (22,2 mm), cotilo de UHMWPE y cemento dental de PMMA (Smith).",
+        "evolucion": [
+          "1958: Fracaso del PTFE por fluencia y desgaste abrasivo osteolítico.",
+          "1961: Par metal–UHMWPE + cemento acrílico PMMA (artroplastia de baja fricción).",
+          "Actualidad: Pares Cerámica–UHMWPE reticulado (vitamina E) o Cerámica–Cerámica y vástagos porosos con hidroxiapatita."
+        ]
+      },
+      "biomateriales": {
+        "resumen": "Cada zona optimiza un fenómeno físico distinto (fatiga en vástago, tribología en cabeza/inserto, fijación en cotilo).",
+        "piezas": [
+          { "parte": "Vástago femoral", "material": "Ti-6Al-4V (110 GPa) o Co-Cr-Mo (220 GPa)", "motivo": "Alta resistencia a fatiga (ISO 7206); Ti-6Al-4V reduce el stress shielding a la mitad respecto a Co-Cr." },
+          { "parte": "Recubrimiento proximal", "material": "Titanio trabecular poroso + Hidroxiapatita (HA)", "motivo": "Anclaje biológico en prótesis no cementadas mediante osteointegración metafisaria." },
+          { "parte": "Cabeza femoral", "material": "Alúmina (Al₂O₃), Circona tenacificada (ZrO₂) o Co-Cr", "motivo": "Dureza extrema, pulido especular e hidrofilia cerámica para minimizar desgaste." },
+          { "parte": "Inserto acetabular", "material": "UHMWPE altamente reticulado (vit. E) o PCU", "motivo": "Cadenas ultra largas resistentes al desgaste; vitamina E frena oxidación post-esterilización gamma." },
+          { "parte": "Cemento (si cementada)", "material": "PMMA polimerizable in situ", "motivo": "Relleno viscoelástico (grout) interdigitado con trabéculas para sujeción inmediata." }
+        ]
+      },
+      "biomecanica": {
+        "ecuacion": "σ = -N/A ± (M · y)/I   |   M = R · d_offset   (R ≈ 3,5 × BW a 16°)",
+        "explicacion": "La carga articular R resultante actúa excéntrica respecto al eje femoral generando flexocompresión: tracción en cara lateral del vástago y compresión en cara medial (calcar). Si el vástago es macizo en Co-Cr (220 GPa frente a 18 GPa del hueso cortical), asume carga en exceso y descarga el fémur proximal (stress shielding, ley de Wolff).",
+        "dcl": {
+          "cargas": ["Resultante articular R (3–4×BW, ~16°)", "Brazo palanca offset femoral d (32–52 mm)", "Reacción axial + momento flector en diáfisis"],
+          "zonas_criticas": ["Cuello modular (corrosión fretting + fatiga)", "Cara lateral vástago (tracción máxima)", "Calcar femoral (apantallamiento de tensiones)"]
+        },
+        "calculadora": {
+          "tipo": "cadera",
+          "controles": [
+            { "id": "masa", "label": "Masa corporal (kg)", "min": 50, "max": 115, "step": 5, "valor": 75 },
+            { "id": "offset", "label": "Offset femoral d (mm)", "min": 32, "max": 52, "step": 2, "valor": 42 },
+            { "id": "E_vastago", "label": "Material vástago", "opciones": [{ "label": "Ti-6Al-4V (110 GPa)", "val": 110 }, { "label": "Co-Cr-Mo (220 GPa)", "val": 220 }] }
+          ]
+        }
+      },
+      "quirurgico": {
+        "tecnica": "Cementada (PMMA) indicada en osteoporosis severa, fracturas en ancianos o recambios por estabilidad inmediata; no cementada (press-fit + HA) en buena calidad ósea. Riesgos clave: mala orientación acetabular (luxación) y aflojamiento aséptico por partículas de UHMWPE.",
+        "robots": [
+          { "nombre": "Mako SmartRobotics (Stryker)", "funcion": "Brazo háptico guiado por TAC 3D previo que fresa el acetábulo exactamente en la inclinación y anteversión planificadas." },
+          { "nombre": "ROSA Hip (Zimmer Biomet)", "funcion": "Asistencia fluoroscópica sin TAC previo que calcula intraoperatoriamente offset, inclinación de copa y longitud real de pierna." }
+        ]
+      }
+    },
+    {
+      "id": "rodilla",
+      "nombre": "Prótesis total de rodilla",
+      "etiqueta": "Prótesis mecánica",
+      "subtitulo": "Artroplastia femorotibial y rotuliana · contacto rodante-deslizante",
+      "resumen_mesa": "Combina cóndilos Co-Cr, bandeja tibial Ti-6Al-4V e inserto UHMWPE bajo contacto hertziano.",
+      "posicion_mesa": [-1.05, 0.25, -3.72],
+      "color": "#7FB6FF",
+      "historia": {
+        "hito_clave": "1968–1974 · Frank Gunston y John Insall",
+        "resumen": "A diferencia de la cadera (rótula esférica congruente), la rodilla realiza flexo-extensión con rodamiento y deslizamiento anteroposterior (roll-back). Gunston adaptó en 1968 la idea de baja fricción de Charnley y el grupo de Insall consolidó la prótesis condilar total moderna.",
+        "evolucion": [
+          "1968: Prótesis policéntrica de Gunston (primer uso sistemático metal–UHMWPE en rodilla).",
+          "1974: Prótesis condilar total de Insall (superficies anatómicas con post-cam).",
+          "Actualidad: Prótesis unicompartimentales, estabilizadas posteriores y recubrimientos multicapa antifricción."
+        ]
+      },
+      "biomateriales": {
+        "resumen": "Asignación asimétrica clásica para maximizar dureza en la superficie convexa móvil y osteointegración/rigidez moderada en tibia.",
+        "piezas": [
+          { "parte": "Componente femoral (cóndilos)", "material": "Aleación Co-Cr (+ recubrimientos TiNbN / CrN–CrC–ZrN o ZrO₂)", "motivo": "Elevada dureza frente al rayado y resistencia al desgaste frente al inserto." },
+          { "parte": "Bandeja tibial", "material": "Aleación Ti-6Al-4V", "motivo": "Módulo inferior al Co-Cr y buena transmisión de carga a la meseta tibial esponjosa." },
+          { "parte": "Inserto tibial y botón rotuliano", "material": "UHMWPE", "motivo": "Absorbe impactos y reduce la fricción articular en contacto metal–polímero." },
+          { "parte": "Fijación / recubrimientos", "material": "Cemento PMMA o Hidroxiapatita (HA)", "motivo": "Anclaje estable de la bandeja y vástagos cortos tibiales al hueso subcondral." }
+        ]
+      },
+      "biomecanica": {
+        "ecuacion": "p_máx (Hertz) ∝ √(F · E* / R_rel)   ·   τ_máx subsuperficial a z ≈ 0,8–1,5 mm",
+        "explicacion": "Durante marcha (3×BW) o escaleras (5×BW), el contacto poco conforme entre cóndilos de Co-Cr y el inserto plano-cóncavo de UHMWPE concentra la presión en un área reducida. El máximo esfuerzo cortante τ_máx no está en la superficie, sino ~1 mm por debajo del UHMWPE: si supera ~20–25 MPa produce delaminación subsuperficial y micropartículas osteolíticas.",
+        "dcl": {
+          "cargas": ["Carga axial femorotibial (3–6×BW)", "Fuerza patelofemoral al subir escaleras", "Cizalladura AP por roll-back en flexión"],
+          "zonas_criticas": ["Subsuperficie del inserto UHMWPE (delaminación)", "Interfaz cemento–hueso tibial (aflojamiento)", "Poste estabilizador en flexión profunda"]
+        },
+        "calculadora": {
+          "tipo": "rodilla",
+          "controles": [
+            { "id": "masa", "label": "Masa corporal (kg)", "min": 50, "max": 115, "step": 5, "valor": 75 },
+            { "id": "gesto", "label": "Actividad fisiológica", "opciones": [{ "label": "Marcha llana (3,0×BW)", "val": 3.0 }, { "label": "Subir escaleras (5,0×BW)", "val": 5.0 }, { "label": "Sentadilla profunda (6,0×BW)", "val": 6.0 }] },
+            { "id": "espesor", "label": "Espesor inserto UHMWPE (mm)", "min": 6, "max": 14, "step": 2, "valor": 10 }
+          ]
+        }
+      },
+      "quirurgico": {
+        "tecnica": "Cortes ortogonales en fémur distal y tibia proximal calibrando la tensión equilibrada de los ligamentos colaterales en flexión y extensión (gap balancing). Se opta por total o unicompartimental según compartimentos dañados.",
+        "robots": [
+          { "nombre": "CORI / NAVIO (Smith+Nephew)", "funcion": "Fresado robótico manual guiado por cámaras ópticas infrarrojas sin TAC previo; mapea la superficie articular real en quirófano." },
+          { "nombre": "ROSA Knee & VELYS (DePuy)", "funcion": "Midan la laxitud ligamentosa antes de cortar el hueso para ajustar la altura y rotación de los cortes con precisión submilimétrica." }
+        ]
+      }
+    },
+    {
+      "id": "osteosintesis",
+      "nombre": "Fijaciones y tornillos de osteosíntesis",
+      "etiqueta": "Fijaciones mecánicas",
+      "subtitulo": "Placas de compresión, clavos intramedulares y tornillos",
+      "resumen_mesa": "Estabilizan fracturas paso a paso hasta que el callo óseo asume la carga; incluye placas, clavos y tornillos.",
+      "posicion_mesa": [-0.35, 0.25, -3.82],
+      "color": "#FFD98A",
+      "historia": {
+        "hito_clave": "1924–1966 · Zierold, Venable/Stuck, grupo AO y Kulkarni",
+        "resumen": "Los primeros aceros al carbono y mezclas galvánicas placa-tornillo fallaron por corrosión rápida. En 1937 el Vitallium (Co-Cr-Mo) y el acero 316L estabilizaron las fijaciones; en 1958 la escuela suiza AO sistematizó la osteosíntesis y en 1966 Kulkarni abrió la vía biodegradable con PLA/PGA.",
+        "evolucion": [
+          "1924–1937: De la corrosión del hierro y pares galvánicos al Vitallium y 316L.",
+          "1958–1980: Principios AO de compresión interfragmentaria y clavos encerrojados.",
+          "1966–actualidad: Placas bloqueadas de estabilidad angular (LCP) y tornillos reabsorbibles PLA/PLGA."
+        ]
+      },
+      "biomateriales": {
+        "resumen": "Elección entre alta rigidez/resistencia metálica (cargas altas en hueso largo) y degradación programada en baja carga.",
+        "piezas": [
+          { "parte": "Placas y clavos de alta carga", "material": "Acero 316LVM, Co-Cr-Mo o Ti-6Al-4V", "motivo": "Soportar flexión y torsión en fémur/tibia; Ti-6Al-4V aporta menor rigidez y mejor compatibilidad con RMN." },
+          { "parte": "Tornillos corticales / esponjosos", "material": "Ti-6Al-4V o acero 316LVM", "motivo": "Paso fino y núcleo ancho en cortical; filete profundo en hueso trabecular para aumentar área de arrancamiento." },
+          { "parte": "Fijación biodegradable", "material": "PLLA, PGA o composites PLLA + Hidroxiapatita", "motivo": "Hidrólisis éster progresiva que transfiere carga al neohueso y evita 2ª cirugía en zonas de baja solicitación." }
+        ]
+      },
+      "biomecanica": {
+        "ecuacion": "σ_placa = M·y / I  (M = F · d_excéntrico)   ·   F_arrancamiento ≈ τ_hueso · π · D · L",
+        "explicacion": "Una placa fijada sobre la superficie externa sufre alta flexión cuando falta apoyo en la cortical opuesta (brazo d igual al semidiámetro óseo más espesor), concentrando tensiones en los agujeros (Kt ≈ 2,5–3). En cambio, un clavo intramedular coincide casi con el eje neutro del hueso (brazo mínimo) reduciendo el momento flector. Además la consolidación exige dinamización en 3 fases: estabilidad absoluta → micromovimiento en fibrocartílago → carga progresiva en callo óseo.",
+        "dcl": {
+          "cargas": ["Flexión excéntrica (placa) vs. carga axial centrada (clavo)", "Torsión del foco de fractura", "Cizalladura en filetes del tornillo (pull-out)"],
+          "zonas_criticas": ["Agujeros de la placa frente al foco (fatiga)", "Zona de transición rosca–cuello del tornillo", "Interfaz rosca–hueso esponjoso (osteoporosis)"]
+        },
+        "calculadora": {
+          "tipo": "osteosintesis",
+          "controles": [
+            { "id": "dispositivo", "label": "Tipo de implante", "opciones": [{ "label": "Placa lateral excéntrica (d ≈ 18 mm)", "val": "placa" }, { "label": "Clavo intramedular centrado (d ≈ 3 mm)", "val": "clavo" }] },
+            { "id": "defecto", "label": "Estado cortical opuesta", "opciones": [{ "label": "Cortical apoyada (comparte carga)", "val": "apoyo" }, { "label": "Conminución / hueco (flexión total)", "val": "hueco" }] },
+            { "id": "fase", "label": "Fase biológica (dinamización)", "opciones": [{ "label": "Fase 1 · Hematoma (E_callo ≈ 0,01 GPa)", "val": 1 }, { "label": "Fase 2 · Fibrocartílago (E_callo ≈ 0,5 GPa)", "val": 2 }, { "label": "Fase 3 · Callo mineral (E_callo ≈ 8 GPa)", "val": 3 }] }
+          ]
+        }
+      },
+      "quirurgico": {
+        "tecnica": "Evolución desde abordajes abiertos extensos a osteosíntesis mínimamente invasiva (MIPO) que respeta el periostio y su vascularización, junto al bloqueo en clavos para controlar la longitud y rotación antes de dinamizar retirando un perno.",
+        "robots": [
+          { "nombre": "Navegación 3D intraoperatoria (O-arm / Arcos 3D)", "funcion": "Verifica en quirófano la reducción y guía tornillos percutáneos en pelvis o sacro sin invadir estructuras neurovasculares." },
+          { "nombre": "Planificación y guías personalizadas impresas en 3D", "funcion": "Preconformado virtual de placas anatómicas y guías de broca sobre modelo óseo del paciente antes de entrar a quirófano." }
+        ]
+      }
+    },
+    {
+      "id": "dental",
+      "nombre": "Implante dental osteointegrado",
+      "etiqueta": "Odontología e implantología",
+      "subtitulo": "Tornillo endóseo, pilar protésico y corona cerámica",
+      "resumen_mesa": "Sustituye la raíz dental por un tornillo osteointegrado en maxilar/mandíbula bajo cargas masticatorias oblicuas.",
+      "posicion_mesa": [0.35, 0.25, -3.82],
+      "color": "#5FF2D2",
+      "destacado": true,
+      "historia": {
+        "hito_clave": "1952–1976 · Per-Ingvar Brånemark (y precedentes Strock 1937 / Mayas 600 d. C.)",
+        "resumen": "Tras los incisivos mayas tallados en nácar osteointegrados fortuitamente y el tornillo de Vitallium de Strock (1937), Brånemark descubrió accidentalmente en conejos que el titanio puro se fusionaba al hueso vivo sin cápsula fibrosa gracias a su óxido nativo TiO₂, definiendo en 1976 la osteointegración.",
+        "evolucion": [
+          "600 d. C. / 1937: Dientes mayas de nácar y tornillo Vitallium de Strock.",
+          "1964–1976: Cámaras ópticas de Ti y formulación científica de la osteointegración.",
+          "Actualidad: Superficies SLA hidrófilas, implantes cerámicos de circona y cirugía guiada por CBCT."
+        ]
+      },
+      "biomateriales": {
+        "resumen": "Debe distinguirse el implante (raíz intraósea) de la prótesis (pilar + corona) y garantizar sellado gingival en el cuello.",
+        "piezas": [
+          { "parte": "Cuerpo roscado (implante)", "material": "Titanio cp (grado 4), Ti-6Al-4V o Ti-Zr", "motivo": "Capa pasiva TiO₂ con microrrugosidad chorreada y grabada al ácido (SLA) para máxima osteointegración." },
+          { "parte": "Alternativa estética cerámica", "material": "Circonia estabilizada (ZrO₂)", "motivo": "Color blanco natural que evita transparencia grisácea en encías finas y baja adherencia de placa." },
+          { "parte": "Pilar y corona (prótesis)", "material": "Ti / ZrO₂ + disilicato de litio o porcelana", "motivo": "Estética dental, sellado marginal antibacteriano y resistencia a fatiga masticatoria." }
+        ]
+      },
+      "biomecanica": {
+        "ecuacion": "σ_crestal = F_axial / A_ef + ((F · sen θ · h_corona) · r) / I",
+        "explicacion": "Las fuerzas masticatorias (150–500 N) rara vez son puramente axiales: una inclinación θ (p. ej. 20°) multiplicada por la altura de la corona h induce un momento flector severo en el cuello crestal. Por análisis de elementos finitos, las tensiones se concentran en los 2–3 mm superiores de hueso cortical: si superan la tolerancia ósea provocan reabsorción marginal en cráter o fractura del tornillo del pilar.",
+        "dcl": {
+          "cargas": ["Fuerza oclusal axial F·cos θ (150–500 N)", "Componente horizontal F·sen θ con brazo h_corona", "Par flector multiplicado en extensiones en cantiléver"],
+          "zonas_criticas": ["Cuello crestal cortical (primeros 2–3 mm)", "Conexión cónica implante–pilar (tornillo protésico)", "Interfaz gingival transmucosa (sellado frente a biopelícula)"]
+        },
+        "calculadora": {
+          "tipo": "dental",
+          "controles": [
+            { "id": "fuerza", "label": "Fuerza masticatoria (N)", "min": 150, "max": 500, "step": 25, "valor": 300 },
+            { "id": "angulo", "label": "Ángulo de carga θ (°)", "min": 0, "max": 30, "step": 5, "valor": 15 },
+            { "id": "altura", "label": "Altura de corona h (mm)", "min": 7, "max": 14, "step": 1, "valor": 10 }
+          ]
+        }
+      },
+      "quirurgico": {
+        "tecnica": "Fresado secuencial irrigado para evitar necrosis térmica del hueso (>47 °C más de 1 minuto); se evalúa el torque de inserción para decidir carga inmediata (≥35 N·cm) frente a osteointegración sumergida diferida (3–6 meses).",
+        "robots": [
+          { "nombre": "Yomi (Neocis) · Robótica dental", "funcion": "Primer sistema robótico dental aprobado: aplica guía háptica física sobre angulación, profundidad y plano oclusal en tiempo real." },
+          { "nombre": "Cirugía guiada digital (CBCT + férulas 3D)", "funcion": "Fusión de CBCT óseo y escáner intraoral para fabricar guías quirúrgicas impresas en 3D sin necesidad de colgajo extenso." }
+        ]
+      }
+    },
+    {
+      "id": "columna",
+      "nombre": "Fijación vertebral y cajas de columna",
+      "etiqueta": "Columna vertebral",
+      "subtitulo": "Cajas intersomáticas cervicales/lumbares y sistema pedicular",
+      "resumen_mesa": "Restaura la altura discal liberando raíces nerviosas mediante cajas de Ti poroso o PEEK y barras posteriores.",
+      "posicion_mesa": [1.35, 0.25, -3.60],
+      "color": "#D7C6FF",
+      "historia": {
+        "hito_clave": "1962–actualidad · Harrington, Bagby, Brantigan y cajas 3D",
+        "resumen": "De las primeras barras de distracción de Harrington (1962) e injertos óseos libres (susceptibles de colapso), se evolucionó a tornillos pediculares y cajas intersomáticas (BAK metálicas y cajas PEEK de Brantigan), hasta las actuales cajas de titanio trabecular poroso fabricadas por impresión 3D.",
+        "evolucion": [
+          "1962–1980: Barras de Harrington y consolidación del anclaje pedicular.",
+          "1990–2005: Cajas de fusión en PEEK con marcadores radiopacos.",
+          "Actualidad: Cajas trabeculares porosas impresas en 3D (SLM) y cirugía robótica vertebral."
+        ]
+      },
+      "biomateriales": {
+        "resumen": "Dilema clásico en medicina clínica entre biomecánica + imagen médica (PEEK) e osteointegración primaria (Titanio poroso).",
+        "piezas": [
+          { "parte": "Caja de titanio poroso (3D SLM)", "material": "Ti-6Al-4V trabecular poroso", "motivo": "Superficie rugosa e interconectada con óptima estabilización primaria e integración ósea, pero mayor rigidez (subsidencia) y artefactos en RMN." },
+          { "parte": "Caja de PEEK", "material": "Poliéter-éter-cetona (~3,6 GPa) + pines Ta/Ti", "motivo": "Módulo cercano al hueso cortical y transparencia en RX/RMN para ver el injerto, pero menor rugosidad e integración lenta sin recubrir." },
+          { "parte": "Barras y tornillos pediculares", "material": "Ti-6Al-4V o Co-Cr-Mo", "motivo": "Estabilidad posterior inmediata mientras se consolida la artrodesis anterior." }
+        ]
+      },
+      "biomecanica": {
+        "ecuacion": "σ_platillo = F_compresión / A_huella   (σ_esponjoso ≈ 2–10 MPa → riesgo de subsidencia)",
+        "explicacion": "La unidad funcional espinal comparte la carga entre la columna anterior (~80 %, cuerpo/disco) y los elementos posteriores (~20 %). La caja transmite compresión desde el platillo vertebral: si la huella es pequeña o la rigidez del metal concentra tensión sobre hueso osteoporótico, σ_platillo supera la resistencia del esponjoso subyacente produciendo subsidencia (hundimiento de la caja y re-compresión nerviosa).",
+        "dcl": {
+          "cargas": ["Compresión axial segmental L4–L5 (400–1500 N)", "Momento en flexo-extensión sobre barras pediculares", "Reacción distribuida sobre huella de caja y platillo"],
+          "zonas_criticas": ["Contacto borde caja–platillo vertebral (subsidencia)", "Pedículos cercanos a médula y raíces nerviosas", "Tornillo–barra en deformidades con gran momento flexor"]
+        },
+        "calculadora": {
+          "tipo": "columna",
+          "controles": [
+            { "id": "material", "label": "Material de la caja", "opciones": [{ "label": "PEEK (~3,6 GPa · reparto suave)", "val": "peek" }, { "label": "Ti poroso 3D (mayor pico de rigidez)", "val": "ti" }] },
+            { "id": "hueso", "label": "Calidad del hueso vertebral", "opciones": [{ "label": "Densidad ósea normal (σ_adm ≈ 8 MPa)", "val": 8 }, { "label": "Osteoporosis moderada (σ_adm ≈ 3 MPa)", "val": 3 }] },
+            { "id": "carga", "label": "Carga compresiva axial (N)", "min": 400, "max": 1500, "step": 100, "valor": 800 }
+          ]
+        }
+      },
+      "quirurgico": {
+        "tecnica": "Abordajes diferenciados por geometría: cajas cervicales compactas por vía anterior (ACDF), cajas lumbares rectas o en banana por vía posterior/transforaminal (PLIF/TLIF, protegiendo las raíces nerviosas) o cajas amplias por vía anterior (ALIF, mayor área y estabilidad). Relleno con injerto óseo autólogo o sustitutivo.",
+        "robots": [
+          { "nombre": "Mazor X Stealth (Medtronic)", "funcion": "Brazo robótico + navegación continua que alinea cada cánula sobre el pedículo evitando desviaciones hacia el canal medular." },
+          { "nombre": "ExcelsiusGPS (Globus) y ROSA Spine", "funcion": "Compensación activa de micromovimientos respiratorios del paciente y planificación automática de la caja intersomática." }
+        ]
+      }
+    }
   ]
 }

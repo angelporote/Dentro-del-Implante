@@ -11,7 +11,12 @@ import { entorno } from './motor.js';
 export const WIN_W = 5.0, WIN_H = 3.3, WIN_Y = 0.55, SEG_H = 8;   // tamaño de la vitrina, altura de pared
 // Radio del pasillo: 11 como mínimo; crece si hay tantas vitrinas que los cristales no cabrían.
 export let HR = 11;
-export const HUB_FOV = () => isMobile() ? 60 : 32;
+export const HUB_FOV = () => {
+  if(isMobile()) return 58;
+  const asp = Math.max(0.7, innerWidth / Math.max(1, innerHeight));
+  const base = 34;
+  return asp >= 1.55 ? base : Math.min(58, THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(base) / 2) * (1.55 / asp))));
+};
 
 /* ---- Escena y cámara ---- */
 export const hubScene = new THREE.Scene();
@@ -38,38 +43,44 @@ const railMat = std(0xC49A6C, { roughness:0.45 });                              
 export const stripeMat = std(0x23A894, { roughness:0.5 });                                 // franja de señalización
 const glassMat = new THREE.MeshBasicMaterial({ color:0xffffff, transparent:true, opacity:0.035, depthWrite:false });
 
-// Señal de hospital: cartel blanco con bloque de color y texto oscuro
+// Señal de hospital: cartel blanco con bloque de color y texto oscuro (una textura compartida por cada sala)
+const cartelesCache = new Map();
 function cartel(num, texto){
-  const m = canvasPlane(3.0, 0.44, 1860, 264, (g, w, h) => {
-    g.clearRect(0, 0, w, h);
-    g.fillStyle = '#FFFFFF';
-    g.beginPath();
-    g.roundRect(6, 6, w - 12, h - 12, 34);
-    g.fill();
-    g.fillStyle = '#1F6FB2';
-    g.beginPath();
-    g.roundRect(6, 6, h - 12, h - 12, [34, 0, 0, 34]);
-    g.fill();
-    g.fillStyle = '#FFFFFF';
-    g.font = '700 104px Sora, sans-serif';
-    g.textAlign = 'center';
-    g.textBaseline = 'middle';
-    g.fillText(num, (h - 12) / 2 + 6, h / 2 + 4);
-    const xTexto = h + 46;
-    const maxW = w - xTexto - 54;
-    let tam = 72;
-    g.font = `600 ${tam}px Sora, sans-serif`;
-    while(tam > 28 && g.measureText(texto).width > maxW){
-      tam -= 2;
+  const clave = `${num}|${texto}`;
+  let proto = cartelesCache.get(clave);
+  if(!proto){
+    proto = canvasPlane(3.0, 0.44, 1860, 264, (g, w, h) => {
+      g.clearRect(0, 0, w, h);
+      g.fillStyle = '#FFFFFF';
+      g.beginPath();
+      g.roundRect(6, 6, w - 12, h - 12, 34);
+      g.fill();
+      g.fillStyle = '#1F6FB2';
+      g.beginPath();
+      g.roundRect(6, 6, h - 12, h - 12, [34, 0, 0, 34]);
+      g.fill();
+      g.fillStyle = '#FFFFFF';
+      g.font = '700 104px Sora, sans-serif';
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.fillText(num, (h - 12) / 2 + 6, h / 2 + 4);
+      const xTexto = h + 46;
+      const maxW = w - xTexto - 54;
+      let tam = 72;
       g.font = `600 ${tam}px Sora, sans-serif`;
-    }
-    g.fillStyle = '#1C2B3A';
-    g.textAlign = 'left';
-    g.fillText(texto, xTexto, h / 2 + 4);
-  });
-  m.material.toneMapped = true;
-  document.fonts?.ready?.then(() => m.userData.redraw(0));
-  return m;
+      while(tam > 28 && g.measureText(texto).width > maxW){
+        tam -= 2;
+        g.font = `600 ${tam}px Sora, sans-serif`;
+      }
+      g.fillStyle = '#1C2B3A';
+      g.textAlign = 'left';
+      g.fillText(texto, xTexto, h / 2 + 4);
+    });
+    proto.material.toneMapped = true;
+    document.fonts?.ready?.then(() => proto.userData.redraw(0));
+    cartelesCache.set(clave, proto);
+  }
+  return new THREE.Mesh(proto.geometry, proto.material);
 }
 
 /* =========================================================
@@ -89,6 +100,17 @@ export function crearPasillo(vitrinas, salas){
   const frameGeo = new THREE.ExtrudeGeometry(frameShape, { depth:0.5, bevelEnabled:true, bevelSize:0.04, bevelThickness:0.04, bevelSegments:3, curveSegments:16 });
   const glowShape = rrect(WIN_W+0.08, WIN_H+0.08, 0.48, WIN_Y); glowShape.holes.push(rrect(WIN_W, WIN_H, 0.45, WIN_Y));
   const glowGeo = new THREE.ShapeGeometry(glowShape, 16);
+  const panelLineGeo = new THREE.BoxGeometry(0.05, SEG_H, 0.04);
+  const glassGeo = new THREE.PlaneGeometry(WIN_W, WIN_H);
+  const stripeGeo = new THREE.PlaneGeometry(chord, 0.16);
+  const railGeo = new THREE.CylinderGeometry(0.07, 0.07, chord, 16);
+  const bracketGeo = new THREE.BoxGeometry(0.05, 0.05, 0.16);
+  const plinthGeo = new THREE.BoxGeometry(chord, 0.35, 0.06);
+  const plinthMat = std(0x8FA3AC, { roughness:.4 });
+  const ceilingLightGeo = new THREE.PlaneGeometry(2.4, 0.6);
+  const ceilingLightMat = basicGlow(0xFFFFFF, 1.6);
+  const salaGeo = new THREE.BoxGeometry(5.8, 4.8, 6.2);
+  const salaMats = new Map();
 
   // Suelo reflectante, techo y línea guía en el suelo
   mesh(new THREE.CircleGeometry(HR+0.6, 96), std(0xC4D2D8, { roughness:0.18, metalness:0.15 }), 0, -SEG_H/2, 0, hubScene).rotation.x = -Math.PI/2;
@@ -99,22 +121,22 @@ export function crearPasillo(vitrinas, salas){
   for(let i=0;i<HN;i++){
     const v=vitrinas[i%NR], g=new THREE.Group(); g.rotation.y = -i*HSTEP; hubScene.add(g);
     mesh(wallGeo, wallMat, 0,0,-HR-0.35, g);
-    for(const x of [-chord/2+0.02, chord/2-0.02]) mesh(new THREE.BoxGeometry(0.05,SEG_H,0.04), panelLineMat, x,0,-HR+0.02, g);   // juntas entre paneles
+    for(const x of [-chord/2+0.02, chord/2-0.02]) mesh(panelLineGeo, panelLineMat, x,0,-HR+0.02, g);   // juntas entre paneles
     mesh(frameGeo, frameMat, 0,0,-HR-0.5, g);
     const gm = basicGlow(0x5FF2D2, 0.9); glowMats.push(gm); mesh(glowGeo, gm, 0,0,-HR+0.05, g);   // perfil de luz de la vitrina
-    const glass = mesh(new THREE.PlaneGeometry(WIN_W,WIN_H), glassMat, 0,WIN_Y,-HR-0.2, g); glass.userData.seg=i; glassMeshes.push(glass);
+    const glass = mesh(glassGeo, glassMat, 0,WIN_Y,-HR-0.2, g); glass.userData.seg=i; glassMeshes.push(glass);
     // franja de señalización, pasamanos de madera con soportes y zócalo
-    mesh(new THREE.PlaneGeometry(chord,0.16), stripeMat, 0,-1.75,-HR+0.36, g);
-    mesh(new THREE.CylinderGeometry(0.07,0.07,chord,16), railMat, 0,-1.45,-HR+0.5, g).rotation.z=Math.PI/2;
-    for(const x of [-chord/3, chord/3]) mesh(new THREE.BoxGeometry(0.05,0.05,0.16), frameMat, x,-1.45,-HR+0.42, g);
-    mesh(new THREE.BoxGeometry(chord,0.35,0.06), std(0x8FA3AC,{roughness:.4}), 0,-SEG_H/2+0.17,-HR+0.37, g);
-    mesh(new THREE.PlaneGeometry(2.4,0.6), basicGlow(0xFFFFFF,1.6), 0,SEG_H/2-0.02,-HR+2.2, g).rotation.x=Math.PI/2;   // panel de luz del techo
+    mesh(stripeGeo, stripeMat, 0,-1.75,-HR+0.36, g);
+    mesh(railGeo, railMat, 0,-1.45,-HR+0.5, g).rotation.z=Math.PI/2;
+    for(const x of [-chord/3, chord/3]) mesh(bracketGeo, frameMat, x,-1.45,-HR+0.42, g);
+    mesh(plinthGeo, plinthMat, 0,-SEG_H/2+0.17,-HR+0.37, g);
+    mesh(ceilingLightGeo, ceilingLightMat, 0,SEG_H/2-0.02,-HR+2.2, g).rotation.x=Math.PI/2;   // panel de luz del techo
     const pl = cartel(String(i%NR+1).padStart(2,'0'), v.titulo); pl.position.set(0, WIN_Y+WIN_H/2+0.55, -HR+0.37); g.add(pl);
     // La sala de detrás: la construye su módulo con estas ayudas
     const d = new THREE.Group(); d.scale.setScalar(1.3); d.position.set(0,WIN_Y-0.2,-HR-0.36); g.add(d);
     tramos.push({ g, d, seg:i });
     const ctx = {
-      sala:(dd, color)=> mesh(new THREE.BoxGeometry(5.8, 4.8, 6.2), std(color,{ side:THREE.BackSide, roughness:0.85 }), 0, 0.15, -3.1, dd),
+      sala:(dd, color)=>{ let sm = salaMats.get(color); if(!sm){ sm = std(color,{ side:THREE.BackSide, roughness:0.85 }); salaMats.set(color, sm); } return mesh(salaGeo, sm, 0, 0.15, -3.1, dd); },
       luz:(dd, color, intensidad)=>{ g.updateMatrixWorld(true); const p=dd.localToWorld(new THREE.Vector3(0,1.5,-2.4)); lucesSala[i]={ pos:p, color:new THREE.Color(color), intensidad }; },
       anim:(f)=> anims.push({ seg:i, f })
     };
@@ -159,7 +181,7 @@ export function crearPasillo(vitrinas, salas){
 
   // Arrastrar para girar (con inercia); tocar una vitrina para entrar; o coger algo de la mesa
   let dragRing=null;
-  const pxPerStep = () => Math.min(innerWidth*0.5, 640);
+  const pxPerStep = () => Math.min(innerWidth*0.42, 560);
   ringWrap.addEventListener('pointerdown',e=>{
     if(estado.enSala) return;
     if(hooks.mesa && hooks.mesa.pointerDown(e)) return;          // ¿has cogido un dispositivo de la mesa?
@@ -201,13 +223,13 @@ export function crearPasillo(vitrinas, salas){
   const eje = new THREE.Vector3(0,1,0), tmp = new THREE.Vector3();
   function actualizar(t){
     // Cámara: mira hacia la vitrina según el ángulo, con un leve balanceo y paralaje del ratón
-    hubCam.rotation.y = -THREE.MathUtils.degToRad(state.angle) - puntero.x*0.04 + Math.sin(t*0.3)*0.006;
+    hubCam.rotation.y = -THREE.MathUtils.degToRad(state.angle) - puntero.x*0.04 + Math.sin(t*0.3)*0.006 + estado.giroSala;
     hubCam.rotation.x = -puntero.y*0.03 + Math.sin(t*0.4)*0.004;
-    // Ocultamos los tramos y salas fuera de vista para evitar dibujarlos
+    // Ocultamos los tramos y salas fuera de vista para evitar dibujarlos (margen amplio para FOV ancho en entrada/giro)
     for(const tr of tramos){
       const rel=Math.abs(norm(tr.seg*STEP - state.angle));
-      tr.g.visible = rel < 95;
-      tr.d.visible = rel < 75;
+      tr.g.visible = rel < 110;
+      tr.d.visible = rel < 100;
     }
     // Animaciones de las salas: solo las de los tramos visibles (las pantallas no se repintan si no se ven)
     for(const a of anims){ const rel=Math.abs(norm(a.seg*STEP - state.angle)); if(rel < STEP*1.3) a.f(t); }

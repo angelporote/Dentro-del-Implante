@@ -279,7 +279,11 @@ const deskRenderer = new THREE.WebGLRenderer({ canvas:document.getElementById('d
 deskRenderer.setPixelRatio(pixelRatio); deskRenderer.setSize(innerWidth,innerHeight,false);
 deskRenderer.toneMapping = THREE.ACESFilmicToneMapping; deskRenderer.toneMappingExposure = 0.9;
 // cada lienzo WebGL necesita su propio entorno (no se pueden compartir texturas entre lienzos); se calcula una vez
-const deskEnv = new THREE.PMREMGenerator(deskRenderer).fromScene(new RoomEnvironment(), 0.04).texture;
+const deskPmrem = new THREE.PMREMGenerator(deskRenderer);
+const deskRoomEnv = new RoomEnvironment();
+const deskEnv = deskPmrem.fromScene(deskRoomEnv, 0.04).texture;
+deskRoomEnv.dispose?.();
+deskPmrem.dispose();
 counter.traverse(o=>o.layers.set(1));
 hubScene.traverse(o=>{ if(o.isLight) o.layers.enable(1); });
 function renderDeskLayer(){
@@ -287,6 +291,25 @@ function renderDeskLayer(){
   hubScene.background=null; hubScene.environment=deskEnv; hubScene.fog=null;
   hubCam.layers.set(1); deskRenderer.render(hubScene, hubCam); hubCam.layers.set(0);
   hubScene.background=bg; hubScene.environment=env; hubScene.fog=fog;
+}
+function precompilar(){
+  const bg=hubScene.background, env=hubScene.environment, fog=hubScene.fog;
+  hubScene.background=null; hubScene.environment=deskEnv; hubScene.fog=null;
+  hubCam.layers.set(1);
+  deskRenderer.compile(hubScene, hubCam);
+  counter.traverse(o=>{
+    if(!o.isMesh) return;
+    [].concat(o.material||[]).forEach(m=>{
+      if(!m) return;
+      for(const v of Object.values(m)){
+        if(v?.isTexture && !v.isRenderTargetTexture) deskRenderer.initTexture?.(v);
+      }
+    });
+  });
+  deskRenderer.render(hubScene, hubCam);
+  hubCam.layers.set(0);
+  hubScene.background=bg; hubScene.environment=env; hubScene.fog=fog;
+  forzarDibujo=true;
 }
 
 // ---- Cada fotograma ----
@@ -365,7 +388,7 @@ function deskPointerUp(cancelar=false){
 
 
 listo = true;
-return { contador:counter, actualizar, redimensionar, dibujar:()=>{ forzarDibujo=true; },
+return { contador:counter, actualizar, redimensionar, precompilar, dibujar:()=>{ forzarDibujo=true; },
          bajarResolucion:(pr)=>{ deskRenderer.setPixelRatio(pr); deskRenderer.setSize(innerWidth,innerHeight,false); forzarDibujo=true; },
          pointerDown:deskPointerDown, pointerMove:deskPointerMove, pointerUp:deskPointerUp, pointerCancel:()=>deskPointerUp(true), agarrando:()=>!!deskGrab };
 }

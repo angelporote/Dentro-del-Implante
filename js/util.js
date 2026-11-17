@@ -15,7 +15,7 @@ export const D = d => reduceMotion ? 0 : d;                            // duraci
 export const rand = (a,b) => a + Math.random()*(b-a);
 
 // Estado global de la web: en qué parte estamos
-export const estado = { enPasillo:false, enSala:false, visorAbierto:false };
+export const estado = { enPasillo:false, enSala:false, visorAbierto:false, giroSala:0 };   // giroSala: cuánto se mira a un lado dentro de una sala (rad)
 
 // Posición del ratón normalizada (-0,5 a 0,5), para efectos de paralaje
 export const puntero = { x:0, y:0 };

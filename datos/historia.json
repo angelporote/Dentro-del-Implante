@@ -95,7 +95,12 @@
       "en_el_cuerpo": true,
       "reemplaza_aumenta": true,
       "clasificacion": "Implante y prótesis",
-      "explicacion": "Se implanta dentro del fémur y la pelvis y sustituye la articulación dañada."
+      "explicacion": "Se implanta dentro del fémur y la pelvis y sustituye la articulación dañada.",
+      "zona_anatomica": "Articulación coxofemoral (cadera)",
+      "silueta_xy": [58, 52],
+      "clase_mdr": "Clase III (MDR)",
+      "semaforo": "rojo",
+      "exigencia_iso10993": "Máxima (>30 días en hueso/carga): citotoxicidad, sensibilización, genotoxicidad, toxicidad crónica e implantación ósea."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -103,7 +108,12 @@
       "en_el_cuerpo": false,
       "reemplaza_aumenta": true,
       "clasificacion": "Prótesis (no implante)",
-      "explicacion": "Reemplaza piezas dentales ausentes, pero no se coloca dentro de los tejidos."
+      "explicacion": "Reemplaza piezas dentales ausentes, pero no se coloca dentro de los tejidos.",
+      "zona_anatomica": "Cavidad oral (apoyo mucoso)",
+      "silueta_xy": [50, 14],
+      "clase_mdr": "Clase IIa (MDR)",
+      "semaforo": "verde",
+      "exigencia_iso10993": "Moderada-baja (mucosa oral sin invadir tejido interno): citotoxicidad, irritación mucosa y sensibilización."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -111,7 +121,12 @@
       "en_el_cuerpo": true,
       "reemplaza_aumenta": false,
       "clasificacion": "Implante (no prótesis)",
-      "explicacion": "Se introduce en el hueso para fijar fragmentos fracturados, pero no sustituye ningún órgano ni parte anatómica."
+      "explicacion": "Se introduce en el hueso para fijar fragmentos fracturados, pero no sustituye ningún órgano ni parte anatómica.",
+      "zona_anatomica": "Diáfisis ósea (fémur / tibia)",
+      "silueta_xy": [57, 66],
+      "clase_mdr": "Clase IIb (MDR)",
+      "semaforo": "ambar",
+      "exigencia_iso10993": "Alta (implante óseo permanente/prolongado): citotoxicidad, genotoxicidad, toxicidad sistémica e implantación."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -119,7 +134,12 @@
       "en_el_cuerpo": true,
       "reemplaza_aumenta": false,
       "clasificacion": "Implante (no prótesis)",
-      "explicacion": "Se coloca intencionadamente atravesando tejido corporal sin reemplazar ninguna parte del cuerpo."
+      "explicacion": "Se coloca intencionadamente atravesando tejido corporal sin reemplazar ninguna parte del cuerpo.",
+      "zona_anatomica": "Tejido cutáneo / cartílago superficial",
+      "silueta_xy": [44, 12],
+      "clase_mdr": "Fuera de MDR (estético, reg. REACH Ni)",
+      "semaforo": "ambar",
+      "exigencia_iso10993": "Biofísicamente es implante (atraviesa epitelio): exige grado implantológico (Ti ASTM F136 / 316LVM) para evitar alergia al níquel."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -127,7 +147,12 @@
       "en_el_cuerpo": true,
       "reemplaza_aumenta": false,
       "clasificacion": "Implante (no prótesis)",
-      "explicacion": "Permanece dentro de la arteria coronaria para mantener abierto su lumen, sin sustituir el vaso sanguíneo."
+      "explicacion": "Permanece dentro de la arteria coronaria para mantener abierto su lumen, sin sustituir el vaso sanguíneo.",
+      "zona_anatomica": "Arteria coronaria (endoluminal)",
+      "silueta_xy": [53, 31],
+      "clase_mdr": "Clase III (MDR)",
+      "semaforo": "rojo",
+      "exigencia_iso10993": "Máxima (contacto permanente con sangre circulante): hemocompatibilidad completa (trombosis, hemólisis, complemento) + genotoxicidad."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -135,7 +160,12 @@
       "en_el_cuerpo": true,
       "reemplaza_aumenta": false,
       "clasificacion": "Implante (no prótesis)",
-      "explicacion": "Se implanta bajo la piel con electrodos en el corazón, pero no reemplaza al órgano sino que regula su ritmo eléctrico."
+      "explicacion": "Se implanta bajo la piel con electrodos en el corazón, pero no reemplaza al órgano sino que regula su ritmo eléctrico.",
+      "zona_anatomica": "Bolsillo pectoral subcutáneo + endocardio",
+      "silueta_xy": [45, 28],
+      "clase_mdr": "Clase III · Implantable activo",
+      "semaforo": "rojo",
+      "exigencia_iso10993": "Máxima (implante activo permanente): hermeticidad, biocompatibilidad crónica de carcasa Ti y cables en sangre."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -143,7 +173,12 @@
       "en_el_cuerpo": true,
       "reemplaza_aumenta": true,
       "clasificacion": "Implante y prótesis",
-      "explicacion": "Se introduce dentro del ojo y sustituye totalmente al cristalino natural opacificado."
+      "explicacion": "Se introduce dentro del ojo y sustituye totalmente al cristalino natural opacificado.",
+      "zona_anatomica": "Saco capsular ocular (cámara posterior)",
+      "silueta_xy": [53, 10],
+      "clase_mdr": "Clase IIb (MDR)",
+      "semaforo": "ambar",
+      "exigencia_iso10993": "Alta (implante ocular permanente): citotoxicidad, irritación intraocular, estabilidad óptica e hidrolítica."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -151,7 +186,12 @@
       "en_el_cuerpo": true,
       "reemplaza_aumenta": true,
       "clasificacion": "Implante y prótesis",
-      "explicacion": "Se sutura dentro del corazón y reemplaza la función de una válvula cardíaca dañada."
+      "explicacion": "Se sutura dentro del corazón y reemplaza la función de una válvula cardíaca dañada.",
+      "zona_anatomica": "Anillo valvular cardíaco (aórtico / mitral)",
+      "silueta_xy": [51, 32],
+      "clase_mdr": "Clase III (MDR)",
+      "semaforo": "rojo",
+      "exigencia_iso10993": "Máxima (contacto sanguíneo permanente a alta cizalladura): hemocompatibilidad crítica, fatiga estructural y trombogenicidad."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -159,7 +199,12 @@
       "en_el_cuerpo": false,
       "reemplaza_aumenta": true,
       "clasificacion": "Prótesis (no implante)",
-      "explicacion": "Reemplaza una extremidad amputada desde el exterior, sin colocarse dentro del organismo."
+      "explicacion": "Reemplaza una extremidad amputada desde el exterior, sin colocarse dentro del organismo.",
+      "zona_anatomica": "Miembro inferior (acoplamiento en piel del muñón)",
+      "silueta_xy": [43, 78],
+      "clase_mdr": "Clase I (MDR)",
+      "semaforo": "verde",
+      "exigencia_iso10993": "Básica (contacto solo con piel intacta en el encaje): citotoxicidad, irritación cutánea y sensibilización."
     },
     {
       "categoria": "Clasificación: ¿Implante, prótesis o ambos?",
@@ -167,7 +212,12 @@
       "en_el_cuerpo": false,
       "reemplaza_aumenta": false,
       "clasificacion": "Dispositivo médico (ni implante ni prótesis)",
-      "explicacion": "Es un producto sanitario de uso quirúrgico transitorio, pero no se implanta ni sustituye tejidos."
+      "explicacion": "Es un producto sanitario de uso quirúrgico transitorio, pero no se implanta ni sustituye tejidos.",
+      "zona_anatomica": "Contacto quirúrgico transitorio (< 60 min)",
+      "silueta_xy": [68, 44],
+      "clase_mdr": "Clase IIa · Instrumental reutilizable/estéril",
+      "semaforo": "verde",
+      "exigencia_iso10993": "Limitada (contacto invasivo breve < 24 h): citotoxicidad, esterilidad y ausencia de residuos citotóxicos."
     }
   ],
   "hitos": [
